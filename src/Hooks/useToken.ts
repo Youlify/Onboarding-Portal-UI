@@ -9,7 +9,8 @@ const useToken = () => {
     STORAGE_TOKEN_KEY,
     { listenStorageChange: true }
   );
-  const isLogin = !!(token?.patient_id && token.practice_id);
+  // const isLogin = !!(token?.patient_id && token.practice_id);
+  const isLogin = true;
   return {
     token,
     setToken,

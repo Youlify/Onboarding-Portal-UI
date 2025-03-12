@@ -6,6 +6,8 @@ const pathResolve = (pathUrl) => path.join(__dirname, pathUrl);
 module.exports = {
   webpack: {
     alias: {
+      "antd/lib/theme/style": "antd/lib/style",
+      "antd/lib/version/style": "antd/lib/style",
       "@": pathResolve("src"),
       "@pages": pathResolve("src/Pages"),
       "@components": pathResolve("/src/Components"),

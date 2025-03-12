@@ -5,6 +5,7 @@ import { configResponsive } from "ahooks";
 import routes from "@router/index";
 import { LoginProvider } from "@provider/login/provider";
 import { GlobalProvider } from "@provider/global/provider";
+import { GlobalStyle } from "./Styles/global";
 import { defaultTheme } from "@styles/themeConfig";
 
 configResponsive({
@@ -22,7 +23,10 @@ const App: React.FC = () => {
     <ConfigProvider theme={defaultTheme} wave={{ disabled: true }}>
       <GlobalProvider>
         <LoginProvider>
-          <AntdApp className="app">{element}</AntdApp>
+          <>
+            <GlobalStyle />
+            <AntdApp className="app">{element}</AntdApp>
+          </>
         </LoginProvider>
       </GlobalProvider>
     </ConfigProvider>

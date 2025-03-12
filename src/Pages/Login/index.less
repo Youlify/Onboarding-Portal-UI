@@ -1,99 +1,86 @@
 @import "@styles/mixins.less";
 
 .login-container {
-  min-height: 100%;
-  background: linear-gradient(120.53deg, #f0f5ff 40.14%, #d1cdf2 95.88%);
-  box-sizing: border-box;
-  padding-bottom: 32px;
-  .spacing-for-media-all({ padding-top: 72; });
+  display: flex;
+  height: 100%;
 }
 
-.login-youlify-logo {
-  margin: 0 auto;
-  width: 148.84px;
-  height: 40px;
-  background: url("../../Assets/images/youlify_logo_dark.svg") no-repeat center /
-    100%;
+.login-banner,
+.login-content {
+  position: relative;
+  flex: 1 0 50%;
+}
+
+.login-banner {
+  padding-top: 120px;
+  background-color: var(--Root-tokens-Primary-default, #2d40cb);
+  &-logo-container,
+  &-text {
+    width: 519px;
+  }
+  &-logo-container {
+    position: absolute;
+    top: 13%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  &-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: Elza-SemiBold;
+    font-size: 40px;
+    color: var(--Mapping-Border-Auxiliary, #ffffff);
+  }
+  &-logo {
+    width: 153px;
+    height: 37px;
+    background: url("../../Assets/images/youlify_logo.png") no-repeat center /
+      100%;
+  }
+  &-bglogo {
+    position: absolute;
+    bottom: 0;
+    right: 10%;
+    width: 70%;
+    object-fit: contain;
+  }
 }
 
 .login-box {
-  margin: 0 auto;
-  width: 438px;
-  background-color: #ffffff;
-  box-sizing: border-box;
-  .spacing-for-media-all({
-    margin-top: 48;
-    padding: 32;
-    border-radius: 16
-  });
-  .media({
-    width: 312px;
-  }, xs);
-  &-title,
-  &-description {
-    font-family: Elza;
-    color: #1d212a;
-    text-align: center;
-  }
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 440px;
   &-title {
-    line-height: 28px;
-    font-size: 20px;
-    font-weight: 600;
+    font-family: Elza-Semibold;
+    font-size: 24px;
+    line-height: 32px;
+    color: var(--Mapping-Text-and-Icon-Primary, #141414);
   }
-  &-description {
-    margin-top: 14px;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 24px;
+  &-form {
+    margin-top: 32px;
   }
 }
 
-.login-box-form {
-  margin: 0 auto;
-  .spacing-for-media-all({
-    margin-top: 24;
-  });
-  &-alert {
-    margin-bottom: 12px;
-  }
-  &-datepicker,
-  &-submit-btn {
-    width: 100%;
-  }
-}
-
-.login-disclaimer-message {
-  margin: 0 auto;
-  width: 438px;
-  .spacing-for-media-all({
-    margin-top: 48;
-  });
-  .media({
-    width: 312px;
-  }, xs);
-  &-title,
-  &-description {
-    font-family: Elza;
+.login-disclaimer {
+  margin-top: 32px;
+  &-title {
+    font-family: Elza-Semibold;
     font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-    color: #50545f;
-  }
-  &-title {
-    font-weight: 600;
+    color: var(--Mapping-Text-and-Icon-Primary, #141414);
   }
   &-description {
     margin-top: 4px;
-    &-link,
-    &-link:link,
-    &-link:hover,
-    &-link:visited,
-    &-link:active {
-      color: #50545f;
+    line-height: 12px;
+    font-family: Elza-Regular;
+    font-size: 10px;
+    color: var(--Mapping-Text-and-Icon-Primary, #141414);
+    a {
+      color: #141414;
       text-decoration: underline;
-    }
-    &-footer {
-      margin-top: 32px;
     }
   }
 }
