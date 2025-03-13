@@ -1,5 +1,3 @@
-@import "@styles/mixins.less";
-
 .navigation-bar {
   position: fixed;
   top: 0;
@@ -8,19 +6,14 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 20px 48px;
+  height: 104px;
   background-color: #2d40cb;
   z-index: 100;
-  .media({
-    padding: 24px 32px;
-  }, xs, sm);
-  .media({
-    padding: 24px 40px;
-  }, md, lg);
-  .media({
-    padding: 32px 64px;
-  }, xl);
+  box-sizing: border-box;
   &-left {
     display: flex;
+    cursor: pointer;
   }
   &-logo {
     width: 100px;

@@ -12,6 +12,7 @@ module.exports = {
       "@pages": pathResolve("src/Pages"),
       "@components": pathResolve("/src/Components"),
       "@common": pathResolve("src/Common"),
+      "@config": pathResolve("src/Config"),
       "@router": pathResolve("src/Router"),
       "@hooks": pathResolve("src/Hooks"),
       "@provider": pathResolve("/src/Provider"),

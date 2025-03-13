@@ -1,37 +1,52 @@
-import React, { useState } from "react";
-import { useOutlet } from "react-router-dom";
-import NavigationBar from "@components/NavigationBar";
-import { useLogout } from "@hooks/useToken";
-import { ReactComponent as LogoutSVG } from "../../Assets/images/logout.svg";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { practiceKeys, practiceConfig, PracticeInfo } from "@config/practice";
+import { PracticeStatusEnum } from "@/Types/enum";
+import HomeTopBar from "./TopBar";
+import HomePracticeCard from "./PracticeCard";
 import "./index.less";
 
-const NavigationBarRight = () => {
-  const { logout } = useLogout();
-  const onLogout = () => {
-    logout();
-  };
-  return (
-    <div className="navigation-bar-logout" onClick={onLogout}>
-      <div className="navigation-bar-logout-text">Log Out</div>
-      <LogoutSVG className="navigation-bar-logout-icon" />
-    </div>
-  );
-};
-
 const Home: React.FC = () => {
-  const outlet = useOutlet();
+  const navigate = useNavigate();
   const [paddingTop, setPaddingTop] = useState(0);
-  const onNavigationBarLayout = (size: { width: number; height: number }) => {
+  const onTopBarLayout = (size: { width: number; height: number }) => {
     setPaddingTop(size.height);
+  };
+  const goStep = (practiceInfo: PracticeInfo) => {
+    navigate(`/step?practiceKey=${practiceInfo.key}`);
   };
 
   return (
     <div className="home-container" style={{ paddingTop }}>
-      <NavigationBar
-        renderRight={() => <NavigationBarRight />}
-        onLayout={onNavigationBarLayout}
-      />
-      {outlet}
+      <HomeTopBar onLayout={onTopBarLayout} />
+      <div className="home-content">
+        <div className="home-content-practice-list">
+          {practiceKeys.map((key) => {
+            const practiceInfo = practiceConfig[key];
+            return (
+              <HomePracticeCard
+                key={practiceInfo.key}
+                title={practiceInfo.cardTitle}
+                fillText={practiceInfo.cardFillText}
+                status={PracticeStatusEnum.NOT_STARTED}
+                practiceInfo={practiceInfo}
+                onClick={goStep}
+              />
+            );
+          })}
+        </div>
+        <div className="home-content-footer">
+          <div className="home-content-footer-left">
+            Copyright © 2024-2025 Youlify. All rights reserved.
+          </div>
+          <a
+            className="home-content-footer-right"
+            href="mailto:support@youlify.ai"
+          >
+            support@youlify.com
+          </a>
+        </div>
+      </div>
     </div>
   );
 };

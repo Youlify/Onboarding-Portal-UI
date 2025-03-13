@@ -24,6 +24,7 @@
       "@pages/*": ["./src/Pages/*"],
       "@components/*": ["./src/Components/*"],
       "@common/*": ["./src/Common/*"],
+      "@config/*": ["./src/Config/*"],
       "@router/*": ["./src/Router/*"],
       "@hooks/*": ["./src/Hooks/*"],
       "@provider/*": ["./src/Provider/*"],

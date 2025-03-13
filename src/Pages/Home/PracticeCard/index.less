@@ -1,0 +1,43 @@
+.practice-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+  width: 228px;
+  height: 228px;
+  max-width: 228px;
+  max-height: 228px;
+  border: 1px solid #ebecef;
+  border-radius: 4px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.02);
+  }
+  &-status {
+    display: flex;
+    &-icon {
+      width: 20px;
+      height: 20px;
+      object-fit: contain;
+    }
+    &-text {
+      margin-left: 8px;
+      font-family: Elza-Semibold;
+      font-size: 14px;
+    }
+  }
+  &-title {
+    margin-top: 12px;
+    line-height: 28px;
+    font-family: Elza-Semibold;
+    font-size: 20px;
+    color: #141414;
+  }
+  &-fill-text {
+    font-family: Elza-Regular;
+    font-size: 16px;
+    color: #a7adb9;
+  }
+}
