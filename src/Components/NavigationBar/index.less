@@ -11,9 +11,17 @@
   background-color: #2d40cb;
   z-index: 100;
   box-sizing: border-box;
+  overflow: hidden;
   &-left {
     display: flex;
     cursor: pointer;
+  }
+  &-bglogo {
+    position: absolute;
+    top: -40px;
+    right: 2%;
+    width: 338px;
+    object-fit: contain;
   }
   &-logo {
     width: 100px;

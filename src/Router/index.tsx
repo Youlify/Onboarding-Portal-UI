@@ -1,30 +1,35 @@
 import { RouteObject } from "react-router-dom";
 import Suspenselazy from "@components/Suspenselazy";
 
+const Login = Suspenselazy(
+  () => import(/* webpackChunkName:"Login" */ "@pages/Login")
+);
+const Home = Suspenselazy(
+  () => import(/* webpackChunkName:"Home" */ "@pages/Home")
+);
+const Step = Suspenselazy(
+  () => import(/* webpackChunkName:"Steps" */ "@/Pages/Step")
+);
+const NotFound = Suspenselazy(
+  () => import(/* webpackChunkName:"NotFound" */ "@pages/NotFound")
+);
+
 const routes: RouteObject[] = [
   {
     path: "/login",
-    element: Suspenselazy(
-      () => import(/* webpackChunkName:"Login" */ "@pages/Login")
-    ),
+    element: <Login />,
   },
   {
     path: "/",
-    element: Suspenselazy(
-      () => import(/* webpackChunkName:"Home" */ "@pages/Home")
-    ),
+    element: <Home />,
   },
   {
     path: "/step",
-    element: Suspenselazy(
-      () => import(/* webpackChunkName:"Steps" */ "@/Pages/Step")
-    ),
+    element: <Step />,
   },
   {
     path: "*",
-    element: Suspenselazy(
-      () => import(/* webpackChunkName:"NotFound" */ "@pages/NotFound")
-    ),
+    element: <NotFound />,
   },
 ];
 

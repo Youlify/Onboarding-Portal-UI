@@ -11,10 +11,7 @@ const NoFound: React.FC = () => {
       title="404"
       subTitle="Sorry, the page you visited does not exist."
       extra={
-        <Button
-          type="primary"
-          onClick={() => navigate("/home", { replace: true })}
-        >
+        <Button type="primary" onClick={() => navigate("/", { replace: true })}>
           Back home
         </Button>
       }

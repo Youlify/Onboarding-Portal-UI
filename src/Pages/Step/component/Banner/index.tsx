@@ -1,8 +1,7 @@
-import { PracticeInfo } from "@config/practice";
 import "./index.less";
 
 interface StepBannerProps {
-  practiceInfo: PracticeInfo;
+  practiceInfo: Practice.PracticeInfo;
   style?: React.CSSProperties;
 }
 

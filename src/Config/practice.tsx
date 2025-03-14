@@ -1,37 +1,20 @@
 import Suspenselazy from "@components/Suspenselazy";
 import { PracticeStatusEnum, PracticeKeyEnum } from "@/Types/enum";
 
-interface PracticeCardInfo {
-  key: string;
-  cardTitle: string;
-  cardFillText: string;
-}
+const PracticeInfoForm = Suspenselazy(
+  () =>
+    import(
+      /* webpackChunkName: "PracticeInfoForm" */ "@pages/Step/component/FormComponents/PracticeInfoForm"
+    )
+);
+const BasicInfoForm = Suspenselazy(
+  () =>
+    import(
+      /* webpackChunkName: "BasicInfoForm" */ "@/Pages/Step/component/FormComponents/BasicInfoForm"
+    )
+);
 
-interface PracticeStepInfo {
-  bannerTitle: string;
-  bannerSubTitle: string;
-  formTitle: string;
-  formComponent: React.ReactElement;
-}
-
-type PracticeKey = `${PracticeKeyEnum}`;
-
-type PracticeStatusConfig = {
-  [key in PracticeStatusEnum]: {
-    icon: string;
-    text: string;
-    textColor: string;
-    bgColor: string;
-  };
-};
-
-type PracticeInfo = PracticeCardInfo & PracticeStepInfo;
-
-type PracticeConfig = {
-  [key in PracticeKey]: PracticeInfo;
-};
-
-const practiceStatusConfig: PracticeStatusConfig = {
+const practiceStatusConfig: Practice.PracticeStatusConfig = {
   [PracticeStatusEnum.NOT_STARTED]: {
     icon: require("@assets/images/status_not_started.png"),
     text: "New",
@@ -52,21 +35,16 @@ const practiceStatusConfig: PracticeStatusConfig = {
   },
 };
 
-const practiceConfig: PracticeConfig = {
+const practiceConfig: Practice.PracticeConfig = {
   practiceInfo: {
     key: PracticeKeyEnum.PRACTICE_INFO,
     cardTitle: "Practice Information",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
-      "First things first—let’s start with some basic information about your practice.\n\nFirst things first—let’s start with some basic information about your practice.",
+      "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Practice Information",
-    formComponent: Suspenselazy(
-      () =>
-        import(
-          /* webpackChunkName: "BasicInfoForm" */ "@/Pages/Step/component/FormComponents/BasicInfoForm"
-        )
-    ),
+    formComponent: <PracticeInfoForm />,
   },
   billing: {
     key: PracticeKeyEnum.BILLING,
@@ -76,12 +54,7 @@ const practiceConfig: PracticeConfig = {
       "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Practice Information",
-    formComponent: Suspenselazy(
-      () =>
-        import(
-          /* webpackChunkName: "BasicInfoForm" */ "@/Pages/Step/component/FormComponents/BasicInfoForm"
-        )
-    ),
+    formComponent: <BasicInfoForm />,
   },
   w9Form: {
     key: PracticeKeyEnum.W9_FORM,
@@ -91,12 +64,7 @@ const practiceConfig: PracticeConfig = {
       "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Practice Information",
-    formComponent: Suspenselazy(
-      () =>
-        import(
-          /* webpackChunkName: "BasicInfoForm" */ "@/Pages/Step/component/FormComponents/BasicInfoForm"
-        )
-    ),
+    formComponent: <BasicInfoForm />,
   },
   renderingProvider: {
     key: PracticeKeyEnum.RENDERING_PROVIDER,
@@ -106,12 +74,7 @@ const practiceConfig: PracticeConfig = {
       "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Practice Information",
-    formComponent: Suspenselazy(
-      () =>
-        import(
-          /* webpackChunkName: "BasicInfoForm" */ "@/Pages/Step/component/FormComponents/BasicInfoForm"
-        )
-    ),
+    formComponent: <BasicInfoForm />,
   },
   facilityInfo: {
     key: PracticeKeyEnum.FACILITY_INFO,
@@ -121,12 +84,7 @@ const practiceConfig: PracticeConfig = {
       "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Practice Information",
-    formComponent: Suspenselazy(
-      () =>
-        import(
-          /* webpackChunkName: "BasicInfoForm" */ "@/Pages/Step/component/FormComponents/BasicInfoForm"
-        )
-    ),
+    formComponent: <BasicInfoForm />,
   },
   bankAccounts: {
     key: PracticeKeyEnum.BANK_ACCOUNTS,
@@ -136,12 +94,7 @@ const practiceConfig: PracticeConfig = {
       "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Practice Information",
-    formComponent: Suspenselazy(
-      () =>
-        import(
-          /* webpackChunkName: "BasicInfoForm" */ "@/Pages/Step/component/FormComponents/BasicInfoForm"
-        )
-    ),
+    formComponent: <BasicInfoForm />,
   },
   ehrLogin: {
     key: PracticeKeyEnum.EHR_LOGIN,
@@ -151,12 +104,7 @@ const practiceConfig: PracticeConfig = {
       "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Practice Information",
-    formComponent: Suspenselazy(
-      () =>
-        import(
-          /* webpackChunkName: "BasicInfoForm" */ "@/Pages/Step/component/FormComponents/BasicInfoForm"
-        )
-    ),
+    formComponent: <BasicInfoForm />,
   },
   accessToYoulify: {
     key: PracticeKeyEnum.ACCESS_TO_YOULIFY,
@@ -166,12 +114,7 @@ const practiceConfig: PracticeConfig = {
       "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Practice Information",
-    formComponent: Suspenselazy(
-      () =>
-        import(
-          /* webpackChunkName: "BasicInfoForm" */ "@/Pages/Step/component/FormComponents/BasicInfoForm"
-        )
-    ),
+    formComponent: <BasicInfoForm />,
   },
   clearingHouse: {
     key: PracticeKeyEnum.CLEARING_HOUSE,
@@ -181,12 +124,7 @@ const practiceConfig: PracticeConfig = {
       "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Practice Information",
-    formComponent: Suspenselazy(
-      () =>
-        import(
-          /* webpackChunkName: "BasicInfoForm" */ "@/Pages/Step/component/FormComponents/BasicInfoForm"
-        )
-    ),
+    formComponent: <BasicInfoForm />,
   },
   stripe: {
     key: PracticeKeyEnum.STRIPE,
@@ -196,12 +134,7 @@ const practiceConfig: PracticeConfig = {
       "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Practice Information",
-    formComponent: Suspenselazy(
-      () =>
-        import(
-          /* webpackChunkName: "BasicInfoForm" */ "@/Pages/Step/component/FormComponents/BasicInfoForm"
-        )
-    ),
+    formComponent: <BasicInfoForm />,
   },
   payerInfo: {
     key: PracticeKeyEnum.PAYER_INFO,
@@ -211,12 +144,7 @@ const practiceConfig: PracticeConfig = {
       "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Practice Information",
-    formComponent: Suspenselazy(
-      () =>
-        import(
-          /* webpackChunkName: "BasicInfoForm" */ "@/Pages/Step/component/FormComponents/BasicInfoForm"
-        )
-    ),
+    formComponent: <BasicInfoForm />,
   },
   additionalBillingInfo: {
     key: PracticeKeyEnum.ADDITIONAL_BILLING_INFO,
@@ -226,16 +154,11 @@ const practiceConfig: PracticeConfig = {
       "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Practice Information",
-    formComponent: Suspenselazy(
-      () =>
-        import(
-          /* webpackChunkName: "BasicInfoForm" */ "@/Pages/Step/component/FormComponents/BasicInfoForm"
-        )
-    ),
+    formComponent: <BasicInfoForm />,
   },
 };
 
-const practiceKeys = Object.keys(practiceConfig) as PracticeKeyEnum[];
+const practiceKeys = Object.keys(practiceConfig) as Practice.PracticeKeys;
 
-export type { PracticeKey, PracticeInfo, PracticeStatusConfig, PracticeConfig };
+// export type { PracticeKey, PracticeInfo, PracticeStatusConfig, PracticeConfig };
 export { practiceStatusConfig, practiceConfig, practiceKeys };

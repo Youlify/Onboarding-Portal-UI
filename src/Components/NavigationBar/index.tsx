@@ -32,6 +32,11 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
 
   return (
     <div className="navigation-bar" ref={ref}>
+      <img
+        className="navigation-bar-bglogo"
+        alt="bglogo"
+        src={require("../../Assets/images/youlify_logo_bg.png")}
+      />
       <div className="navigation-bar-left" onClick={onBarLeftClick}>
         <div className="navigation-bar-logo"></div>
       </div>

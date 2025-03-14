@@ -20,6 +20,11 @@ const HomeTopBar: React.FC<HomeTopBarProps> = ({ onLayout }) => {
 
   return (
     <div className="home-top-bar" ref={ref}>
+      <img
+        className="home-top-bar-bglogo"
+        alt="bglogo"
+        src={require("../../../Assets/images/youlify_logo_bg.png")}
+      />
       <div className="home-top-bar-logo"></div>
       <div className="home-top-bar-content">
         <div className="home-top-bar-text">

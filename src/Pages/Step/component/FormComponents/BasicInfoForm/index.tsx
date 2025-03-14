@@ -1,8 +1,12 @@
+import { Form, Input } from "antd";
+
 const BasicInfoForm = () => {
   return (
-    <div>
-      <h1>Basic Info</h1>
-    </div>
+    <>
+      <Form.Item name="name" label="name">
+        <Input />
+      </Form.Item>
+    </>
   );
 };
 

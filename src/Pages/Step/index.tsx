@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { practiceConfig, PracticeKey } from "@config/practice";
+import { practiceConfig } from "@config/practice";
 import NavigationBar from "@components/NavigationBar";
 import CircularProgress from "@components/CircularProgress";
 import StepBanner from "./component/Banner";
@@ -10,7 +10,7 @@ import "./index.less";
 const Step: React.FC = () => {
   const [searchParams] = useSearchParams();
   const [paddingTop, setPaddingTop] = useState(0);
-  const practiceKey = searchParams.get("practiceKey") as PracticeKey;
+  const practiceKey = searchParams.get("practiceKey") as Practice.PracticeKey;
   const practiceInfo = practiceConfig?.[practiceKey];
   const onNavigationBarLayout = (size: { width: number; height: number }) => {
     setPaddingTop(size.height);
@@ -25,7 +25,10 @@ const Step: React.FC = () => {
         onLayout={onNavigationBarLayout}
         renderRight={renderNaitonBarRight}
       />
-      <div className="step-content">
+      <div
+        className="step-content"
+        style={{ height: `calc(100% - ${paddingTop}px)` }}
+      >
         <StepBanner practiceInfo={practiceInfo} />
         <StepForm practiceInfo={practiceInfo} style={{ flex: 1 }} />
       </div>

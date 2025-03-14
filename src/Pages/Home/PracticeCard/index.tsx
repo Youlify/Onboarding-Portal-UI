@@ -1,14 +1,14 @@
 import { PracticeStatusEnum } from "@/Types/enum";
-import { practiceStatusConfig, PracticeInfo } from "@config/practice";
+import { practiceStatusConfig } from "@config/practice";
 import "./index.less";
 
 interface PracticeCardProps {
   status: PracticeStatusEnum;
   title: string;
   fillText?: string;
-  practiceInfo: PracticeInfo;
+  practiceInfo: Practice.PracticeInfo;
   style?: React.CSSProperties;
-  onClick?: (practiceInfo: PracticeInfo) => void;
+  onClick?: (practiceInfo: Practice.PracticeInfo) => void;
 }
 
 const PracticeCard: React.FC<PracticeCardProps> = ({

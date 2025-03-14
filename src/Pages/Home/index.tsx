@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { practiceKeys, practiceConfig, PracticeInfo } from "@config/practice";
+import { practiceKeys, practiceConfig } from "@config/practice";
 import { PracticeStatusEnum } from "@/Types/enum";
 import HomeTopBar from "./TopBar";
 import HomePracticeCard from "./PracticeCard";
@@ -12,7 +12,7 @@ const Home: React.FC = () => {
   const onTopBarLayout = (size: { width: number; height: number }) => {
     setPaddingTop(size.height);
   };
-  const goStep = (practiceInfo: PracticeInfo) => {
+  const goStep = (practiceInfo: Practice.PracticeInfo) => {
     navigate(`/step?practiceKey=${practiceInfo.key}`);
   };
 

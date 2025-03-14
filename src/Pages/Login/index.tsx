@@ -58,8 +58,12 @@ const Login: React.FC = () => {
           <div className="login-box-form">
             <ConfigProvider
               theme={{
+                token: {
+                  colorPrimary: "#2D40CB",
+                },
                 components: {
                   Form: {
+                    itemMarginBottom: 32,
                     labelFontSize: 14,
                   },
                 },

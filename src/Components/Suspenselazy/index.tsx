@@ -1,8 +1,11 @@
-import React, { Suspense, lazy } from "react";
+import { Suspense, lazy } from "react";
 
-const Suspenselazy = (props: any) => {
-  return (
-    <Suspense fallback={<>...</>}>{React.createElement(lazy(props))}</Suspense>
+const Suspenselazy = (lazyComponent: any) => {
+  const LazyComponent = lazy(lazyComponent);
+  return (props: any) => (
+    <Suspense fallback={<>...</>}>
+      <LazyComponent {...props} />
+    </Suspense>
   );
 };
 

@@ -1,4 +1,4 @@
-// import { get, post } from "./http";
-// import { API_URL } from "@common/api";
+import { get, post } from "./http";
+import { API_URL } from "@common/api";
 
 export {};
