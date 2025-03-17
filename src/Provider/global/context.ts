@@ -1,8 +1,7 @@
 import { createContext } from "react";
 
 export interface GlobalContextValueType {
-  accountInfo?: Patient.AccountInfo;
-  accountAPIInfo?: Patient.AccountAPIInfo;
+  accountInfo?: Account.AccountInfo;
 }
 
 export interface GlobalContextSetType {
@@ -13,7 +12,6 @@ export type GlobalContextType = GlobalContextValueType & GlobalContextSetType;
 
 const defaultGlobalValueContext = {
   accountInfo: {},
-  accountAPIInfo: {},
 } as GlobalContextValueType;
 
 const globalContext = createContext<GlobalContextType>(

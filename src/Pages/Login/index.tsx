@@ -1,35 +1,40 @@
-import { useContext, useState } from "react";
-import { Form, Input, Button, ConfigProvider } from "antd";
+import { useContext } from "react";
+import { Form, Input, Button, ConfigProvider, message } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { useRequest } from "ahooks";
 import { useToken } from "@hooks/useToken";
 import { globalContext } from "@provider/global/context";
-// import { login } from "@service/factory";
+import { accessCode } from "@service/factory";
 import "./index.less";
 
-interface FormFieldValues extends API.APILoginParams {}
-
 const Login: React.FC = () => {
-  const [form] = useForm<FormFieldValues>();
+  const [messageApi, contextHolder] = message.useMessage();
+  const [form] = useForm<{ access_code: string }>();
   const { setGlobalValue } = useContext(globalContext);
-  const [errorMessage, setErrorMessage] = useState("");
   const { setToken } = useToken();
-  // const { run } = useRequest(login, {
-  //   manual: true,
-  //   onSuccess(data, params) {
-  //     const accountInfo = params?.[0];
-  //     setToken(data);
-  //     setGlobalValue?.({ accountInfo, accountAPIInfo: data });
-  //   },
-  //   onError(e) {
-  //     setErrorMessage(e.message);
-  //   },
-  // });
+  const { run } = useRequest(accessCode, {
+    manual: true,
+    onSuccess(data, params) {
+      if (!data) return;
+      const practiceId = "test";
+      const accessCode = params?.[0].access_code;
+      const accountInfo = { practiceId, accessCode };
+      setToken(accountInfo);
+      setGlobalValue?.({ accountInfo });
+    },
+    onError(e) {
+      messageApi.error(e.message);
+      // MOCK LOGIN
+      const accountInfo = { practiceId: "test", accessCode: "123456" };
+      setToken(accountInfo);
+      setGlobalValue?.({ accountInfo });
+    },
+  });
 
   const onSubmit = async () => {
     try {
       const values = await form.validateFields();
-      // run(values);
+      run(values);
     } catch (e) {
       console.log(e);
     }
@@ -37,6 +42,7 @@ const Login: React.FC = () => {
 
   return (
     <div className="login-container">
+      {contextHolder}
       <div className="login-banner">
         <img
           className="login-banner-bglogo"

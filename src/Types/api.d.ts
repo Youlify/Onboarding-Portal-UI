@@ -9,51 +9,26 @@ declare namespace API {
 
   type APINullRes = APIRes<null>;
 
-  interface APIBaseParams {
-    practice_id: string;
-    patient_id: string;
+  interface APIAccessCodeParams {
+    access_code: string;
   }
 
-  type APIBalanceInfo = Patient.BalanceInfo;
-
-  interface APICreatPaymentLinkInfo {
-    stripe_id: string;
-    stripe_link: string;
+  interface APIBasicInfo {
+    practice_legal_name: string;
+    logo_name: string;
+    display_name: string;
+    business_contact_number: string;
+    no_logo: boolean;
+    address: {
+      physical_address: string;
+      city: string;
+      state: string;
+      zip: string;
+    };
+    taxonomy_codes: string[];
   }
 
-  interface APIPaymentDistribution {
-    statement_id: string;
-    payment_amount: number;
-  }
-
-  interface APILoginParams extends Patient.AccountInfo {}
-
-  interface APILogoutParams {
-    account_number: string;
-  }
-
-  interface APIDownloadReportParams extends APIBaseParams {
-    account_number: string;
-    tab: string;
-    sub_tab: string;
-  }
-
-  interface APICreatPaymentLinkParams extends APIBaseParams {
-    user_id: string;
-    is_full_payment: boolean;
-    total_payment_amount: number;
-    pay_distribution: APIPaymentDistribution[];
-  }
-
-  interface APIPaymentStatusParams extends APIBaseParams {
-    stripe_id: string;
-  }
-
-  type APILoginRes = APIRes<Patient.AccountAPIInfo>;
-  type APIBasicInfoRes = APIRes<Patient.BasicInfo>;
-  type APIBalanceInfoRes = APIRes<APIBalanceInfo>;
-  type APIDownloadReportRes = APIRes<Patient.ReportDownloadInfo>;
-  type APIStatementPayInfoRes = APIRes<Patient.StatementInfoList>;
-  type APICreatPaymentLinkRes = APIRes<APICreatPaymentLinkInfo>;
-  type APIPaymentStatusRes = APIRes<Patient.PaymentStatus>;
+  type APIAccessCodeRes = APIRes<boolean>;
+  type APIProgressPercentageRes = APIRes<number>;
+  type APIBasicInfoRes = APIRes<APIBasicInfo>;
 }

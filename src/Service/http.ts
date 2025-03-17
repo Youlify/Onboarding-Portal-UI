@@ -5,7 +5,24 @@ import {
   AxiosResponse,
   AxiosError,
 } from "axios";
-import { BASE_URL, SYSTEM_ERROR_MESSAGE } from "@common/contant";
+import {
+  BASE_URL,
+  SYSTEM_ERROR_MESSAGE,
+  STORAGE_TOKEN_KEY,
+} from "@common/contant";
+import { replaceTmpUrlByParams } from "@utils/url";
+
+const handleRequestConfigUrl = (config: InternalAxiosRequestConfig) => {
+  try {
+    const tokenKey = JSON.parse(
+      localStorage.getItem(STORAGE_TOKEN_KEY) || "{}"
+    );
+    const practice_id = tokenKey.practiceId;
+    config.url = replaceTmpUrlByParams(config.url || "", { practice_id });
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 const serviceAxios = axios.create({
   baseURL: BASE_URL,
@@ -21,6 +38,7 @@ const serviceAxios = axios.create({
 
 serviceAxios.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    handleRequestConfigUrl(config);
     return config;
   },
   (err: AxiosError) => {

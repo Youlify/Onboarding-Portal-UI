@@ -1,5 +1,12 @@
-import React from "react";
-import { Button, Form, FormInstance } from "antd";
+import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button, message, FormInstance } from "antd";
+import { useRequest } from "ahooks";
+import { practiceKeys } from "@config/practice";
+import {
+  FormComponentProps,
+  BaseFormWrapperRef,
+} from "../FormComponents/BaseFormWrapper";
 import "./index.less";
 
 export interface DynamicFormProps {
@@ -11,31 +18,125 @@ interface StepFormProps {
   style?: React.CSSProperties;
 }
 
+const getNextStepKey = (
+  practiceKeys: Practice.PracticeKeys,
+  currentKey: Practice.PracticeKey
+) => {
+  const currentIndex = practiceKeys.indexOf(currentKey);
+  if (currentIndex + 1 === practiceKeys.length) return null;
+  return practiceKeys[currentIndex + 1];
+};
+
 const StepForm: React.FC<StepFormProps> = ({ practiceInfo, style }) => {
-  const { formTitle, formComponent } = practiceInfo;
-  const [form] = Form.useForm();
+  const navigate = useNavigate();
+  const [messageApi, contextHolder] = message.useMessage();
+  const [formInitialValues, setFormInitialValues] = useState({});
+  const [extraData, setExtraData] = useState<any[]>([]);
+  const formComponentRef = useRef<BaseFormWrapperRef>(null);
+  const {
+    formTitle,
+    formComponent,
+    initDataApi,
+    submitDataApi,
+    extraDataApis,
+  } = practiceInfo;
+
+  const { run: runInitDataApi } = useRequest(initDataApi!, {
+    manual: true,
+    onSuccess(data) {
+      setFormInitialValues(data);
+    },
+    onError(e) {
+      messageApi.error(e.message);
+    },
+  });
+  const { run: runSubmitDataApi } = useRequest(submitDataApi!, {
+    manual: true,
+    onSuccess(data) {
+      console.log(data);
+    },
+    onError(e) {
+      messageApi.error(e.message);
+    },
+  });
+  const runExtraDataApis = async () => {
+    try {
+      const res = await Promise.all(extraDataApis!.map((api) => api?.()));
+      setExtraData(res);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const onGoBack = () => {
+    navigate("/", { replace: true });
+  };
+
+  const onSaveOrNext =
+    (onlySave = true) =>
+    async () => {
+      try {
+        const values = await formComponentRef.current?.validateFields();
+        runSubmitDataApi({ ...values });
+        if (!onlySave) {
+          const nextKey = getNextStepKey(practiceKeys, practiceInfo.key);
+          if (nextKey) {
+            navigate(`/step?practiceKey=${nextKey}`);
+          } else {
+            navigate("/", { replace: true });
+          }
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+  useEffect(() => {
+    if (extraDataApis?.length) runExtraDataApis();
+    // eslint-disable-next-line
+  }, [extraDataApis]);
+
+  useEffect(() => {
+    if (initDataApi) runInitDataApi();
+    // eslint-disable-next-line
+  }, [initDataApi]);
 
   return (
     <div className="step-form-container" style={style}>
+      {contextHolder}
       <div className="step-form-main">
         <div className="step-form-title">{formTitle}</div>
         <div className="step-form-fields">
-          <Form form={form} layout="vertical">
-            {React.cloneElement(formComponent, { form })}
-          </Form>
+          {React.cloneElement(formComponent, {
+            fieldsProps: {
+              ref: formComponentRef,
+              initialValues: formInitialValues,
+            },
+            practiceInfo,
+            extraData,
+          } as FormComponentProps)}
         </div>
       </div>
       <div className="step-form-toolbar">
         <div className="step-form-toolbar-left">
-          <Button type="default" style={{ width: 200 }}>
+          <Button type="default" style={{ width: 200 }} onClick={onGoBack}>
             Back to Menu
           </Button>
         </div>
         <div className="step-form-toolbar-right">
-          <Button color="primary" variant="outlined" style={{ width: 160 }}>
+          <Button
+            color="primary"
+            variant="outlined"
+            style={{ width: 160 }}
+            onClick={onSaveOrNext(true)}
+          >
             Save
           </Button>
-          <Button type="primary" style={{ marginLeft: 16, width: 160 }}>
+          <Button
+            type="primary"
+            style={{ marginLeft: 16, width: 160 }}
+            onClick={onSaveOrNext(false)}
+          >
             Save and Next
           </Button>
         </div>

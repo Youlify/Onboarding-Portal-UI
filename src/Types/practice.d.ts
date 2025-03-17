@@ -1,6 +1,6 @@
 declare namespace Practice {
   interface PracticeCardInfo {
-    key: string;
+    key: Practice.PracticeKey;
     cardTitle: string;
     cardFillText: string;
   }
@@ -10,8 +10,9 @@ declare namespace Practice {
     bannerSubTitle: string;
     formTitle: string;
     formComponent: React.ReactElement;
-    initDataApi?: () => Promise;
-    patchDataApi?: () => Promise;
+    initDataApi?: (params?: Record<string, any>) => Promise<any>;
+    submitDataApi?: (data?: Record<string, any>) => Promise<any>;
+    extraDataApis?: ((params?: Record<string, any>) => Promise<any>)[];
   }
 
   type PracticeKey = `${PracticeKeyEnum}`;

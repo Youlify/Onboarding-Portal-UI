@@ -15,6 +15,6 @@ const getBaseUrl = () => {
 
 export const BASE_URL = getBaseUrl();
 export const SYSTEM_ERROR_MESSAGE = "System error";
-export const STORAGE_TOKEN_KEY = "_token";
-export const STORAGE_GLOBAL_VALUE_KEY = "_global";
+export const STORAGE_TOKEN_KEY = "_onboarding_token";
+export const STORAGE_GLOBAL_VALUE_KEY = "_onboarding_global";
 export const AUTO_LOGOUT_LEFT_TIME = 15 * 60 * 1000;

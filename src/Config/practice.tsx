@@ -1,5 +1,6 @@
 import Suspenselazy from "@components/Suspenselazy";
 import { PracticeStatusEnum, PracticeKeyEnum } from "@/Types/enum";
+import { getBasicInfo } from "@service/factory";
 
 const PracticeInfoForm = Suspenselazy(
   () =>
@@ -45,6 +46,7 @@ const practiceConfig: Practice.PracticeConfig = {
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Practice Information",
     formComponent: <PracticeInfoForm />,
+    initDataApi: getBasicInfo,
   },
   billing: {
     key: PracticeKeyEnum.BILLING,
@@ -160,5 +162,4 @@ const practiceConfig: Practice.PracticeConfig = {
 
 const practiceKeys = Object.keys(practiceConfig) as Practice.PracticeKeys;
 
-// export type { PracticeKey, PracticeInfo, PracticeStatusConfig, PracticeConfig };
 export { practiceStatusConfig, practiceConfig, practiceKeys };
