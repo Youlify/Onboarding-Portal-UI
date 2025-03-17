@@ -1,0 +1,83 @@
+@import "./variables.less";
+
+.choose(@type, @style) when (@type = xs) {
+  @media (max-width: @xs-max-width) {
+    @style();
+  }
+}
+
+.choose(@type, @style) when (@type = sm) {
+  @media (min-width: @sm-min-width) and (max-width: @sm-max-width) {
+    @style();
+  }
+}
+
+.choose(@type, @style) when (@type = md) {
+  @media (min-width: @md-min-width) and (max-width: @md-max-width) {
+    @style();
+  }
+}
+
+.choose(@type, @style) when (@type = lg) {
+  @media (min-width: @lg-min-width) and (max-width: @lg-max-width) {
+    @style();
+  }
+}
+
+.choose(@type, @style) when (@type = xl) {
+  @media (min-width: @xl-min-width) {
+    @style();
+  }
+}
+
+.loop(@i, @style, @list) when (@i < length(@list)) {
+  .choose(extract(@list, @i + 1), @style);
+  .loop(@i + 1, @style, @list);
+}
+
+.media(@style, ...) {
+  .loop(0, @style, @arguments);
+}
+
+.media-all(@style) {
+  .media(@style, @breakpoints);
+}
+
+.spacing-value(@spacing, @breakpoint) {
+  @isLess32: boolean(@spacing < 32);
+  @spacing-key: "spacing-@{spacing}";
+  @spacing-value: if(
+    @isLess32,
+    @spacing-values[@@spacing-key],
+    @spacing-values[@@spacing-key][@@breakpoint]
+  );
+}
+
+.spacing-for-media(@selector, @breakpoint, @property-value-dict) {
+  .media({
+    @{selector} {
+      each(@property-value-dict, {
+        @{key}: .spacing-value(@value, @breakpoint)[@spacing-value]
+      })
+    }
+  }, @breakpoint);
+}
+
+.spacing-for-media-all(@property-value-dict, @selector: e("&")) {
+  each(@breakpoints, {
+    .spacing-for-media(@selector, @value, @property-value-dict)
+  });
+}
+
+.gap-for-media() {
+  .media({
+    margin-top: 72px;
+  }, xl, lg, md);
+  .media({
+    margin-top: 48px;
+  }, sm);
+  .media({
+    flex-direction: column;
+    margin-top: 32px;
+  }, xs);
+}

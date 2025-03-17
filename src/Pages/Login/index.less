@@ -1,0 +1,84 @@
+.login-container {
+  display: flex;
+  height: 100%;
+}
+
+.login-banner,
+.login-content {
+  position: relative;
+  flex: 1 0 50%;
+}
+
+.login-banner {
+  padding-top: 120px;
+  background-color: var(--Root-tokens-Primary-default, #2d40cb);
+  &-logo-container,
+  &-text {
+    width: 519px;
+  }
+  &-logo-container {
+    position: absolute;
+    top: 13%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  &-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: Elza-SemiBold;
+    font-size: 40px;
+    color: var(--Mapping-Border-Auxiliary, #ffffff);
+  }
+  &-logo {
+    width: 153px;
+    height: 37px;
+    background: url("../../Assets/images/youlify_logo.png") no-repeat center /
+      100%;
+  }
+  &-bglogo {
+    position: absolute;
+    bottom: 0;
+    right: 10%;
+    width: 70%;
+    object-fit: contain;
+  }
+}
+
+.login-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 440px;
+  &-title {
+    font-family: Elza-Semibold;
+    font-size: 24px;
+    line-height: 32px;
+    color: var(--Mapping-Text-and-Icon-Primary, #141414);
+  }
+  &-form {
+    margin-top: 32px;
+  }
+}
+
+.login-disclaimer {
+  margin-top: 32px;
+  &-title {
+    font-family: Elza-Semibold;
+    font-size: 14px;
+    color: var(--Mapping-Text-and-Icon-Primary, #141414);
+  }
+  &-description {
+    margin-top: 4px;
+    line-height: 12px;
+    font-family: Elza-Regular;
+    font-size: 10px;
+    color: var(--Mapping-Text-and-Icon-Primary, #141414);
+    a {
+      color: #141414;
+      text-decoration: underline;
+    }
+  }
+}

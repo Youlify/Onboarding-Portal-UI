@@ -1,0 +1,48 @@
+.circular-progress {
+  display: inline-block;
+  position: relative;
+  svg {
+    transform: rotate(-90deg);
+  }
+  &-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    &-percentage {
+      font-family: Elza-Semibold;
+      color: #ffffff;
+    }
+    &-text {
+      font-family: Elza-Regular;
+      font-size: 18px;
+      font-weight: 500;
+      color: #ffffff;
+    }
+  }
+}
+
+.circular-progress.circular-progress--small {
+  width: 64px;
+  height: 64px;
+  svg {
+    width: 64px;
+    height: 64px;
+  }
+  .circular-progress-content-percentage {
+    font-size: 20px;
+  }
+}
+
+.circular-progress.circular-progress--large {
+  width: 180px;
+  height: 180px;
+  svg {
+    width: 180px;
+    height: 180px;
+  }
+  .circular-progress-content-percentage {
+    font-size: 32px;
+  }
+}
