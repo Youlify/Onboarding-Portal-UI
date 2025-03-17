@@ -16,6 +16,7 @@
     "antd-style": "^3.7.1",
     "axios": "^1.8.2",
     "craco-antd": "^2.0.0",
+    "lodash": "^4.17.21",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.3.0",
@@ -51,6 +52,7 @@
   "devDependencies": {
     "@craco/craco": "^7.1.0",
     "@craco/types": "^7.1.0",
+    "@types/lodash": "^4.17.16",
     "dayjs": "^1.11.13"
   }
 }
