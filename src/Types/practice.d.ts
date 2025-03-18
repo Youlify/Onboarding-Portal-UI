@@ -13,6 +13,8 @@ declare namespace Practice {
     initDataApi?: (params?: Record<string, any>) => Promise<any>;
     submitDataApi?: (data?: Record<string, any>) => Promise<any>;
     extraDataApis?: ((params?: Record<string, any>) => Promise<any>)[];
+    format?: (formData: Record<string, any>) => Record<string, any>;
+    parse?: (apiData: Record<string, any>) => Record<string, any>;
   }
 
   type PracticeKey = `${PracticeKeyEnum}`;

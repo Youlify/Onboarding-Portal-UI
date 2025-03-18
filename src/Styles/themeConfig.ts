@@ -17,6 +17,12 @@ export const defaultTheme: ThemeConfig = {
     Input: {
       controlHeight: 48,
     },
+    Select: {
+      controlHeight: 48,
+    },
+    Checkbox: {
+      fontFamily: "Elza-Semibold",
+    },
     Button: {
       controlHeight: 48,
     },

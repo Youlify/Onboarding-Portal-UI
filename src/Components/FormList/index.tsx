@@ -6,15 +6,15 @@ export interface FormListProps<T = any>
   extends Omit<FormItemProps, "children"> {
   label?: React.ReactNode;
   name: FormItemProps["name"];
+  initialValue?: T[];
+  maxCount?: number;
+  minCount?: number;
+  showLabel?: boolean;
   children?: (
     field: FormListFieldData,
     index: number,
     operation: FormListOperation
   ) => React.ReactNode;
-  initialValue?: T[];
-  maxCount?: number;
-  minCount?: number;
-  showLabel?: boolean;
   createDefaultItem?: (index: number) => T;
 }
 
@@ -22,11 +22,12 @@ const FormList = <T extends object = any>(props: FormListProps<T>) => {
   const {
     label,
     name,
-    children,
     initialValue,
+    rules,
     maxCount,
     minCount,
     showLabel = false,
+    children,
     createDefaultItem,
     ...formItemProps
   } = props;
@@ -37,11 +38,26 @@ const FormList = <T extends object = any>(props: FormListProps<T>) => {
 
   return (
     <Form.Item
+      name={name}
       label={label}
       {...formItemProps}
+      rules={[
+        ...(rules || []),
+        () => ({
+          validator(_, value) {
+            if (minCount !== undefined && (value?.length || 0) < minCount) {
+              return Promise.reject(`At least ${minCount} items are required`);
+            }
+            if (maxCount !== undefined && (value?.length || 0) > maxCount) {
+              return Promise.reject(`At most ${maxCount} items are allowed`);
+            }
+            return Promise.resolve();
+          },
+        }),
+      ]}
       style={{ width: "100%", ...formItemProps.style }}
     >
-      <Form.List name={name as any} initialValue={initialValue}>
+      <Form.List name={name} initialValue={initialValue}>
         {(fields, operation, { errors }) => {
           const isMaxReached =
             maxCount !== undefined && fields.length >= maxCount;
@@ -58,11 +74,11 @@ const FormList = <T extends object = any>(props: FormListProps<T>) => {
             >
               {fields.length === 0 && (
                 <Button
-                  type="dashed"
-                  onClick={() => operation.add(getDefaultItem(0))}
+                  type="default"
                   icon={<PlusOutlined />}
-                  block
+                  block={true}
                   disabled={isMaxReached}
+                  onClick={() => operation.add(getDefaultItem(0))}
                 >
                   Add New
                 </Button>
@@ -102,7 +118,6 @@ const FormList = <T extends object = any>(props: FormListProps<T>) => {
                         marginTop: showLabel ? 28 : 0,
                         marginLeft: 16,
                         flexShrink: 0,
-                        opacity: fields.length > 1 ? 1 : 0.6,
                       }}
                     >
                       <Button
@@ -137,13 +152,23 @@ const FormList = <T extends object = any>(props: FormListProps<T>) => {
                 </div>
               ))}
               {maxCount && (
-                <div style={{ fontSize: 12, color: "#666666" }}>
+                <div
+                  style={{ fontSize: 14, fontWeight: 500, color: "#1f1f1f" }}
+                >
                   Max add {maxCount} (current {fields.length}/{maxCount})
                 </div>
               )}
-              {errors && (
-                <div className="ant-form-item-explain-error">{errors}</div>
-              )}
+              <div className="ant-form-item-explain-connected">
+                {errors?.map((error, i) => (
+                  <div
+                    key={i}
+                    role="alert"
+                    className="ant-form-item-explain-error"
+                  >
+                    {error}
+                  </div>
+                ))}
+              </div>
             </div>
           );
         }}

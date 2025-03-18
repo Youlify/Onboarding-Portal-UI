@@ -1,17 +1,28 @@
 import Suspenselazy from "@components/Suspenselazy";
 import { PracticeStatusEnum, PracticeKeyEnum } from "@/Types/enum";
-import { getBasicInfo } from "@service/factory";
+import {
+  getBasicInfo,
+  patchBasicInfo,
+  getBillingInfo,
+  patchBillingInfo,
+} from "@service/factory";
 
+const BasicTemplateForm = Suspenselazy(
+  () =>
+    import(
+      /* webpackChunkName: "BasicTemplateForm" */ "@/Pages/Step/component/FormComponents/BasicTemplateForm"
+    )
+);
+const BillingForm = Suspenselazy(
+  () =>
+    import(
+      /* webpackChunkName: "BillingForm" */ "@/Pages/Step/component/FormComponents/BillingForm"
+    )
+);
 const PracticeInfoForm = Suspenselazy(
   () =>
     import(
       /* webpackChunkName: "PracticeInfoForm" */ "@pages/Step/component/FormComponents/PracticeInfoForm"
-    )
-);
-const BasicInfoForm = Suspenselazy(
-  () =>
-    import(
-      /* webpackChunkName: "BasicInfoForm" */ "@/Pages/Step/component/FormComponents/BasicInfoForm"
     )
 );
 
@@ -47,116 +58,118 @@ const practiceConfig: Practice.PracticeConfig = {
     formTitle: "Practice Information",
     formComponent: <PracticeInfoForm />,
     initDataApi: getBasicInfo,
+    submitDataApi: patchBasicInfo,
   },
   billing: {
     key: PracticeKeyEnum.BILLING,
-    cardTitle: "Practice Information",
+    cardTitle: "Billing",
     cardFillText: "5 Fields  |  Avg 5-10mins",
-    bannerTitle:
-      "First things first—let’s start with some basic information about your practice.",
+    bannerTitle: "Next up—let’s tackle the billing details on the right.",
     bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Practice Information",
-    formComponent: <BasicInfoForm />,
+    formTitle: "Billing Tax ID & NPI",
+    formComponent: <BillingForm />,
+    initDataApi: getBillingInfo,
+    submitDataApi: patchBillingInfo,
   },
   w9Form: {
     key: PracticeKeyEnum.W9_FORM,
-    cardTitle: "Practice Information",
+    cardTitle: "W9-Form",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
-      "First things first—let’s start with some basic information about your practice.",
+      "Youlify uses a secure digital lockbox to process paper checks, EOBs, and claim denials.\n\nPayers require a signed W-9 to update the payment address.",
     bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Practice Information",
-    formComponent: <BasicInfoForm />,
+    formTitle: "W-9 Form",
+    formComponent: <BasicTemplateForm />,
   },
   renderingProvider: {
     key: PracticeKeyEnum.RENDERING_PROVIDER,
-    cardTitle: "Practice Information",
+    cardTitle: "Template Title",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
       "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Practice Information",
-    formComponent: <BasicInfoForm />,
+    formTitle: "Template Title",
+    formComponent: <BasicTemplateForm />,
   },
   facilityInfo: {
     key: PracticeKeyEnum.FACILITY_INFO,
-    cardTitle: "Practice Information",
+    cardTitle: "Template Title",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
       "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Practice Information",
-    formComponent: <BasicInfoForm />,
+    formTitle: "Template Title",
+    formComponent: <BasicTemplateForm />,
   },
   bankAccounts: {
     key: PracticeKeyEnum.BANK_ACCOUNTS,
-    cardTitle: "Practice Information",
+    cardTitle: "Template Title",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
       "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Practice Information",
-    formComponent: <BasicInfoForm />,
+    formTitle: "Template Title",
+    formComponent: <BasicTemplateForm />,
   },
   ehrLogin: {
     key: PracticeKeyEnum.EHR_LOGIN,
-    cardTitle: "Practice Information",
+    cardTitle: "Template Title",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
       "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Practice Information",
-    formComponent: <BasicInfoForm />,
+    formTitle: "Template Title",
+    formComponent: <BasicTemplateForm />,
   },
   accessToYoulify: {
     key: PracticeKeyEnum.ACCESS_TO_YOULIFY,
-    cardTitle: "Practice Information",
+    cardTitle: "Template Title",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
       "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Practice Information",
-    formComponent: <BasicInfoForm />,
+    formTitle: "Template Title",
+    formComponent: <BasicTemplateForm />,
   },
   clearingHouse: {
     key: PracticeKeyEnum.CLEARING_HOUSE,
-    cardTitle: "Practice Information",
+    cardTitle: "Template Title",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
       "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Practice Information",
-    formComponent: <BasicInfoForm />,
+    formTitle: "Template Title",
+    formComponent: <BasicTemplateForm />,
   },
   stripe: {
     key: PracticeKeyEnum.STRIPE,
-    cardTitle: "Practice Information",
+    cardTitle: "Template Title",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
       "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Practice Information",
-    formComponent: <BasicInfoForm />,
+    formTitle: "Template Title",
+    formComponent: <BasicTemplateForm />,
   },
   payerInfo: {
     key: PracticeKeyEnum.PAYER_INFO,
-    cardTitle: "Practice Information",
+    cardTitle: "Template Title",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
       "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Practice Information",
-    formComponent: <BasicInfoForm />,
+    formTitle: "Template Title",
+    formComponent: <BasicTemplateForm />,
   },
   additionalBillingInfo: {
     key: PracticeKeyEnum.ADDITIONAL_BILLING_INFO,
-    cardTitle: "Practice Information",
+    cardTitle: "Template Title",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
       "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Practice Information",
-    formComponent: <BasicInfoForm />,
+    formTitle: "Template Title",
+    formComponent: <BasicTemplateForm />,
   },
 };
 

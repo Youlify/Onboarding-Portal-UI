@@ -28,7 +28,15 @@ declare namespace API {
     taxonomy_codes: string[];
   }
 
+  interface APIBillingInfo {
+    tax_id: string;
+    npi: string;
+    tax_classification: string;
+    additional_info: string;
+  }
+
   type APIAccessCodeRes = APIRes<boolean>;
   type APIProgressPercentageRes = APIRes<number>;
   type APIBasicInfoRes = APIRes<APIBasicInfo>;
+  type APIBillingInfoRes = APIRes<APIBillingInfo>;
 }

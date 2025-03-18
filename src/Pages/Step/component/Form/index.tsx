@@ -38,12 +38,15 @@ const StepForm: React.FC<StepFormProps> = ({ practiceInfo, style }) => {
     formComponent,
     initDataApi,
     submitDataApi,
+    format,
+    parse,
     extraDataApis,
   } = practiceInfo;
 
   const { run: runInitDataApi } = useRequest(initDataApi!, {
     manual: true,
     onSuccess(data) {
+      if (parse) data = parse(data);
       setFormInitialValues(data);
     },
     onError(e) {
@@ -76,8 +79,10 @@ const StepForm: React.FC<StepFormProps> = ({ practiceInfo, style }) => {
     (onlySave = true) =>
     async () => {
       try {
-        const values = await formComponentRef.current?.validateFields();
-        runSubmitDataApi({ ...values });
+        const formValues = await formComponentRef.current?.validateFields();
+        let submitValues = formValues;
+        if (format) submitValues = format(formValues);
+        runSubmitDataApi({ ...submitValues });
         if (!onlySave) {
           const nextKey = getNextStepKey(practiceKeys, practiceInfo.key);
           if (nextKey) {
