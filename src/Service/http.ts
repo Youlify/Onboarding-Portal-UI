@@ -85,4 +85,12 @@ async function post<T>(url: string, options?: AxiosRequestConfig) {
   });
 }
 
-export { serviceAxios, request, get, post };
+async function patch<T>(url: string, options?: AxiosRequestConfig) {
+  return request<T>({
+    ...options,
+    url,
+    method: "PATCH",
+  });
+}
+
+export { serviceAxios, request, get, post, patch };

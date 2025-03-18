@@ -1,0 +1,21 @@
+.upload-no-file {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 249px;
+  height: 249px;
+  background: url("../../Assets/images/upload_bg.png") no-repeat center / 40%
+    40%;
+  background-color: #ebecef;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #000000;
+    opacity: 0.8;
+  }
+}
