@@ -18,7 +18,11 @@ const handleRequestConfigUrl = (config: InternalAxiosRequestConfig) => {
       localStorage.getItem(STORAGE_TOKEN_KEY) || "{}"
     );
     const practice_id = tokenKey.practiceId;
-    config.url = replaceTmpUrlByParams(config.url || "", { practice_id });
+    const access_code = tokenKey.accessCode;
+    config.url = replaceTmpUrlByParams(config.url || "", {
+      practice_id,
+      access_code,
+    });
   } catch (e) {
     console.log(e);
   }

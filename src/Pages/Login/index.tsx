@@ -1,4 +1,5 @@
-import { useContext } from "react";
+import { useState, useContext, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Form, Input, Button, ConfigProvider, message } from "antd";
 import { useForm } from "antd/es/form/Form";
 import { useRequest } from "ahooks";
@@ -10,13 +11,14 @@ import "./index.less";
 const Login: React.FC = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [form] = useForm<{ access_code: string }>();
+  const [searchParams] = useSearchParams();
   const { setGlobalValue } = useContext(globalContext);
   const { setToken } = useToken();
+  const [practiceId, setPracticeId] = useState("");
   const { run } = useRequest(accessCode, {
     manual: true,
     onSuccess(data, params) {
       if (!data) return;
-      const practiceId = "test";
       const accessCode = params?.[0].access_code;
       const accountInfo = { practiceId, accessCode };
       setToken(accountInfo);
@@ -25,7 +27,7 @@ const Login: React.FC = () => {
     onError(e) {
       messageApi.error(e.message);
       // MOCK LOGIN
-      const accountInfo = { practiceId: "test", accessCode: "123456" };
+      const accountInfo = { practiceId, accessCode: "123456" };
       setToken(accountInfo);
       setGlobalValue?.({ accountInfo });
     },
@@ -33,12 +35,26 @@ const Login: React.FC = () => {
 
   const onSubmit = async () => {
     try {
+      if (!practiceId) {
+        messageApi.error("Please use the correct practiceId");
+        return;
+      }
       const values = await form.validateFields();
       run(values);
     } catch (e) {
       console.log(e);
     }
   };
+
+  useEffect(() => {
+    let practiceId = searchParams.get("practiceId") ?? "";
+    if (!practiceId) {
+      const redirectUrl = searchParams.get("redirect") ?? "";
+      const redirect = decodeURIComponent(redirectUrl);
+      practiceId = new RegExp(/practiceId=(\d+)/g).exec(redirect)?.[1] ?? "";
+    }
+    setPracticeId(practiceId);
+  }, [searchParams]);
 
   return (
     <div className="login-container">

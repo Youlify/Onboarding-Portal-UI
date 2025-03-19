@@ -35,8 +35,13 @@ declare namespace API {
     additional_info: string;
   }
 
+  interface APIW9FormInfo {
+    file_name: string;
+  }
+
   type APIAccessCodeRes = APIRes<boolean>;
   type APIProgressPercentageRes = APIRes<number>;
   type APIBasicInfoRes = APIRes<APIBasicInfo>;
   type APIBillingInfoRes = APIRes<APIBillingInfo>;
+  type APIW9FormRes = APIRes<APIW9FormInfo>;
 }

@@ -1,4 +1,4 @@
-import { Button, Form, Input, Space, FormItemProps } from "antd";
+import { Button, Form, Input, Divider, FormItemProps } from "antd";
 import { CopyOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { FormListFieldData, FormListOperation } from "antd/es/form/FormList";
 
@@ -9,7 +9,9 @@ export interface FormListProps<T = any>
   initialValue?: T[];
   maxCount?: number;
   minCount?: number;
-  showLabel?: boolean;
+  variant?: "normal" | "rich";
+  addText?: string;
+  showDivider?: boolean;
   children?: (
     field: FormListFieldData,
     index: number,
@@ -26,15 +28,14 @@ const FormList = <T extends object = any>(props: FormListProps<T>) => {
     rules,
     maxCount,
     minCount,
-    showLabel = false,
+    variant = "normal",
+    addText = "Add New",
+    showDivider = true,
     children,
     createDefaultItem,
     ...formItemProps
   } = props;
   const form = Form.useFormInstance();
-
-  const getDefaultItem = (index: number): T | string =>
-    createDefaultItem ? createDefaultItem(index) : "";
 
   return (
     <Form.Item
@@ -72,25 +73,13 @@ const FormList = <T extends object = any>(props: FormListProps<T>) => {
                 width: "100%",
               }}
             >
-              {fields.length === 0 && (
-                <Button
-                  type="default"
-                  icon={<PlusOutlined />}
-                  block={true}
-                  disabled={isMaxReached}
-                  onClick={() => operation.add(getDefaultItem(0))}
-                >
-                  Add New
-                </Button>
-              )}
               {fields.map((field, index) => (
-                <div key={field.key} style={{ width: "100%" }}>
+                <div key={field.key}>
                   <div
-                    key={field.key}
                     style={{
                       display: "flex",
                       justifyContent: "space-between",
-                      alignItems: "flex-start",
+                      alignItems: "flex-end",
                       width: "100%",
                     }}
                   >
@@ -113,21 +102,21 @@ const FormList = <T extends object = any>(props: FormListProps<T>) => {
                         </Form.Item>
                       )}
                     </div>
-                    <Space
+                    <div
                       style={{
-                        marginTop: showLabel ? 28 : 0,
-                        marginLeft: 16,
                         flexShrink: 0,
+                        marginBottom: 16,
+                        marginLeft: 16,
                       }}
                     >
-                      <Button
-                        type="text"
-                        icon={<PlusOutlined />}
-                        disabled={isMaxReached}
-                        onClick={() =>
-                          operation.add(getDefaultItem(index + 1), index + 1)
-                        }
-                      />
+                      {variant === "normal" && (
+                        <Button
+                          type="text"
+                          icon={<PlusOutlined />}
+                          disabled={isMaxReached}
+                          onClick={() => operation.add()}
+                        />
+                      )}
                       <Button
                         type="text"
                         icon={<CopyOutlined />}
@@ -147,10 +136,36 @@ const FormList = <T extends object = any>(props: FormListProps<T>) => {
                         disabled={isMinReached}
                         onClick={() => operation.remove(index)}
                       />
-                    </Space>
+                    </div>
                   </div>
+                  {showDivider && index < fields.length - 1 && (
+                    <Divider style={{ display: "inline-block" }} />
+                  )}
                 </div>
               ))}
+              {variant === "normal" && fields.length === 0 && (
+                <Button
+                  type="default"
+                  icon={<PlusOutlined />}
+                  block={true}
+                  disabled={isMaxReached}
+                  onClick={() => operation.add()}
+                >
+                  {addText}
+                </Button>
+              )}
+              {variant === "rich" && (
+                <Button
+                  type="primary"
+                  icon={<PlusOutlined />}
+                  block={true}
+                  disabled={isMaxReached}
+                  style={{ width: "fit-content" }}
+                  onClick={() => operation.add()}
+                >
+                  {addText}
+                </Button>
+              )}
               {maxCount && (
                 <div
                   style={{ fontSize: 14, fontWeight: 500, color: "#1f1f1f" }}

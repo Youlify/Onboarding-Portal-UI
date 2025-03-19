@@ -1,11 +1,11 @@
-declare namespace Practice {
-  interface PracticeCardInfo {
-    key: Practice.PracticeKey;
+declare namespace Module {
+  interface ModuleCardInfo {
+    key: Module.ModuleKey;
     cardTitle: string;
     cardFillText: string;
   }
 
-  interface PracticeStepInfo {
+  interface ModuleStepInfo {
     bannerTitle: string;
     bannerSubTitle: string;
     formTitle: string;
@@ -17,12 +17,12 @@ declare namespace Practice {
     parse?: (apiData: Record<string, any>) => Record<string, any>;
   }
 
-  type PracticeKey = `${PracticeKeyEnum}`;
+  type ModuleKey = `${ModuleKeyEnum}`;
 
-  type PracticeKeys = PracticeKey[];
+  type ModuleKeys = ModuleKey[];
 
-  type PracticeStatusConfig = {
-    [key in PracticeStatusEnum]: {
+  type ModuleStatusConfig = {
+    [key in ModuleStatusEnum]: {
       icon: string;
       text: string;
       textColor: string;
@@ -30,9 +30,9 @@ declare namespace Practice {
     };
   };
 
-  type PracticeInfo = PracticeCardInfo & PracticeStepInfo;
+  type ModuleInfo = ModuleCardInfo & ModuleStepInfo;
 
-  type PracticeConfig = {
-    [key in PracticeKey]: PracticeInfo;
+  type ModuleConfig = {
+    [key in ModuleKey]: ModuleInfo;
   };
 }

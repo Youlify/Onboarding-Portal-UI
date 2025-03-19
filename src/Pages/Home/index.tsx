@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { practiceKeys, practiceConfig } from "@config/practice";
-import { PracticeStatusEnum } from "@/Types/enum";
+import { moduleKeys, moduleConfig } from "@/Config/module";
+import { ModuleStatusEnum } from "@/Types/enum";
 import HomeTopBar from "./TopBar";
-import HomePracticeCard from "./PracticeCard";
+import HomeModuleCard from "./ModuleCard";
 import "./index.less";
 
 const Home: React.FC = () => {
@@ -12,24 +12,24 @@ const Home: React.FC = () => {
   const onTopBarLayout = (size: { width: number; height: number }) => {
     setPaddingTop(size.height);
   };
-  const goStep = (practiceInfo: Practice.PracticeInfo) => {
-    navigate(`/step?practiceKey=${practiceInfo.key}`);
+  const goStep = (moduleInfo: Module.ModuleInfo) => {
+    navigate(`/step?moduleKey=${moduleInfo.key}`);
   };
 
   return (
     <div className="home-container" style={{ paddingTop }}>
       <HomeTopBar onLayout={onTopBarLayout} />
       <div className="home-content">
-        <div className="home-content-practice-list">
-          {practiceKeys.map((key) => {
-            const practiceInfo = practiceConfig[key];
+        <div className="home-content-module-list">
+          {moduleKeys.map((key) => {
+            const moduleInfo = moduleConfig[key];
             return (
-              <HomePracticeCard
-                key={practiceInfo.key}
-                title={practiceInfo.cardTitle}
-                fillText={practiceInfo.cardFillText}
-                status={PracticeStatusEnum.NOT_STARTED}
-                practiceInfo={practiceInfo}
+              <HomeModuleCard
+                key={moduleInfo.key}
+                title={moduleInfo.cardTitle}
+                fillText={moduleInfo.cardFillText}
+                status={ModuleStatusEnum.NOT_STARTED}
+                moduleInfo={moduleInfo}
                 onClick={goStep}
               />
             );

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useRequest } from "ahooks";
-import { practiceConfig } from "@config/practice";
+import { moduleConfig } from "@/Config/module";
 import { getProgressPercentage } from "@service/factory";
 import NavigationBar from "@components/NavigationBar";
 import CircularProgress from "@components/CircularProgress";
@@ -13,8 +13,8 @@ const Step: React.FC = () => {
   const [searchParams] = useSearchParams();
   const [paddingTop, setPaddingTop] = useState(0);
   const [progressPercentage, setProgressPercentage] = useState(0);
-  const practiceKey = searchParams.get("practiceKey") as Practice.PracticeKey;
-  const practiceInfo = practiceConfig?.[practiceKey];
+  const moduleKey = searchParams.get("moduleKey") as Module.ModuleKey;
+  const moduleInfo = moduleConfig?.[moduleKey];
 
   const { run: runGetProgressPercentageApi } = useRequest(
     getProgressPercentage,
@@ -52,8 +52,8 @@ const Step: React.FC = () => {
         className="step-content"
         style={{ height: `calc(100% - ${paddingTop}px)` }}
       >
-        <StepBanner practiceInfo={practiceInfo} />
-        <StepForm practiceInfo={practiceInfo} style={{ flex: 1 }} />
+        <StepBanner moduleInfo={moduleInfo} />
+        <StepForm moduleInfo={moduleInfo} style={{ flex: 1 }} />
       </div>
     </div>
   );
