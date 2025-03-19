@@ -114,12 +114,12 @@ const PracticeInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
             label="Taxonomy Code"
             tooltip="You can find your taxonomy code on the National Uniform Claim Committee code (NUCC) code set list. Link →"
             minCount={1}
+            showDivider={false}
             required={true}
           >
             {(field) => (
               <>
                 <Form.Item
-                  key={field.key}
                   name={field.name}
                   rules={[
                     {

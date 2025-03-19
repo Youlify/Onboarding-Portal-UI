@@ -3,8 +3,10 @@ import { PracticeStatusEnum, PracticeKeyEnum } from "@/Types/enum";
 import {
   getBasicInfo,
   patchBasicInfo,
-  getBillingInfo,
-  patchBillingInfo,
+  getBilling,
+  patchBilling,
+  getW9Form,
+  signW9Form,
 } from "@service/factory";
 
 const BasicTemplateForm = Suspenselazy(
@@ -13,16 +15,28 @@ const BasicTemplateForm = Suspenselazy(
       /* webpackChunkName: "BasicTemplateForm" */ "@/Pages/Step/component/FormComponents/BasicTemplateForm"
     )
 );
+const PracticeInfoForm = Suspenselazy(
+  () =>
+    import(
+      /* webpackChunkName: "PracticeInfoForm" */ "@pages/Step/component/FormComponents/PracticeInfoForm"
+    )
+);
 const BillingForm = Suspenselazy(
   () =>
     import(
       /* webpackChunkName: "BillingForm" */ "@/Pages/Step/component/FormComponents/BillingForm"
     )
 );
-const PracticeInfoForm = Suspenselazy(
+const W9Form = Suspenselazy(
   () =>
     import(
-      /* webpackChunkName: "PracticeInfoForm" */ "@pages/Step/component/FormComponents/PracticeInfoForm"
+      /* webpackChunkName: "W9Form" */ "@/Pages/Step/component/FormComponents/W9Form"
+    )
+);
+const RenderingProviderForm = Suspenselazy(
+  () =>
+    import(
+      /* webpackChunkName: "RenderingProviderForm" */ "@/Pages/Step/component/FormComponents/RenderingProviderForm"
     )
 );
 
@@ -68,8 +82,8 @@ const practiceConfig: Practice.PracticeConfig = {
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Billing Tax ID & NPI",
     formComponent: <BillingForm />,
-    initDataApi: getBillingInfo,
-    submitDataApi: patchBillingInfo,
+    initDataApi: getBilling,
+    submitDataApi: patchBilling,
   },
   w9Form: {
     key: PracticeKeyEnum.W9_FORM,
@@ -79,17 +93,19 @@ const practiceConfig: Practice.PracticeConfig = {
       "Youlify uses a secure digital lockbox to process paper checks, EOBs, and claim denials.\n\nPayers require a signed W-9 to update the payment address.",
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "W-9 Form",
-    formComponent: <BasicTemplateForm />,
+    formComponent: <W9Form />,
+    initDataApi: getW9Form,
+    submitDataApi: signW9Form,
   },
   renderingProvider: {
     key: PracticeKeyEnum.RENDERING_PROVIDER,
-    cardTitle: "Template Title",
+    cardTitle: "Rendering Provider",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
-      "First things first—let’s start with some basic information about your practice.",
+      "Who’s who in your practice?\n\nPlease list all your rendering providers.",
     bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Template Title",
-    formComponent: <BasicTemplateForm />,
+    formTitle: "Rendering Provider",
+    formComponent: <RenderingProviderForm />,
   },
   facilityInfo: {
     key: PracticeKeyEnum.FACILITY_INFO,
