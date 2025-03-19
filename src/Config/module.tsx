@@ -1,5 +1,5 @@
 import Suspenselazy from "@components/Suspenselazy";
-import { PracticeStatusEnum, PracticeKeyEnum } from "@/Types/enum";
+import { ModuleStatusEnum, ModuleKeyEnum } from "@/Types/enum";
 import {
   getBasicInfo,
   patchBasicInfo,
@@ -40,20 +40,20 @@ const RenderingProviderForm = Suspenselazy(
     )
 );
 
-const practiceStatusConfig: Practice.PracticeStatusConfig = {
-  [PracticeStatusEnum.NOT_STARTED]: {
+const moduleStatusConfig: Module.ModuleStatusConfig = {
+  [ModuleStatusEnum.NOT_STARTED]: {
     icon: require("@assets/images/status_not_started.png"),
     text: "New",
     textColor: "#2B6FF6",
     bgColor: "#E2EBFF",
   },
-  [PracticeStatusEnum.IN_PROGRESS]: {
+  [ModuleStatusEnum.IN_PROGRESS]: {
     icon: require("@assets/images/status_in_progress.png"),
     text: "In Progress",
     textColor: "#7F40C9",
     bgColor: "#FAEAFB",
   },
-  [PracticeStatusEnum.COMPLETED]: {
+  [ModuleStatusEnum.COMPLETED]: {
     icon: require("@assets/images/status_completed.png"),
     text: "Completed",
     textColor: "#15803D",
@@ -61,9 +61,9 @@ const practiceStatusConfig: Practice.PracticeStatusConfig = {
   },
 };
 
-const practiceConfig: Practice.PracticeConfig = {
+const moduleConfig: Module.ModuleConfig = {
   practiceInfo: {
-    key: PracticeKeyEnum.PRACTICE_INFO,
+    key: ModuleKeyEnum.PRACTICE_INFO,
     cardTitle: "Practice Information",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
@@ -75,7 +75,7 @@ const practiceConfig: Practice.PracticeConfig = {
     submitDataApi: patchBasicInfo,
   },
   billing: {
-    key: PracticeKeyEnum.BILLING,
+    key: ModuleKeyEnum.BILLING,
     cardTitle: "Billing",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle: "Next up—let’s tackle the billing details on the right.",
@@ -86,7 +86,7 @@ const practiceConfig: Practice.PracticeConfig = {
     submitDataApi: patchBilling,
   },
   w9Form: {
-    key: PracticeKeyEnum.W9_FORM,
+    key: ModuleKeyEnum.W9_FORM,
     cardTitle: "W9-Form",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
@@ -98,7 +98,7 @@ const practiceConfig: Practice.PracticeConfig = {
     submitDataApi: signW9Form,
   },
   renderingProvider: {
-    key: PracticeKeyEnum.RENDERING_PROVIDER,
+    key: ModuleKeyEnum.RENDERING_PROVIDER,
     cardTitle: "Rendering Provider",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
@@ -107,8 +107,18 @@ const practiceConfig: Practice.PracticeConfig = {
     formTitle: "Rendering Provider",
     formComponent: <RenderingProviderForm />,
   },
+  superAdvancedProvider: {
+    key: ModuleKeyEnum.SUPER_ADVANCED_PROVIDER,
+    cardTitle: "Template Title",
+    cardFillText: "5 Fields  |  Avg 5-10mins",
+    bannerTitle:
+      "Who’s who in your practice?\n\nPlease list all your rendering providers.",
+    bannerSubTitle: "All fields are required unless marked as optional.",
+    formTitle: "Rendering Provider",
+    formComponent: <RenderingProviderForm />,
+  },
   facilityInfo: {
-    key: PracticeKeyEnum.FACILITY_INFO,
+    key: ModuleKeyEnum.FACILITY_INFO,
     cardTitle: "Template Title",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
@@ -118,7 +128,7 @@ const practiceConfig: Practice.PracticeConfig = {
     formComponent: <BasicTemplateForm />,
   },
   bankAccounts: {
-    key: PracticeKeyEnum.BANK_ACCOUNTS,
+    key: ModuleKeyEnum.BANK_ACCOUNTS,
     cardTitle: "Template Title",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
@@ -128,7 +138,7 @@ const practiceConfig: Practice.PracticeConfig = {
     formComponent: <BasicTemplateForm />,
   },
   ehrLogin: {
-    key: PracticeKeyEnum.EHR_LOGIN,
+    key: ModuleKeyEnum.EHR_LOGIN,
     cardTitle: "Template Title",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
@@ -138,7 +148,7 @@ const practiceConfig: Practice.PracticeConfig = {
     formComponent: <BasicTemplateForm />,
   },
   accessToYoulify: {
-    key: PracticeKeyEnum.ACCESS_TO_YOULIFY,
+    key: ModuleKeyEnum.ACCESS_TO_YOULIFY,
     cardTitle: "Template Title",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
@@ -148,7 +158,7 @@ const practiceConfig: Practice.PracticeConfig = {
     formComponent: <BasicTemplateForm />,
   },
   clearingHouse: {
-    key: PracticeKeyEnum.CLEARING_HOUSE,
+    key: ModuleKeyEnum.CLEARING_HOUSE,
     cardTitle: "Template Title",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
@@ -158,7 +168,7 @@ const practiceConfig: Practice.PracticeConfig = {
     formComponent: <BasicTemplateForm />,
   },
   stripe: {
-    key: PracticeKeyEnum.STRIPE,
+    key: ModuleKeyEnum.STRIPE,
     cardTitle: "Template Title",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
@@ -168,7 +178,7 @@ const practiceConfig: Practice.PracticeConfig = {
     formComponent: <BasicTemplateForm />,
   },
   payerInfo: {
-    key: PracticeKeyEnum.PAYER_INFO,
+    key: ModuleKeyEnum.PAYER_INFO,
     cardTitle: "Template Title",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
@@ -178,7 +188,7 @@ const practiceConfig: Practice.PracticeConfig = {
     formComponent: <BasicTemplateForm />,
   },
   additionalBillingInfo: {
-    key: PracticeKeyEnum.ADDITIONAL_BILLING_INFO,
+    key: ModuleKeyEnum.ADDITIONAL_BILLING_INFO,
     cardTitle: "Template Title",
     cardFillText: "5 Fields  |  Avg 5-10mins",
     bannerTitle:
@@ -189,6 +199,6 @@ const practiceConfig: Practice.PracticeConfig = {
   },
 };
 
-const practiceKeys = Object.keys(practiceConfig) as Practice.PracticeKeys;
+const moduleKeys = Object.keys(moduleConfig) as Module.ModuleKeys;
 
-export { practiceStatusConfig, practiceConfig, practiceKeys };
+export { moduleStatusConfig, moduleConfig, moduleKeys };

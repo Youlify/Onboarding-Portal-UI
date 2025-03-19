@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, message, FormInstance } from "antd";
 import { useRequest } from "ahooks";
-import { practiceKeys } from "@config/practice";
+import { moduleKeys } from "@/Config/module";
 import {
   FormComponentProps,
   BaseFormWrapperRef,
@@ -14,20 +14,20 @@ export interface DynamicFormProps {
 }
 
 interface StepFormProps {
-  practiceInfo: Practice.PracticeInfo;
+  moduleInfo: Module.ModuleInfo;
   style?: React.CSSProperties;
 }
 
 const getNextStepKey = (
-  practiceKeys: Practice.PracticeKeys,
-  currentKey: Practice.PracticeKey
+  moduleKeys: Module.ModuleKeys,
+  currentKey: Module.ModuleKey
 ) => {
-  const currentIndex = practiceKeys.indexOf(currentKey);
-  if (currentIndex + 1 === practiceKeys.length) return null;
-  return practiceKeys[currentIndex + 1];
+  const currentIndex = moduleKeys.indexOf(currentKey);
+  if (currentIndex + 1 === moduleKeys.length) return null;
+  return moduleKeys[currentIndex + 1];
 };
 
-const StepForm: React.FC<StepFormProps> = ({ practiceInfo, style }) => {
+const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
   const navigate = useNavigate();
   const [messageApi, contextHolder] = message.useMessage();
   const [formInitialValues, setFormInitialValues] = useState({});
@@ -41,7 +41,7 @@ const StepForm: React.FC<StepFormProps> = ({ practiceInfo, style }) => {
     format,
     parse,
     extraDataApis,
-  } = practiceInfo;
+  } = moduleInfo;
 
   const { run: runInitDataApi } = useRequest(initDataApi!, {
     manual: true,
@@ -84,7 +84,7 @@ const StepForm: React.FC<StepFormProps> = ({ practiceInfo, style }) => {
         if (format) submitValues = format(formValues);
         runSubmitDataApi({ ...submitValues });
         if (!onlySave) {
-          const nextKey = getNextStepKey(practiceKeys, practiceInfo.key);
+          const nextKey = getNextStepKey(moduleKeys, moduleInfo.key);
           if (nextKey) {
             navigate(`/step?practiceKey=${nextKey}`);
           } else {
@@ -117,7 +117,7 @@ const StepForm: React.FC<StepFormProps> = ({ practiceInfo, style }) => {
               ref: formComponentRef,
               initialValues: formInitialValues,
             },
-            practiceInfo,
+            moduleInfo,
             extraData,
           } as FormComponentProps)}
         </div>

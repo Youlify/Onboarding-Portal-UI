@@ -1,14 +1,15 @@
-export enum PracticeStatusEnum {
+export enum ModuleStatusEnum {
   NOT_STARTED = "NOT_STARTED",
   IN_PROGRESS = "IN_PROGRESS",
   COMPLETED = "COMPLETED",
 }
 
-export enum PracticeKeyEnum {
+export enum ModuleKeyEnum {
   PRACTICE_INFO = "practiceInfo",
   BILLING = "billing",
   W9_FORM = "w9Form",
   RENDERING_PROVIDER = "renderingProvider",
+  SUPER_ADVANCED_PROVIDER = "superAdvancedProvider",
   FACILITY_INFO = "facilityInfo",
   BANK_ACCOUNTS = "bankAccounts",
   EHR_LOGIN = "ehrLogin",

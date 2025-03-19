@@ -10,7 +10,7 @@ export interface BaseFormWrapperProps extends FormProps {
 
 export interface FormComponentProps {
   fieldsProps?: BaseFormWrapperProps;
-  practiceInfo?: Practice.PracticeInfo;
+  moduleInfo?: Module.ModuleInfo;
   extraData?: any[];
 }
 

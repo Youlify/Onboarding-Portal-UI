@@ -1,12 +1,12 @@
 import "./index.less";
 
 interface StepBannerProps {
-  practiceInfo: Practice.PracticeInfo;
+  moduleInfo: Module.ModuleInfo;
   style?: React.CSSProperties;
 }
 
-const StepBanner: React.FC<StepBannerProps> = ({ practiceInfo, style }) => {
-  const { bannerTitle, bannerSubTitle } = practiceInfo;
+const StepBanner: React.FC<StepBannerProps> = ({ moduleInfo, style }) => {
+  const { bannerTitle, bannerSubTitle } = moduleInfo;
   const bannerTitleLines = bannerTitle?.split("\n");
   const bannerTitleSpans = bannerTitleLines.length
     ? bannerTitleLines.map((line, index) => {
