@@ -1,0 +1,99 @@
+.clearing-house-form-step {
+  &:not(:first-child) {
+    margin-top: 48px;
+  }
+  &-title,
+  &-description {
+    font-family: Elza-Medium;
+    font-size: 18px;
+  }
+  &-title {
+    color: var(--Root-tokens-Blue-Blue-300, #2b6ff6);
+  }
+  &-description {
+    color: var(--Root-tokens-Gray-Gray-900, #141414);
+    &--dark {
+      color: #7f40c9;
+    }
+  }
+  &-content {
+    padding-top: 16px;
+  }
+}
+.clearing-house-form-example-file {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid #ebecef;
+  border-radius: 4px;
+  background-color: #ffffff;
+  &-left {
+    display: flex;
+    align-items: center;
+    text-align: left;
+  }
+  &-icon {
+    padding: 8px;
+    height: fit-content;
+    border: 1px solid #d4d7dd;
+    border-radius: 4px;
+    &-image {
+      width: 20px;
+      height: 20px;
+      background: url("../../../../../Assets/images/file.png") no-repeat center /
+        100%;
+    }
+  }
+  &-info {
+    margin-left: 12px;
+    &-name {
+      font-family: Elza-Medium;
+      font-size: 16px;
+      color: var(--Mapping-Text-and-Icon-Primary, #141414);
+    }
+    &-size {
+      margin-top: 4px;
+      font-family: Elza-Medium;
+      font-size: 10px;
+      color: var(--Mapping-Text-and-Icon-Primary, #6c717c);
+    }
+  }
+}
+.clearing-house-form-unupload {
+  padding: 16px;
+  border: 1px dashed #d4d7dd;
+  border-radius: 4px;
+  &-icon {
+    margin: 0 auto;
+    padding: 8px;
+    width: fit-content;
+    height: fit-content;
+    border: 1px solid #d4d7dd;
+    border-radius: 4px;
+    &-image {
+      width: 20px;
+      height: 20px;
+      background: url("../../../../../Assets/images/file.png") no-repeat center /
+        100%;
+    }
+  }
+  &-text {
+    margin-top: 12px;
+    font-family: Elza-Medium;
+    font-size: 16px;
+    color: var(--Mapping-Text-and-Icon-Primary, #141414);
+    text-align: center;
+  }
+  &-size-text {
+    margin-top: 16px;
+    line-height: 12px;
+    font-family: Elza-Medium;
+    font-size: 10px;
+    color: var(--Mapping-Text-and-Icon-Tertiary, #6c717c);
+    text-align: center;
+  }
+}
+.clearing-house-form-upload-operations-download {
+  margin-right: 12px;
+}

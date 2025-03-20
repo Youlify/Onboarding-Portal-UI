@@ -7,6 +7,9 @@ const GlobalStyle = createGlobalStyle`
   .ant-form-item-additional {
     margin-bottom: 12px;
   }
+  .ant-upload-wrapper .ant-upload-drag {
+    border: none;
+  }
 `;
 
 export { GlobalStyle };
