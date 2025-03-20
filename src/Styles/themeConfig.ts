@@ -21,7 +21,19 @@ export const defaultTheme: ThemeConfig = {
       controlHeight: 48,
     },
     Checkbox: {
-      fontFamily: "Elza-Semibold",
+      fontSize: 14,
+    },
+    Radio: {
+      controlHeightLG: 48,
+      fontFamily: "Elza",
+      buttonPaddingInline: 64,
+      borderRadiusLG: 1000,
+      colorPrimary: "#E2EBFF",
+      colorPrimaryHover: "#E2EBFF",
+      buttonSolidCheckedColor: "#2B6FF6",
+      buttonSolidCheckedBg: "#E2EBFF",
+      buttonSolidCheckedHoverBg: "#E2EBFF",
+      colorBorder: "#D4D7DD",
     },
     Button: {
       controlHeight: 48,

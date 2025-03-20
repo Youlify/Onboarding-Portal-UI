@@ -39,6 +39,54 @@ const RenderingProviderForm = Suspenselazy(
       /* webpackChunkName: "RenderingProviderForm" */ "@/Pages/Step/component/FormComponents/RenderingProviderForm"
     )
 );
+const SuperAdvancedProviderForm = Suspenselazy(
+  () =>
+    import(
+      /* webpackChunkName: "SuperAdvancedProviderForm" */ "@/Pages/Step/component/FormComponents/SuperAdvancedProviderForm"
+    )
+);
+const FacilityInfoForm = Suspenselazy(
+  () =>
+    import(
+      /* webpackChunkName: "FacilityInfoForm" */ "@/Pages/Step/component/FormComponents/FacilityInfoForm"
+    )
+);
+const BankAccountsForm = Suspenselazy(
+  () =>
+    import(
+      /* webpackChunkName: "BankAccountsForm" */ "@/Pages/Step/component/FormComponents/BankAccountsForm"
+    )
+);
+const EHRLoginForm = Suspenselazy(
+  () =>
+    import(
+      /* webpackChunkName: "EHRLoginForm" */ "@/Pages/Step/component/FormComponents/EHRLoginForm"
+    )
+);
+const AccessToYoulifyForm = Suspenselazy(
+  () =>
+    import(
+      /* webpackChunkName: "AccessToYoulifyForm" */ "@/Pages/Step/component/FormComponents/AccessToYoulifyForm"
+    )
+);
+const ClearingHouseForm = Suspenselazy(
+  () =>
+    import(
+      /* webpackChunkName: "ClearingHouseForm" */ "@/Pages/Step/component/FormComponents/ClearingHouseForm"
+    )
+);
+const StripeForm = Suspenselazy(
+  () =>
+    import(
+      /* webpackChunkName: "StripeForm" */ "@/Pages/Step/component/FormComponents/StripeForm"
+    )
+);
+const PayerInfoForm = Suspenselazy(
+  () =>
+    import(
+      /* webpackChunkName: "PayerInfoForm" */ "@/Pages/Step/component/FormComponents/PayerInfoForm"
+    )
+);
 
 const moduleStatusConfig: Module.ModuleStatusConfig = {
   [ModuleStatusEnum.NOT_STARTED]: {
@@ -65,9 +113,9 @@ const moduleConfig: Module.ModuleConfig = {
   practiceInfo: {
     key: ModuleKeyEnum.PRACTICE_INFO,
     cardTitle: "Practice Information",
-    cardFillText: "5 Fields  |  Avg 5-10mins",
+    cardFillText: "Avg 5-10mins",
     bannerTitle:
-      "First things first—let’s start with some basic information about your practice.",
+      "First things first—let's start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Practice Information",
     formComponent: <PracticeInfoForm />,
@@ -76,9 +124,9 @@ const moduleConfig: Module.ModuleConfig = {
   },
   billing: {
     key: ModuleKeyEnum.BILLING,
-    cardTitle: "Billing",
-    cardFillText: "5 Fields  |  Avg 5-10mins",
-    bannerTitle: "Next up—let’s tackle the billing details on the right.",
+    cardTitle: "Billing Tax ID & NPI",
+    cardFillText: "Avg 5-10mins",
+    bannerTitle: "Next up—let's tackle the billing details on the right.",
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Billing Tax ID & NPI",
     formComponent: <BillingForm />,
@@ -88,7 +136,7 @@ const moduleConfig: Module.ModuleConfig = {
   w9Form: {
     key: ModuleKeyEnum.W9_FORM,
     cardTitle: "W9-Form",
-    cardFillText: "5 Fields  |  Avg 5-10mins",
+    cardFillText: "Avg 5-10mins",
     bannerTitle:
       "Youlify uses a secure digital lockbox to process paper checks, EOBs, and claim denials.\n\nPayers require a signed W-9 to update the payment address.",
     bannerSubTitle: "All fields are required unless marked as optional.",
@@ -100,97 +148,98 @@ const moduleConfig: Module.ModuleConfig = {
   renderingProvider: {
     key: ModuleKeyEnum.RENDERING_PROVIDER,
     cardTitle: "Rendering Provider",
-    cardFillText: "5 Fields  |  Avg 5-10mins",
+    cardFillText: "Avg 5-10mins",
     bannerTitle:
-      "Who’s who in your practice?\n\nPlease list all your rendering providers.",
+      "Who's who in your practice?\n\nPlease list all your rendering providers.",
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Rendering Provider",
     formComponent: <RenderingProviderForm />,
   },
   superAdvancedProvider: {
     key: ModuleKeyEnum.SUPER_ADVANCED_PROVIDER,
-    cardTitle: "Template Title",
-    cardFillText: "5 Fields  |  Avg 5-10mins",
+    cardTitle: "Supervising Provider & Advanced Provider",
+    cardFillText: "Avg 5-10mins",
     bannerTitle:
-      "Who’s who in your practice?\n\nPlease list all your rendering providers.",
+      "Let's pair things up—tell us about the supervising provider and advanced provider pairs.",
     bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Rendering Provider",
-    formComponent: <RenderingProviderForm />,
+    formTitle: "Supervising Provider & Advanced Provider",
+    formComponent: <SuperAdvancedProviderForm />,
   },
   facilityInfo: {
     key: ModuleKeyEnum.FACILITY_INFO,
-    cardTitle: "Template Title",
-    cardFillText: "5 Fields  |  Avg 5-10mins",
+    cardTitle: "Facility Information",
+    cardFillText: "Avg 5-10mins",
     bannerTitle:
-      "First things first—let’s start with some basic information about your practice.",
+      "Where do you practice?\n\nPlease list all facilities where your team provides services.",
     bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Template Title",
-    formComponent: <BasicTemplateForm />,
+    formTitle: "Facility Information",
+    formComponent: <FacilityInfoForm />,
   },
   bankAccounts: {
     key: ModuleKeyEnum.BANK_ACCOUNTS,
-    cardTitle: "Template Title",
-    cardFillText: "5 Fields  |  Avg 5-10mins",
+    cardTitle: "Bank Accounts",
+    cardFillText: "Avg 5-10mins",
     bannerTitle:
-      "First things first—let’s start with some basic information about your practice.",
+      "Let's talk banking—which accounts should we use for Youlify payments and payer deposits? (They can be the same!)",
     bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Template Title",
-    formComponent: <BasicTemplateForm />,
+    formTitle: "Bank Account to Pay Youlify Invoice",
+    formComponent: <BankAccountsForm />,
   },
   ehrLogin: {
     key: ModuleKeyEnum.EHR_LOGIN,
-    cardTitle: "Template Title",
-    cardFillText: "5 Fields  |  Avg 5-10mins",
+    cardTitle: "EHR Login In",
+    cardFillText: "Avg 5-10mins",
     bannerTitle:
-      "First things first—let’s start with some basic information about your practice.",
+      "You're more than halfway there! \n\nTo connect with your EHR, please create a new account for us with office manager (preferred) or biller access.",
     bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Template Title",
-    formComponent: <BasicTemplateForm />,
+    formTitle: "EHR Login In",
+    formComponent: <EHRLoginForm />,
   },
   accessToYoulify: {
     key: ModuleKeyEnum.ACCESS_TO_YOULIFY,
-    cardTitle: "Template Title",
-    cardFillText: "5 Fields  |  Avg 5-10mins",
+    cardTitle: "Access to Youlify",
+    cardFillText: "Avg 5-10mins",
     bannerTitle:
-      "First things first—let’s start with some basic information about your practice.",
-    bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Template Title",
-    formComponent: <BasicTemplateForm />,
+      "Now it's fun part—how many people from your practice need access to Youlify?\n\nThis usually includes front office staff handling co-pays, the office manager, and providers reviewing claim payments.",
+    bannerSubTitle:
+      "You can add, remove, or modify accounts at any time during your contract period by contacting Youlify support.",
+    formTitle: "Access to Youlify",
+    formComponent: <AccessToYoulifyForm />,
   },
   clearingHouse: {
     key: ModuleKeyEnum.CLEARING_HOUSE,
-    cardTitle: "Template Title",
-    cardFillText: "5 Fields  |  Avg 5-10mins",
+    cardTitle: "Clearing House Authorization Form",
+    cardFillText: "Avg 5-10mins",
     bannerTitle:
-      "First things first—let’s start with some basic information about your practice.",
-    bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Template Title",
-    formComponent: <BasicTemplateForm />,
+      "Almost done—we just need the clearinghouse authorization form on your company letterhead.",
+    bannerSubTitle: "",
+    formTitle: "Clearing House Authorization Form",
+    formComponent: <ClearingHouseForm />,
   },
   stripe: {
     key: ModuleKeyEnum.STRIPE,
-    cardTitle: "Template Title",
-    cardFillText: "5 Fields  |  Avg 5-10mins",
+    cardTitle: "Stripe",
+    cardFillText: "Avg 5-10mins",
     bannerTitle:
-      "First things first—let’s start with some basic information about your practice.",
+      "Youlify partners with Stripe to process credit card payments. We have pre-configured to accept FSA and HSA cards.\n\nPlease do not sign up with Stripe directly. Instead, please schedule a quick chat where we can go through the Stripe onboarding together.",
     bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Template Title",
-    formComponent: <BasicTemplateForm />,
+    formTitle: "Stripe Standard Connect Account Chat",
+    formComponent: <StripeForm />,
   },
   payerInfo: {
     key: ModuleKeyEnum.PAYER_INFO,
-    cardTitle: "Template Title",
-    cardFillText: "5 Fields  |  Avg 5-10mins",
+    cardTitle: "Payer Information",
+    cardFillText: "Avg 5-10mins",
     bannerTitle:
-      "First things first—let’s start with some basic information about your practice.",
-    bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Template Title",
-    formComponent: <BasicTemplateForm />,
+      "Let’s lock in your payer details.\n\nDon’t forget to list all the payers.",
+    bannerSubTitle: "",
+    formTitle: "Payer Information",
+    formComponent: <PayerInfoForm />,
   },
   additionalBillingInfo: {
     key: ModuleKeyEnum.ADDITIONAL_BILLING_INFO,
     cardTitle: "Template Title",
-    cardFillText: "5 Fields  |  Avg 5-10mins",
+    cardFillText: "Avg 5-10mins",
     bannerTitle:
       "First things first—let’s start with some basic information about your practice.",
     bannerSubTitle: "All fields are required unless marked as optional.",

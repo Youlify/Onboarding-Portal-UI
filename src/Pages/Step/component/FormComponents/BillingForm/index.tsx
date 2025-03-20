@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, Input, Select, Checkbox, Col, Row } from "antd";
+import { Form, Input, Select, Checkbox, Col, Row, ConfigProvider } from "antd";
 import BaseFormWrapper, { FormComponentProps } from "../BaseFormWrapper";
 
 const TaxClassificationOptions = [
@@ -12,10 +12,7 @@ const TaxClassificationOptions = [
   "LLC. tax as S",
   "LLC. tax as P",
   "Other",
-].map((item) => ({
-  label: item,
-  value: item,
-}));
+].map((item) => ({ label: item, value: item }));
 
 const BasicTemplateForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
   const initialValues = fieldsProps?.initialValues || {};
@@ -72,15 +69,23 @@ const BasicTemplateForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
       </Row>
       <Row style={{ marginTop: 32 }}>
         <Col span={24}>
-          <Checkbox
-            checked={additionalInfoChecked}
-            onChange={(e) => setAdditionalInfoChecked(e.target.checked)}
+          <ConfigProvider
+            theme={{
+              components: {
+                Checkbox: { fontFamily: "Elza-Semibold", fontSize: 16 },
+              },
+            }}
           >
-            We have more than one billing Tax ID and/or billing NPI.{" "}
-            <span style={{ fontFamily: "Elza", color: "#A7ADB9" }}>
-              (not common)
-            </span>
-          </Checkbox>
+            <Checkbox
+              checked={additionalInfoChecked}
+              onChange={(e) => setAdditionalInfoChecked(e.target.checked)}
+            >
+              We have more than one billing Tax ID and/or billing NPI.{" "}
+              <span style={{ fontFamily: "Elza", color: "#A7ADB9" }}>
+                (not common)
+              </span>
+            </Checkbox>
+          </ConfigProvider>
         </Col>
         {additionalInfoChecked && (
           <Col span={24} style={{ marginTop: 24 }}>
