@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "antd";
 import { moduleKeys, moduleConfig } from "@config/module";
 import { ModuleStatusEnum } from "@/Types/enum";
-import useProgressPercentage from "@hooks/useProgressPercentage";
+import { useProgressPercentage } from "@/Hooks/useProgress";
 import HomeTopBar from "./TopBar";
 import HomeModuleCard from "./ModuleCard";
 import "./index.less";

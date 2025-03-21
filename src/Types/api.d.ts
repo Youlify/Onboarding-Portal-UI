@@ -38,9 +38,13 @@ declare namespace API {
   interface APIW9FormInfo {
     file_name: string;
   }
+  interface APIProgressStatus {
+    [key as string]: `${ModuleStatusEnum}`;
+  }
 
   type APIAccessCodeRes = APIRes<boolean>;
   type APIProgressPercentageRes = APIRes<number>;
+  type APIProgressStatusRes = APIRes<APIProgressStatus>;
   type APIBasicInfoRes = APIRes<APIBasicInfo>;
   type APIBillingInfoRes = APIRes<APIBillingInfo>;
   type APIW9FormRes = APIRes<APIW9FormInfo>;

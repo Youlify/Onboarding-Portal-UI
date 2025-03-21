@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useOutlet } from "react-router-dom";
-import useProgressPercentage from "@hooks/useProgressPercentage";
+import { useProgressPercentage } from "@/Hooks/useProgress";
 import NavigationBar from "@components/NavigationBar";
 import CircularProgress from "@components/CircularProgress";
 import "./index.less";
