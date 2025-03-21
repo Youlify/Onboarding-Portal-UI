@@ -1,16 +1,45 @@
 import { useState } from "react";
 import { Form, Input, Select, Checkbox, Col, Row, Divider } from "antd";
+import { UploadFile } from "antd/lib";
+import AzureUpload from "@components/AzureUpload";
 import BaseFormWrapper, { FormComponentProps } from "../BaseFormWrapper";
+import "./index.less";
 
 const AccountTypeOptions = ["Checking", "Saving"].map((item) => ({
   value: item,
   label: item,
 }));
 
+const BankAccountsFormUploadView = ({ filename }: { filename?: string }) => {
+  return (
+    <div className="bank-accounts-form-upload">
+      {filename ? (
+        <div>{filename}</div>
+      ) : (
+        <div className="bank-accounts-form-upload-text">
+          Click to Select File
+        </div>
+      )}
+      <div className="bank-accounts-form-upload-icon"></div>
+    </div>
+  );
+};
+
 const BankAccountsForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
   const [payBankAgreeChecked, setPayBankAgreeChecked] = useState(false);
   const [receiveBankAgreeChecked, setReceiveBankAgreeChecked] = useState(false);
   const [sameAsChecked, setSameAsChecked] = useState(false);
+  const [uploadFileNames, setUploadFileNames] = useState(["", ""]);
+  const onUploadFileChange =
+    (type: "payBank" | "receiveBank") => (file?: UploadFile) => {
+      const fileName = file?.name || "";
+      if (type === "payBank") {
+        setUploadFileNames([fileName, uploadFileNames[1]]);
+      } else {
+        setUploadFileNames([uploadFileNames[0], fileName]);
+      }
+    };
+
   return (
     <BaseFormWrapper layout="vertical" {...fieldsProps}>
       <Row gutter={24}>
@@ -57,6 +86,24 @@ const BankAccountsForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
           </Form.Item>
         </Col>
       </Row>
+      <Row>
+        <Col span={24}>
+          <Form.Item
+            name={["pay_bank", "bank_letter"]}
+            label="A Void Check or Bank Letter"
+            rules={[{ required: true, message: "Please upload file" }]}
+          >
+            <AzureUpload
+              style={{ width: "100%" }}
+              renderUnUploadView={() => <BankAccountsFormUploadView />}
+              renderUploadedView={() => (
+                <BankAccountsFormUploadView filename={uploadFileNames[0]} />
+              )}
+              onFileChange={onUploadFileChange("payBank")}
+            />
+          </Form.Item>
+        </Col>
+      </Row>
       <Row style={{ marginTop: 32 }}>
         <Col span={24}>
           <Checkbox
@@ -76,7 +123,10 @@ const BankAccountsForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
             name={["pay_bank", "sign_name"]}
             rules={[{ required: true, message: "Please input full name" }]}
           >
-            <Input placeholder="Full Name Here" />
+            <Input
+              placeholder="Full Name Here"
+              disabled={!payBankAgreeChecked}
+            />
           </Form.Item>
         </Col>
       </Row>
@@ -152,6 +202,24 @@ const BankAccountsForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
               </Form.Item>
             </Col>
           </Row>
+          <Row>
+            <Col span={24}>
+              <Form.Item
+                name={["receive_bank", "bank_letter"]}
+                label="A Void Check or Bank Letter"
+                rules={[{ required: true, message: "Please upload file" }]}
+              >
+                <AzureUpload
+                  style={{ width: "100%" }}
+                  renderUnUploadView={() => <BankAccountsFormUploadView />}
+                  renderUploadedView={() => (
+                    <BankAccountsFormUploadView filename={uploadFileNames[1]} />
+                  )}
+                  onFileChange={onUploadFileChange("receiveBank")}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
           <Row style={{ marginTop: 32 }}>
             <Col span={24}>
               <Checkbox
@@ -171,7 +239,10 @@ const BankAccountsForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
                 name={["receive_bank", "sign_name"]}
                 rules={[{ required: true, message: "Please input full name" }]}
               >
-                <Input placeholder="Full Name Here" />
+                <Input
+                  placeholder="Full Name Here"
+                  disabled={!receiveBankAgreeChecked}
+                />
               </Form.Item>
             </Col>
           </Row>

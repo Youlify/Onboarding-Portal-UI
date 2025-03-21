@@ -8,7 +8,13 @@ const Home = Suspenselazy(
   () => import(/* webpackChunkName:"Home" */ "@pages/Home")
 );
 const Step = Suspenselazy(
-  () => import(/* webpackChunkName:"Steps" */ "@/Pages/Step")
+  () => import(/* webpackChunkName:"Step" */ "@pages/Step")
+);
+const StepIndex = Suspenselazy(
+  () => import(/* webpackChunkName:"StepIndex" */ "@pages/Step/Index/index")
+);
+const StepAllDone = Suspenselazy(
+  () => import(/* webpackChunkName:"StepAllDone" */ "@pages/Step/AllDone")
 );
 const NotFound = Suspenselazy(
   () => import(/* webpackChunkName:"NotFound" */ "@pages/NotFound")
@@ -24,8 +30,17 @@ const routes: RouteObject[] = [
     element: <Home />,
   },
   {
-    path: "/step",
     element: <Step />,
+    children: [
+      {
+        path: "/step",
+        element: <StepIndex />,
+      },
+      {
+        path: "/step/allDone",
+        element: <StepAllDone />,
+      },
+    ],
   },
   {
     path: "*",

@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { moduleKeys, moduleConfig } from "@/Config/module";
+import { Button } from "antd";
+import { moduleKeys, moduleConfig } from "@config/module";
 import { ModuleStatusEnum } from "@/Types/enum";
+import useProgressPercentage from "@hooks/useProgressPercentage";
 import HomeTopBar from "./TopBar";
 import HomeModuleCard from "./ModuleCard";
 import "./index.less";
@@ -9,6 +11,11 @@ import "./index.less";
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const [paddingTop, setPaddingTop] = useState(0);
+  const {
+    run: runGetProgressPercentage,
+    progressPercentage,
+    isProgressPercentageCompleted,
+  } = useProgressPercentage();
   const onTopBarLayout = (size: { width: number; height: number }) => {
     setPaddingTop(size.height);
   };
@@ -16,9 +23,17 @@ const Home: React.FC = () => {
     navigate(`/step?moduleKey=${moduleInfo.key}`);
   };
 
+  useEffect(() => {
+    runGetProgressPercentage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="home-container" style={{ paddingTop }}>
-      <HomeTopBar onLayout={onTopBarLayout} />
+      <HomeTopBar
+        progressPercentage={progressPercentage}
+        onLayout={onTopBarLayout}
+      />
       <div className="home-content">
         <div className="home-content-module-list">
           {moduleKeys.map((key) => {
@@ -34,6 +49,16 @@ const Home: React.FC = () => {
               />
             );
           })}
+        </div>
+        <div className="home-content-submit">
+          <Button
+            color="primary"
+            variant="solid"
+            style={{ width: 228 }}
+            disabled={!isProgressPercentageCompleted}
+          >
+            Submit for Review
+          </Button>
         </div>
         <div className="home-content-footer">
           <div className="home-content-footer-left">

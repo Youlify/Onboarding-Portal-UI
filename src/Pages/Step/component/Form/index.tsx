@@ -32,6 +32,7 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
   const [messageApi, contextHolder] = message.useMessage();
   const [formInitialValues, setFormInitialValues] = useState({});
   const [extraData, setExtraData] = useState<any[]>([]);
+  const [formDisabled, setFormDiabled] = useState(false);
   const formComponentRef = useRef<BaseFormWrapperRef>(null);
   const {
     formTitle,
@@ -53,7 +54,7 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
       messageApi.error(e.message);
     },
   });
-  const { run: runSubmitDataApi } = useRequest(submitDataApi!, {
+  const { runAsync: runSubmitDataApi } = useRequest(submitDataApi!, {
     manual: true,
     onSuccess(data) {
       console.log(data);
@@ -75,21 +76,40 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
     navigate("/", { replace: true });
   };
 
+  const callAPIOrNext = async (
+    { save, next }: { save: boolean; next: boolean },
+    submitValues?: any
+  ) => {
+    try {
+      if (save && submitDataApi) {
+        await runSubmitDataApi({ ...submitValues });
+        messageApi.success("Save success");
+      }
+      if (next) {
+        const nextKey = getNextStepKey(moduleKeys, moduleInfo.key);
+        if (nextKey) {
+          navigate(`/step?moduleKey=${nextKey}`);
+        } else {
+          navigate("/", { replace: true });
+        }
+      }
+    } catch (e) {
+      messageApi.error((e as Error).message);
+    }
+  };
+
   const onSaveOrNext =
-    (onlySave = true) =>
+    ({ save, next }: { save: boolean; next: boolean }) =>
     async () => {
       try {
-        const formValues = await formComponentRef.current?.validateFields();
-        let submitValues = formValues;
-        if (format) submitValues = format(formValues);
-        runSubmitDataApi({ ...submitValues });
-        if (!onlySave) {
-          const nextKey = getNextStepKey(moduleKeys, moduleInfo.key);
-          if (nextKey) {
-            navigate(`/step?practiceKey=${nextKey}`);
-          } else {
-            navigate("/", { replace: true });
-          }
+        if (save) {
+          const formValues = await formComponentRef.current?.validateFields();
+          let submitValues = formValues;
+          if (format) submitValues = format(formValues);
+          if (submitDataApi) await runSubmitDataApi({ ...submitValues });
+          callAPIOrNext({ save, next }, submitValues);
+        } else {
+          callAPIOrNext({ save, next });
         }
       } catch (e) {
         console.log(e);
@@ -116,6 +136,7 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
             fieldsProps: {
               ref: formComponentRef,
               initialValues: formInitialValues,
+              disabled: formDisabled,
             },
             moduleInfo,
             extraData,
@@ -129,21 +150,33 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
           </Button>
         </div>
         <div className="step-form-toolbar-right">
-          <Button
-            color="primary"
-            variant="outlined"
-            style={{ width: 160 }}
-            onClick={onSaveOrNext(true)}
-          >
-            Save
-          </Button>
-          <Button
-            type="primary"
-            style={{ marginLeft: 16, width: 160 }}
-            onClick={onSaveOrNext(false)}
-          >
-            Save and Next
-          </Button>
+          {!formDisabled ? (
+            <>
+              <Button
+                color="primary"
+                variant="outlined"
+                style={{ width: 160 }}
+                onClick={onSaveOrNext({ save: true, next: false })}
+              >
+                Save
+              </Button>
+              <Button
+                type="primary"
+                style={{ marginLeft: 16, width: 160 }}
+                onClick={onSaveOrNext({ save: true, next: true })}
+              >
+                Save and Next
+              </Button>
+            </>
+          ) : (
+            <Button
+              type="primary"
+              style={{ marginLeft: 16, width: 160 }}
+              onClick={onSaveOrNext({ save: false, next: true })}
+            >
+              Next
+            </Button>
+          )}
         </div>
       </div>
     </div>

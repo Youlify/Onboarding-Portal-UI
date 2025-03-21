@@ -1,6 +1,7 @@
 declare namespace Module {
   interface ModuleCardInfo {
     key: Module.ModuleKey;
+    apiKey?: string;
     cardTitle: string;
     cardFillText: string;
   }

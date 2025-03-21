@@ -9,12 +9,6 @@ import {
   signW9Form,
 } from "@service/factory";
 
-const BasicTemplateForm = Suspenselazy(
-  () =>
-    import(
-      /* webpackChunkName: "BasicTemplateForm" */ "@/Pages/Step/component/FormComponents/BasicTemplateForm"
-    )
-);
 const PracticeInfoForm = Suspenselazy(
   () =>
     import(
@@ -87,6 +81,12 @@ const PayerInfoForm = Suspenselazy(
       /* webpackChunkName: "PayerInfoForm" */ "@/Pages/Step/component/FormComponents/PayerInfoForm"
     )
 );
+const AdditionalBillingInfoForm = Suspenselazy(
+  () =>
+    import(
+      /* webpackChunkName: "AdditionalBillingInfoForm" */ "@/Pages/Step/component/FormComponents/AdditionalBillingInfoForm"
+    )
+);
 
 const moduleStatusConfig: Module.ModuleStatusConfig = {
   [ModuleStatusEnum.NOT_STARTED]: {
@@ -106,6 +106,24 @@ const moduleStatusConfig: Module.ModuleStatusConfig = {
     text: "Completed",
     textColor: "#15803D",
     bgColor: "#EFFCF3",
+  },
+  [ModuleStatusEnum.NEED_MORE_INFO]: {
+    icon: require("@assets/images/status_need_more_info.png"),
+    text: "Need More Info",
+    textColor: "#B45309",
+    bgColor: "#FEF3C7",
+  },
+  [ModuleStatusEnum.IN_REVIEW]: {
+    icon: require("@assets/images/status_in_review.png"),
+    text: "In Review",
+    textColor: "#6C717C",
+    bgColor: "#F6F6F8",
+  },
+  [ModuleStatusEnum.APPROVED]: {
+    icon: require("@assets/images/status_approved.png"),
+    text: "Approved",
+    textColor: "#6C717C",
+    bgColor: "#F6F6F8",
   },
 };
 
@@ -238,13 +256,12 @@ const moduleConfig: Module.ModuleConfig = {
   },
   additionalBillingInfo: {
     key: ModuleKeyEnum.ADDITIONAL_BILLING_INFO,
-    cardTitle: "Template Title",
+    cardTitle: "Additional Billing Information",
     cardFillText: "Avg 5-10mins",
-    bannerTitle:
-      "First things first—let’s start with some basic information about your practice.",
-    bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Template Title",
-    formComponent: <BasicTemplateForm />,
+    bannerTitle: "And finally—a few extra questions to wrap things up.",
+    bannerSubTitle: "",
+    formTitle: "Additional Billing Information",
+    formComponent: <AdditionalBillingInfoForm />,
   },
 };
 

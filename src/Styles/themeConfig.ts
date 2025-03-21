@@ -37,6 +37,9 @@ export const defaultTheme: ThemeConfig = {
     },
     Button: {
       controlHeight: 48,
+      colorTextDisabled: "#6C717C",
+      borderColorDisabled: "transparent",
+      colorBgContainerDisabled: "#EBECEF",
     },
   },
 };
