@@ -1,18 +1,8 @@
-import {
-  Form,
-  // FormInstance,
-  Input,
-  // Checkbox,
-  Col,
-  Row,
-  // ConfigProvider,
-} from "antd";
+import { Form, Input, Col, Row } from "antd";
 import FormList from "@components/FormList";
 import BaseFormWrapper, { FormComponentProps } from "../BaseFormWrapper";
 
 const FacilityInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
-  // const form = (fieldsProps?.ref?.current || {}) as FormInstance;
-
   return (
     <BaseFormWrapper layout="vertical" {...fieldsProps}>
       <FormList

@@ -4,10 +4,14 @@ import CircularProgress from "@components/CircularProgress";
 import "./index.less";
 
 interface HomeTopBarProps {
+  progressPercentage?: number;
   onLayout?: (size: { width: number; height: number }) => void;
 }
 
-const HomeTopBar: React.FC<HomeTopBarProps> = ({ onLayout }) => {
+const HomeTopBar: React.FC<HomeTopBarProps> = ({
+  progressPercentage = 0,
+  onLayout,
+}) => {
   const ref = useRef(null);
   const size = useSize(ref);
 
@@ -39,7 +43,7 @@ const HomeTopBar: React.FC<HomeTopBarProps> = ({ onLayout }) => {
         </div>
         <CircularProgress
           size="large"
-          percentage={30}
+          percentage={progressPercentage}
           style={{ marginLeft: 140 }}
         />
       </div>

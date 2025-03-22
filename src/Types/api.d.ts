@@ -39,8 +39,19 @@ declare namespace API {
     file_name: string;
   }
 
+  interface APIProgressModuleStatus {
+    status: ModuleStatusEnum;
+    editable: boolean;
+    ready: boolean;
+  }
+
+  interface APIProgressStatus {
+    [key: string]: APIProgressModuleStatus;
+  }
+
   type APIAccessCodeRes = APIRes<boolean>;
   type APIProgressPercentageRes = APIRes<number>;
+  type APIProgressStatusRes = APIRes<APIProgressStatus>;
   type APIBasicInfoRes = APIRes<APIBasicInfo>;
   type APIBillingInfoRes = APIRes<APIBillingInfo>;
   type APIW9FormRes = APIRes<APIW9FormInfo>;

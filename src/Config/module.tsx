@@ -9,12 +9,6 @@ import {
   signW9Form,
 } from "@service/factory";
 
-const BasicTemplateForm = Suspenselazy(
-  () =>
-    import(
-      /* webpackChunkName: "BasicTemplateForm" */ "@/Pages/Step/component/FormComponents/BasicTemplateForm"
-    )
-);
 const PracticeInfoForm = Suspenselazy(
   () =>
     import(
@@ -87,6 +81,12 @@ const PayerInfoForm = Suspenselazy(
       /* webpackChunkName: "PayerInfoForm" */ "@/Pages/Step/component/FormComponents/PayerInfoForm"
     )
 );
+const AdditionalBillingInfoForm = Suspenselazy(
+  () =>
+    import(
+      /* webpackChunkName: "AdditionalBillingInfoForm" */ "@/Pages/Step/component/FormComponents/AdditionalBillingInfoForm"
+    )
+);
 
 const moduleStatusConfig: Module.ModuleStatusConfig = {
   [ModuleStatusEnum.NOT_STARTED]: {
@@ -107,11 +107,30 @@ const moduleStatusConfig: Module.ModuleStatusConfig = {
     textColor: "#15803D",
     bgColor: "#EFFCF3",
   },
+  [ModuleStatusEnum.NEED_MORE_INFO]: {
+    icon: require("@assets/images/status_need_more_info.png"),
+    text: "Need More Info",
+    textColor: "#B45309",
+    bgColor: "#FEF3C7",
+  },
+  [ModuleStatusEnum.IN_REVIEW]: {
+    icon: require("@assets/images/status_in_review.png"),
+    text: "In Review",
+    textColor: "#6C717C",
+    bgColor: "#F6F6F8",
+  },
+  [ModuleStatusEnum.APPROVED]: {
+    icon: require("@assets/images/status_approved.png"),
+    text: "Approved",
+    textColor: "#6C717C",
+    bgColor: "#F6F6F8",
+  },
 };
 
 const moduleConfig: Module.ModuleConfig = {
   practiceInfo: {
     key: ModuleKeyEnum.PRACTICE_INFO,
+    apiKey: "basic_info",
     cardTitle: "Practice Information",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -124,6 +143,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   billing: {
     key: ModuleKeyEnum.BILLING,
+    apiKey: "billing_tax_id_and_npi",
     cardTitle: "Billing Tax ID & NPI",
     cardFillText: "Avg 5-10mins",
     bannerTitle: "Next up—let's tackle the billing details on the right.",
@@ -135,6 +155,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   w9Form: {
     key: ModuleKeyEnum.W9_FORM,
+    apiKey: "w9_form",
     cardTitle: "W9-Form",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -147,6 +168,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   renderingProvider: {
     key: ModuleKeyEnum.RENDERING_PROVIDER,
+    apiKey: "rendering_provider",
     cardTitle: "Rendering Provider",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -157,6 +179,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   superAdvancedProvider: {
     key: ModuleKeyEnum.SUPER_ADVANCED_PROVIDER,
+    apiKey: "supervising_advanced_provider",
     cardTitle: "Supervising Provider & Advanced Provider",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -167,6 +190,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   facilityInfo: {
     key: ModuleKeyEnum.FACILITY_INFO,
+    apiKey: "facility_information",
     cardTitle: "Facility Information",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -177,6 +201,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   bankAccounts: {
     key: ModuleKeyEnum.BANK_ACCOUNTS,
+    apiKey: "bank_account",
     cardTitle: "Bank Accounts",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -187,6 +212,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   ehrLogin: {
     key: ModuleKeyEnum.EHR_LOGIN,
+    apiKey: "ehr_login",
     cardTitle: "EHR Login In",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -197,6 +223,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   accessToYoulify: {
     key: ModuleKeyEnum.ACCESS_TO_YOULIFY,
+    apiKey: "users",
     cardTitle: "Access to Youlify",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -208,6 +235,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   clearingHouse: {
     key: ModuleKeyEnum.CLEARING_HOUSE,
+    apiKey: "authorization_form",
     cardTitle: "Clearing House Authorization Form",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -218,6 +246,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   stripe: {
     key: ModuleKeyEnum.STRIPE,
+    apiKey: "stripe_chat",
     cardTitle: "Stripe",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -228,6 +257,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   payerInfo: {
     key: ModuleKeyEnum.PAYER_INFO,
+    apiKey: "payers",
     cardTitle: "Payer Information",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -238,13 +268,13 @@ const moduleConfig: Module.ModuleConfig = {
   },
   additionalBillingInfo: {
     key: ModuleKeyEnum.ADDITIONAL_BILLING_INFO,
-    cardTitle: "Template Title",
+    apiKey: "additional_billing_information",
+    cardTitle: "Additional Billing Information",
     cardFillText: "Avg 5-10mins",
-    bannerTitle:
-      "First things first—let’s start with some basic information about your practice.",
-    bannerSubTitle: "All fields are required unless marked as optional.",
-    formTitle: "Template Title",
-    formComponent: <BasicTemplateForm />,
+    bannerTitle: "And finally—a few extra questions to wrap things up.",
+    bannerSubTitle: "",
+    formTitle: "Additional Billing Information",
+    formComponent: <AdditionalBillingInfoForm />,
   },
 };
 

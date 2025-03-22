@@ -10,6 +10,9 @@ const GlobalStyle = createGlobalStyle`
   .ant-upload-wrapper .ant-upload-drag {
     border: none;
   }
+  .ant-radio-button-wrapper:hover {
+    color: #2B6FF6;
+  }
 `;
 
 export { GlobalStyle };

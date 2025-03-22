@@ -17,6 +17,7 @@ interface AzureUploadProps extends Omit<UploadProps, "onChange"> {
   renderUnUploadView?: () => React.ReactNode;
   renderUploadedView?: () => React.ReactNode;
   onChange?: (url?: string) => void;
+  onFileChange?: (file?: UploadFile) => void;
 }
 
 export interface AzureUploadRef {
@@ -36,6 +37,7 @@ const AzureUpload = forwardRef<AzureUploadRef, AzureUploadProps>(
       renderUnUploadView,
       renderUploadedView,
       onChange,
+      onFileChange,
       ...props
     },
     ref
@@ -69,6 +71,7 @@ const AzureUpload = forwardRef<AzureUploadRef, AzureUploadProps>(
         });
         const fileUrl = uploadUrl.split("?")[0];
         onChange?.(fileUrl);
+        onFileChange?.(file);
         onSuccess(null, file);
       } catch (error) {
         messageApi.error("Upload failed");
@@ -81,6 +84,7 @@ const AzureUpload = forwardRef<AzureUploadRef, AzureUploadProps>(
     const handleDelete = (e?: React.MouseEvent) => {
       e?.stopPropagation();
       setFileList([]);
+      onFileChange?.(undefined);
       onChange?.(undefined);
     };
 
