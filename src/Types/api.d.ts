@@ -38,8 +38,15 @@ declare namespace API {
   interface APIW9FormInfo {
     file_name: string;
   }
+
+  interface APIProgressModuleStatus {
+    status: ModuleStatusEnum;
+    editable: boolean;
+    ready: boolean;
+  }
+
   interface APIProgressStatus {
-    [key as string]: `${ModuleStatusEnum}`;
+    [key: string]: APIProgressModuleStatus;
   }
 
   type APIAccessCodeRes = APIRes<boolean>;

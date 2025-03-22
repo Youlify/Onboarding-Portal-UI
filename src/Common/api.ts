@@ -16,7 +16,7 @@ const API_URL = {
   PATCH_RENDERING_PROVIDER:
     "/practices/onboarding/{practice_id}/rendering_provider",
   GET_SUPER_ADVANCED_PROVIDER:
-    "/practices/onboarding/{practice_id}/super_advanced_provider",
+    "/practices/onboarding/{practice_id}/practices/onboarding/{practice_id}/progress",
   PATCH_SUPER_ADVANCED_PROVIDER:
     "/practices/onboarding/{practice_id}/super_advanced_provider",
   GET_FACILITIES: "/practices/onboarding/{practice_id}/facilities",

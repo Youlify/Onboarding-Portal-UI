@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, message, FormInstance } from "antd";
 import { useRequest } from "ahooks";
-import { moduleKeys } from "@/Config/module";
+import { moduleKeys } from "@config/module";
+import { useProgressPercentage } from "@hooks/useProgress";
 import {
   FormComponentProps,
   BaseFormWrapperRef,
@@ -23,7 +24,8 @@ const getNextStepKey = (
   currentKey: Module.ModuleKey
 ) => {
   const currentIndex = moduleKeys.indexOf(currentKey);
-  if (currentIndex + 1 === moduleKeys.length) return null;
+  if (currentIndex === -1) return null;
+  if (currentIndex + 1 === moduleKeys.length) return "last";
   return moduleKeys[currentIndex + 1];
 };
 
@@ -44,6 +46,7 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
     extraDataApis,
   } = moduleInfo;
 
+  const { runAsync: runGetProgressPercentage } = useProgressPercentage();
   const { run: runInitDataApi } = useRequest(initDataApi!, {
     manual: true,
     onSuccess(data) {
@@ -87,10 +90,17 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
       }
       if (next) {
         const nextKey = getNextStepKey(moduleKeys, moduleInfo.key);
-        if (nextKey) {
-          navigate(`/step?moduleKey=${nextKey}`);
-        } else {
+        if (nextKey === "last") {
+          const progressPercentage = await runGetProgressPercentage();
+          if (progressPercentage === 100) {
+            navigate("/stepDone");
+          } else {
+            navigate("/", { replace: true });
+          }
+        } else if (nextKey === null) {
           navigate("/", { replace: true });
+        } else {
+          navigate(`/step?moduleKey=${nextKey}`);
         }
       }
     } catch (e) {

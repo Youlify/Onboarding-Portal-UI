@@ -1,10 +1,10 @@
 export enum ModuleStatusEnum {
-  NOT_STARTED = "NOT_STARTED",
-  IN_PROGRESS = "IN_PROGRESS",
-  COMPLETED = "COMPLETED",
-  NEED_MORE_INFO = "NEED_MORE_INFO",
-  IN_REVIEW = "IN_REVIEW",
-  APPROVED = "APPROVED",
+  NOT_STARTED = "NEW",
+  IN_PROGRESS = "In Progress",
+  COMPLETED = "Complete",
+  NEED_MORE_INFO = "Need More info",
+  IN_REVIEW = "In Review",
+  APPROVED = "Approved",
 }
 
 export enum ModuleKeyEnum {

@@ -5,7 +5,7 @@ import { getProgressPercentage, getProgressStatus } from "@service/factory";
 const useProgressPercentage = () => {
   const [progressPercentage, setProgressPercentage] = useState(0);
   const isProgressPercentageCompleted = progressPercentage === 100;
-  const { run, runAsync } = useRequest(getProgressPercentage, {
+  const { ...rest } = useRequest(getProgressPercentage, {
     manual: true,
     onSuccess(data) {
       setProgressPercentage(data || 0);
@@ -15,16 +15,17 @@ const useProgressPercentage = () => {
     },
   });
   return {
-    run,
-    runAsync,
+    ...rest,
     progressPercentage,
     isProgressPercentageCompleted,
   };
 };
 
-const useProgressStatus = (onFinally?: () => void) => {
-  const [progressStatus, setProgressStatus] = useState({});
-  const { run, runAsync } = useRequest(getProgressStatus, {
+const useProgressStatus = () => {
+  const [progressStatus, setProgressStatus] = useState<API.APIProgressStatus>(
+    {}
+  );
+  const { ...rest } = useRequest(getProgressStatus, {
     manual: true,
     onSuccess(data) {
       if (data) setProgressStatus(data);
@@ -32,13 +33,9 @@ const useProgressStatus = (onFinally?: () => void) => {
     onError(e) {
       console.log(e);
     },
-    onFinally() {
-      onFinally?.();
-    },
   });
   return {
-    run,
-    runAsync,
+    ...rest,
     progressStatus,
   };
 };

@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "antd";
 import { moduleKeys, moduleConfig } from "@config/module";
-import { ModuleStatusEnum } from "@/Types/enum";
-import { useProgressPercentage } from "@/Hooks/useProgress";
+import { useProgressPercentage, useProgressStatus } from "@/Hooks/useProgress";
 import HomeTopBar from "./TopBar";
 import HomeModuleCard from "./ModuleCard";
 import "./index.less";
@@ -11,11 +10,14 @@ import "./index.less";
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const [paddingTop, setPaddingTop] = useState(0);
+
   const {
     run: runGetProgressPercentage,
     progressPercentage,
     isProgressPercentageCompleted,
   } = useProgressPercentage();
+  const { run: runGetProgressStatus, progressStatus } = useProgressStatus();
+
   const onTopBarLayout = (size: { width: number; height: number }) => {
     setPaddingTop(size.height);
   };
@@ -23,8 +25,27 @@ const Home: React.FC = () => {
     navigate(`/step?moduleKey=${moduleInfo.key}`);
   };
 
+  const renderableModules = useMemo(() => {
+    const daynamicModuleKeys = Object.keys(progressStatus);
+    const daynamicModules = [] as (Module.ModuleInfo & {
+      status: API.APIProgressModuleStatus;
+    })[];
+    moduleKeys.forEach((key) => {
+      const moduleInfo = moduleConfig[key];
+      const apiKey = moduleInfo.apiKey || "";
+      if (daynamicModuleKeys.indexOf(apiKey) > -1) {
+        daynamicModules.push({
+          ...moduleInfo,
+          status: progressStatus[apiKey],
+        });
+      }
+    });
+    return daynamicModules;
+  }, [progressStatus]);
+
   useEffect(() => {
     runGetProgressPercentage();
+    runGetProgressStatus();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -36,15 +57,14 @@ const Home: React.FC = () => {
       />
       <div className="home-content">
         <div className="home-content-module-list">
-          {moduleKeys.map((key) => {
-            const moduleInfo = moduleConfig[key];
+          {renderableModules.map((renderableModule) => {
             return (
               <HomeModuleCard
-                key={moduleInfo.key}
-                title={moduleInfo.cardTitle}
-                fillText={moduleInfo.cardFillText}
-                status={ModuleStatusEnum.NOT_STARTED}
-                moduleInfo={moduleInfo}
+                key={renderableModule.key}
+                title={renderableModule.cardTitle}
+                fillText={renderableModule.cardFillText}
+                status={renderableModule.status.status}
+                moduleInfo={renderableModule}
                 onClick={goStep}
               />
             );

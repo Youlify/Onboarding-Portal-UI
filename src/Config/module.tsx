@@ -130,6 +130,7 @@ const moduleStatusConfig: Module.ModuleStatusConfig = {
 const moduleConfig: Module.ModuleConfig = {
   practiceInfo: {
     key: ModuleKeyEnum.PRACTICE_INFO,
+    apiKey: "basic_info",
     cardTitle: "Practice Information",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -142,6 +143,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   billing: {
     key: ModuleKeyEnum.BILLING,
+    apiKey: "billing_tax_id_and_npi",
     cardTitle: "Billing Tax ID & NPI",
     cardFillText: "Avg 5-10mins",
     bannerTitle: "Next up—let's tackle the billing details on the right.",
@@ -153,6 +155,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   w9Form: {
     key: ModuleKeyEnum.W9_FORM,
+    apiKey: "w9_form",
     cardTitle: "W9-Form",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -165,6 +168,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   renderingProvider: {
     key: ModuleKeyEnum.RENDERING_PROVIDER,
+    apiKey: "rendering_provider",
     cardTitle: "Rendering Provider",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -175,6 +179,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   superAdvancedProvider: {
     key: ModuleKeyEnum.SUPER_ADVANCED_PROVIDER,
+    apiKey: "supervising_advanced_provider",
     cardTitle: "Supervising Provider & Advanced Provider",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -185,6 +190,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   facilityInfo: {
     key: ModuleKeyEnum.FACILITY_INFO,
+    apiKey: "facility_information",
     cardTitle: "Facility Information",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -195,6 +201,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   bankAccounts: {
     key: ModuleKeyEnum.BANK_ACCOUNTS,
+    apiKey: "bank_account",
     cardTitle: "Bank Accounts",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -205,6 +212,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   ehrLogin: {
     key: ModuleKeyEnum.EHR_LOGIN,
+    apiKey: "ehr_login",
     cardTitle: "EHR Login In",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -215,6 +223,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   accessToYoulify: {
     key: ModuleKeyEnum.ACCESS_TO_YOULIFY,
+    apiKey: "users",
     cardTitle: "Access to Youlify",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -226,6 +235,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   clearingHouse: {
     key: ModuleKeyEnum.CLEARING_HOUSE,
+    apiKey: "authorization_form",
     cardTitle: "Clearing House Authorization Form",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -236,6 +246,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   stripe: {
     key: ModuleKeyEnum.STRIPE,
+    apiKey: "stripe_chat",
     cardTitle: "Stripe",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -246,6 +257,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   payerInfo: {
     key: ModuleKeyEnum.PAYER_INFO,
+    apiKey: "payers",
     cardTitle: "Payer Information",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -256,6 +268,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   additionalBillingInfo: {
     key: ModuleKeyEnum.ADDITIONAL_BILLING_INFO,
+    apiKey: "additional_billing_information",
     cardTitle: "Additional Billing Information",
     cardFillText: "Avg 5-10mins",
     bannerTitle: "And finally—a few extra questions to wrap things up.",
