@@ -1,5 +1,5 @@
 export enum ModuleStatusEnum {
-  NOT_STARTED = "NEW",
+  NOT_STARTED = "New",
   IN_PROGRESS = "In Progress",
   COMPLETED = "Complete",
   NEED_MORE_INFO = "Need More info",

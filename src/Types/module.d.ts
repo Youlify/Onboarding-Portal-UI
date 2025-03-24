@@ -33,6 +33,10 @@ declare namespace Module {
 
   type ModuleInfo = ModuleCardInfo & ModuleStepInfo;
 
+  type ModuleInfoWithProgress = ModuleInfo & {
+    progress: API.APIProgressModule;
+  };
+
   type ModuleConfig = {
     [key in ModuleKey]: ModuleInfo;
   };

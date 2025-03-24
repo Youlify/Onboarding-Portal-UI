@@ -1,8 +1,10 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, message, FormInstance } from "antd";
+import { omit } from "lodash";
 import { useRequest } from "ahooks";
 import { moduleKeys } from "@config/module";
+import { ModuleStatusEnum } from "@/Types/enum";
 import { useProgressPercentage } from "@hooks/useProgress";
 import {
   FormComponentProps,
@@ -51,7 +53,14 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
     manual: true,
     onSuccess(data) {
       if (parse) data = parse(data);
+      const status = data.status as ModuleStatusEnum;
+      const formDisabled =
+        status === ModuleStatusEnum.IN_REVIEW ||
+        status === ModuleStatusEnum.APPROVED;
+      data = omit(data, "status");
       setFormInitialValues(data);
+      setFormDiabled(formDisabled);
+      formComponentRef.current?.setFieldsValue(data);
     },
     onError(e) {
       messageApi.error(e.message);
@@ -91,8 +100,8 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
       if (next) {
         const nextKey = getNextStepKey(moduleKeys, moduleInfo.key);
         if (nextKey === "last") {
-          const progressPercentage = await runGetProgressPercentage();
-          if (progressPercentage === 100) {
+          const res = await runGetProgressPercentage();
+          if (res?.percentage === 100) {
             navigate("/stepDone");
           } else {
             navigate("/", { replace: true });

@@ -2,13 +2,13 @@ const getBaseUrl = () => {
   const hostname = window.location.hostname;
   let baseUrl = "";
   if (hostname.includes("localhost") || hostname.includes("127.0.0.1")) {
-    baseUrl = "https://api.sandbox.youlify.ai/api";
+    baseUrl = "https://api.sandbox.youlify.ai/api/onboarding";
   } else if (hostname.includes("172.203.240.97")) {
-    baseUrl = "http://172.178.80.128:8080/api";
+    baseUrl = "http://172.178.80.128:8080/api/onboarding";
   } else if (hostname.includes("staging")) {
-    baseUrl = "https://api-staging.youlify.ai/api";
+    baseUrl = "https://api-staging.youlify.ai/api/onboarding";
   } else {
-    baseUrl = "https://api.youlify.ai/api";
+    baseUrl = "https://api.youlify.ai/api/onboarding";
   }
   return baseUrl;
 };
