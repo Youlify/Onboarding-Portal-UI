@@ -29,8 +29,8 @@ const AzureUpload = forwardRef<AzureUploadRef, AzureUploadProps>(
   (
     {
       account = "youlify",
-      containerName = "user-profile-pics",
-      sasToken = "se=2028-06-01T07:00:00Z&si=provider-portal-frontend&sv=2022-11-02&sr=c&sig=PG8ZwQo5Xa7w1s4dS9ZtOMzGbX7zRYpInCLXNN65UuM%3D",
+      containerName = "practice-logos",
+      sasToken = "sp=racwdl&st=2025-03-25T03:41:37Z&se=2028-05-01T11:41:37Z&sv=2024-11-04&sr=c&sig=Zi1omoNutz9eAQh6KsizxZH%2BDmUmDyPSUyAxEI6LqhY%3D",
       accept,
       value,
       containerStyle,
@@ -174,6 +174,7 @@ const AzureUpload = forwardRef<AzureUploadRef, AzureUploadProps>(
                 type="primary"
                 icon={<UploadOutlined />}
                 loading={loading}
+                disabled={props.disabled}
               >
                 Select File to Upload
               </Button>

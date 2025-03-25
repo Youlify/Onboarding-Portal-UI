@@ -12,6 +12,7 @@ export interface FormComponentProps {
   fieldsProps?: BaseFormWrapperProps;
   moduleInfo?: Module.ModuleInfo;
   extraData?: any[];
+  refreshData?: () => void;
 }
 
 const BaseFormWrapper = forwardRef<BaseFormWrapperRef, BaseFormWrapperProps>(

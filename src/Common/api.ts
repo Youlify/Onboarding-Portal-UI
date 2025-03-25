@@ -36,6 +36,7 @@ const API_URL = {
     "/practices/{practice_id}/additional_billing_info",
   SEARCH_PROCEDURE_CODE: "/medical-code/procedure-code-option/search",
   SEARCH_NDC_CODE: "/medical-code/ndc-code-option/search",
+  WORKFLOW_COMPLETION: "/practices/{practice_id}/completion",
 };
 
 export { API_URL };

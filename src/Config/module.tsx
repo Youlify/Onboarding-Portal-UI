@@ -6,7 +6,6 @@ import {
   getBilling,
   patchBilling,
   getW9Form,
-  signW9Form,
   getRenderingProvider,
   patchRenderingProvider,
   getSuperAdvancedProvider,
@@ -186,7 +185,8 @@ const moduleConfig: Module.ModuleConfig = {
     formTitle: "W-9 Form",
     formComponent: <W9Form />,
     initDataApi: getW9Form,
-    submitDataApi: signW9Form,
+    extraDataApis: [getBasicInfo],
+    onlyNext: true,
   },
   renderingProvider: {
     key: ModuleKeyEnum.RENDERING_PROVIDER,
@@ -200,6 +200,7 @@ const moduleConfig: Module.ModuleConfig = {
     formComponent: <RenderingProviderForm />,
     initDataApi: getRenderingProvider,
     submitDataApi: patchRenderingProvider,
+    extraDataApis: [getBasicInfo],
   },
   superAdvancedProvider: {
     key: ModuleKeyEnum.SUPER_ADVANCED_PROVIDER,

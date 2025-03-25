@@ -23,6 +23,7 @@ const Login: React.FC = () => {
       const accountInfo = { practiceId, accessCode };
       setToken(accountInfo);
       setGlobalValue?.({ accountInfo });
+      messageApi.success("Login success");
     },
     onError(e) {
       messageApi.error(e.message);

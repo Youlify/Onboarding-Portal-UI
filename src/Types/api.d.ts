@@ -166,6 +166,23 @@ declare namespace API {
 
   type APINDCCodeList = string[];
 
+  type APIBaseInfoParams = APIBasicInfo;
+  type APIBillingInfoParams = APIBillingInfo;
+  interface APISignW9FormParams {
+    unsigned_w9: string;
+    full_name: string;
+  }
+  type APIRenderingProviderParams = APIRenderingProviderList;
+  type APISuperAdvancedProviderParams = APISuperAdvancedProvider;
+  type APIFacilityParams = APIFacilityList;
+  type APIBankAccountInfoParams = APIBankAccountInfo;
+  type APIEHRLoginInfoParams = APIEHRLoginInfo;
+  type APIAuthorizationFormParams = APIAuthorizationForm;
+  type APIStripeChatParams = APIStripeChat;
+  type APIPayerParams = APIPayerList;
+  type APIUserParams = APIUserList;
+  type APIAdditionalBillingInfoParams = APIAdditionalBillingInfo;
+
   type APIAccessCodeRes = APIRes<boolean>;
   type APIProgressPercentageRes = APIRes<APIProgressPercentageInfo>;
   type APIProgressRes = APIRes<APIProgress>;

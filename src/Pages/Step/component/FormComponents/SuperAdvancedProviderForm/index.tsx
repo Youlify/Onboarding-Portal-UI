@@ -11,6 +11,7 @@ const SuperAdvancedProviderForm: React.FC<FormComponentProps> = ({
       <Row>
         <Col span={24}>
           <Form.Item
+            name="has_super_advanced_providers"
             label={
               <div className="super-advanced-provider-form-q">
                 <div className="super-advanced-provider-form-q-title">
@@ -18,11 +19,12 @@ const SuperAdvancedProviderForm: React.FC<FormComponentProps> = ({
                   provider?
                 </div>
                 <div className="super-advanced-provider-form-q-description">
-                  e.g. Jane Doe PA-C’s patients are billed as John Smith MD. On
+                  e.g. Jane Doe PA-C's patients are billed as John Smith MD. On
                   the claim, the rendering provider is John Smith MD.
                 </div>
               </div>
             }
+            rules={[{ required: true, message: "Please select an option" }]}
           >
             <Radio.Group buttonStyle="solid" size="large">
               <Radio.Button value={true}>Yes</Radio.Button>
@@ -34,6 +36,7 @@ const SuperAdvancedProviderForm: React.FC<FormComponentProps> = ({
       <Row style={{ marginTop: 48 }}>
         <Col span={24}>
           <Form.Item
+            name="always_paired"
             label={
               <div className="super-advanced-provider-form-q">
                 <div className="super-advanced-provider-form-q-title">
@@ -42,6 +45,7 @@ const SuperAdvancedProviderForm: React.FC<FormComponentProps> = ({
                 </div>
               </div>
             }
+            rules={[{ required: true, message: "Please select an option" }]}
           >
             <Radio.Group buttonStyle="solid" size="large">
               <Radio.Button value={true}>Yes</Radio.Button>
@@ -50,50 +54,56 @@ const SuperAdvancedProviderForm: React.FC<FormComponentProps> = ({
           </Form.Item>
         </Col>
       </Row>
-      <FormList
-        variant="rich"
-        name="super_advanced_pairs"
-        addText="Add New Pair"
-        minCount={1}
-        showDivider={false}
-        required={true}
-        style={{ marginTop: 48 }}
-      >
-        {(field) => (
-          <Row gutter={24}>
-            <Col span={12}>
-              <Form.Item
-                key={field.key}
-                name={[field.name, "advanced_provider"]}
-                label="Advance Provider"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input advance provider",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                key={field.key}
-                name={[field.name, "supervising_provider"]}
-                label="Supervising Provider"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input supervising provider",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
-        )}
-      </FormList>
+      <Form.Item dependencies={["always_paired"]}>
+        {({ getFieldValue }) =>
+          getFieldValue("always_paired") ? (
+            <FormList
+              variant="rich"
+              name="provider_pairs"
+              addText="Add New Pair"
+              minCount={1}
+              showDivider={false}
+              required={true}
+              style={{ marginTop: 48 }}
+            >
+              {(field) => (
+                <Row gutter={24}>
+                  <Col span={12}>
+                    <Form.Item
+                      key={field.key}
+                      name={[field.name, "advanced_provider"]}
+                      label="Advance Provider"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input advance provider",
+                        },
+                      ]}
+                    >
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item
+                      key={field.key}
+                      name={[field.name, "supervising_provider"]}
+                      label="Supervising Provider"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please input supervising provider",
+                        },
+                      ]}
+                    >
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                </Row>
+              )}
+            </FormList>
+          ) : null
+        }
+      </Form.Item>
     </BaseFormWrapper>
   );
 };
