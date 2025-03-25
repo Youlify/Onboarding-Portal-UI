@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import { Button, Form, Input, Divider, FormItemProps } from "antd";
+import DisabledContext from "antd/lib/config-provider/DisabledContext";
 import { CopyOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import { FormListFieldData, FormListOperation } from "antd/es/form/FormList";
 
@@ -36,6 +38,7 @@ const FormList = <T extends object = any>(props: FormListProps<T>) => {
     ...formItemProps
   } = props;
   const form = Form.useFormInstance();
+  const formDisabled = useContext(DisabledContext);
 
   return (
     <Form.Item
@@ -113,14 +116,14 @@ const FormList = <T extends object = any>(props: FormListProps<T>) => {
                         <Button
                           type="text"
                           icon={<PlusOutlined />}
-                          disabled={isMaxReached}
+                          disabled={isMaxReached || formDisabled}
                           onClick={() => operation.add()}
                         />
                       )}
                       <Button
                         type="text"
                         icon={<CopyOutlined />}
-                        disabled={isMaxReached}
+                        disabled={isMaxReached || formDisabled}
                         onClick={() => {
                           const currentValue = form.getFieldValue([
                             name as string,
@@ -133,7 +136,7 @@ const FormList = <T extends object = any>(props: FormListProps<T>) => {
                         type="text"
                         danger
                         icon={<DeleteOutlined />}
-                        disabled={isMinReached}
+                        disabled={isMinReached || formDisabled}
                         onClick={() => operation.remove(index)}
                       />
                     </div>
@@ -148,7 +151,7 @@ const FormList = <T extends object = any>(props: FormListProps<T>) => {
                   type="default"
                   icon={<PlusOutlined />}
                   block={true}
-                  disabled={isMaxReached}
+                  disabled={isMaxReached || formDisabled}
                   onClick={() => operation.add()}
                 >
                   {addText}
@@ -159,7 +162,7 @@ const FormList = <T extends object = any>(props: FormListProps<T>) => {
                   type="primary"
                   icon={<PlusOutlined />}
                   block={true}
-                  disabled={isMaxReached}
+                  disabled={isMaxReached || formDisabled}
                   style={{ width: "fit-content" }}
                   onClick={() => operation.add()}
                 >

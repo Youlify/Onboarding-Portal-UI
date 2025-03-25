@@ -11,11 +11,13 @@ declare namespace Module {
     bannerSubTitle: string;
     formTitle: string;
     formComponent: React.ReactElement;
-    initDataApi?: (params?: Record<string, any>) => Promise<any>;
-    submitDataApi?: (data?: Record<string, any>) => Promise<any>;
-    extraDataApis?: ((params?: Record<string, any>) => Promise<any>)[];
-    format?: (formData: Record<string, any>) => Record<string, any>;
-    parse?: (apiData: Record<string, any>) => Record<string, any>;
+    initDataApi?: (params?: any) => Promise<any>;
+    submitDataApi?: (data?: any) => Promise<any>;
+    extraDataApis?: ((params?: any) => Promise<any>)[];
+    format?: (formData: any) => any;
+    parse?: (apiData: any) => Record<string, any>;
+    needRefresh?: boolean;
+    onlyNext?: boolean;
   }
 
   type ModuleKey = `${ModuleKeyEnum}`;
@@ -32,6 +34,10 @@ declare namespace Module {
   };
 
   type ModuleInfo = ModuleCardInfo & ModuleStepInfo;
+
+  type ModuleInfoWithProgress = ModuleInfo & {
+    progress: API.APIProgressModule;
+  };
 
   type ModuleConfig = {
     [key in ModuleKey]: ModuleInfo;

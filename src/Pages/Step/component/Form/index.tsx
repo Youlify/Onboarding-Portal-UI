@@ -1,8 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, message, FormInstance } from "antd";
+import { Button, Spin, message, FormInstance } from "antd";
+import { omit } from "lodash";
 import { useRequest } from "ahooks";
 import { moduleKeys } from "@config/module";
+import { ModuleStatusEnum } from "@/Types/enum";
 import { useProgressPercentage } from "@hooks/useProgress";
 import {
   FormComponentProps,
@@ -44,28 +46,35 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
     format,
     parse,
     extraDataApis,
+    needRefresh,
+    onlyNext,
   } = moduleInfo;
 
   const { runAsync: runGetProgressPercentage } = useProgressPercentage();
-  const { run: runInitDataApi } = useRequest(initDataApi!, {
-    manual: true,
-    onSuccess(data) {
-      if (parse) data = parse(data);
-      setFormInitialValues(data);
-    },
-    onError(e) {
-      messageApi.error(e.message);
-    },
-  });
-  const { runAsync: runSubmitDataApi } = useRequest(submitDataApi!, {
-    manual: true,
-    onSuccess(data) {
-      console.log(data);
-    },
-    onError(e) {
-      messageApi.error(e.message);
-    },
-  });
+  const { run: runInitDataApi, loading: initDataLoading } = useRequest(
+    initDataApi!,
+    {
+      manual: true,
+      onSuccess(data) {
+        if (parse) data = parse(data);
+        const status = data.status as ModuleStatusEnum;
+        const formDisabled =
+          status === ModuleStatusEnum.IN_REVIEW ||
+          status === ModuleStatusEnum.APPROVED;
+        data = omit(data, "status");
+        setFormInitialValues(data);
+        setFormDiabled(formDisabled);
+        formComponentRef.current?.setFieldsValue(data);
+      },
+      onError(e) {
+        messageApi.error(e.message);
+      },
+    }
+  );
+  const { runAsync: runSubmitDataApi, loading: submitDataLoading } = useRequest(
+    submitDataApi!,
+    { manual: true }
+  );
   const runExtraDataApis = async () => {
     try {
       const res = await Promise.all(extraDataApis!.map((api) => api?.()));
@@ -74,6 +83,10 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
       console.log(e);
     }
   };
+
+  const refreshData = useCallback(() => {
+    if (initDataApi) runInitDataApi();
+  }, [initDataApi, runInitDataApi]);
 
   const onGoBack = () => {
     navigate("/", { replace: true });
@@ -87,12 +100,13 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
       if (save && submitDataApi) {
         await runSubmitDataApi({ ...submitValues });
         messageApi.success("Save success");
+        if (needRefresh && !next) refreshData();
       }
       if (next) {
         const nextKey = getNextStepKey(moduleKeys, moduleInfo.key);
         if (nextKey === "last") {
-          const progressPercentage = await runGetProgressPercentage();
-          if (progressPercentage === 100) {
+          const res = await runGetProgressPercentage();
+          if (res?.percentage === 100) {
             navigate("/stepDone");
           } else {
             navigate("/", { replace: true });
@@ -116,7 +130,6 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
           const formValues = await formComponentRef.current?.validateFields();
           let submitValues = formValues;
           if (format) submitValues = format(formValues);
-          if (submitDataApi) await runSubmitDataApi({ ...submitValues });
           callAPIOrNext({ save, next }, submitValues);
         } else {
           callAPIOrNext({ save, next });
@@ -139,6 +152,7 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
   return (
     <div className="step-form-container" style={style}>
       {contextHolder}
+      <Spin spinning={initDataLoading || submitDataLoading} fullscreen={true} />
       <div className="step-form-main">
         <div className="step-form-title">{formTitle}</div>
         <div className="step-form-fields">
@@ -150,6 +164,7 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
             },
             moduleInfo,
             extraData,
+            refreshData,
           } as FormComponentProps)}
         </div>
       </div>
@@ -160,7 +175,7 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
           </Button>
         </div>
         <div className="step-form-toolbar-right">
-          {!formDisabled ? (
+          {!formDisabled && !onlyNext ? (
             <>
               <Button
                 color="primary"

@@ -12,16 +12,17 @@ export interface FormComponentProps {
   fieldsProps?: BaseFormWrapperProps;
   moduleInfo?: Module.ModuleInfo;
   extraData?: any[];
+  refreshData?: () => void;
 }
 
 const BaseFormWrapper = forwardRef<BaseFormWrapperRef, BaseFormWrapperProps>(
-  ({ children, initialValues, ...restProps }, ref) => {
+  ({ children, ...restProps }, ref) => {
     const [form] = Form.useForm();
 
     useImperativeHandle(ref, () => ({ ...form }));
 
     return (
-      <Form form={form} initialValues={initialValues} {...restProps}>
+      <Form form={form} {...restProps}>
         {children}
       </Form>
     );

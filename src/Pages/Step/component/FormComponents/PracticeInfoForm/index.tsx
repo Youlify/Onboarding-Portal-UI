@@ -6,7 +6,9 @@ import {
   Col,
   Row,
   ConfigProvider,
+  CheckboxChangeEvent,
 } from "antd";
+import { AzureContainerConfig } from "@config/azure";
 import FormList from "@components/FormList";
 import AzureUpload from "@components/AzureUpload";
 import BaseFormWrapper, { FormComponentProps } from "../BaseFormWrapper";
@@ -15,8 +17,15 @@ import "./index.less";
 const PracticeInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
   const form = (fieldsProps?.ref?.current || {}) as FormInstance;
   const logoName = Form.useWatch("logo_name", form);
+  const noLogo = Form.useWatch("no_logo", form);
   const practiceLegalName = Form.useWatch("practice_legal_name", form);
   const address = Form.useWatch("address", form);
+
+  const onNoLogoChange = (e: CheckboxChangeEvent) => {
+    if (e.target.checked) form.setFieldsValue({ logo_name: "" });
+    else
+      form.setFieldsValue({ logo_name: fieldsProps?.initialValues?.logo_name });
+  };
 
   return (
     <BaseFormWrapper layout="vertical" {...fieldsProps}>
@@ -153,16 +162,34 @@ const PracticeInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
           <Form.Item
             name="logo_name"
             label="Practice Logo (SVG, PNG or JPG. 5mb max.)"
+            rules={[
+              {
+                required: !noLogo,
+                message: "Please upload a logo",
+              },
+            ]}
           >
-            <AzureUpload accept=".png,.jpg,.jpeg,.svg" />
+            <AzureUpload
+              containerName={
+                AzureContainerConfig.ONBOARDING_PORTAL_PRACTICE_LOGOS
+                  .containerName
+              }
+              sasToken={
+                AzureContainerConfig.ONBOARDING_PORTAL_PRACTICE_LOGOS.sasToken
+              }
+              accept=".png,.jpg,.jpeg,.svg"
+              disabled={noLogo}
+            />
           </Form.Item>
-          <Form.Item name="no_logo" valuePropName="checked">
-            <ConfigProvider
-              theme={{ components: { Checkbox: { fontSize: 12 } } }}
-            >
-              <Checkbox>My practice does not have a logo.</Checkbox>
-            </ConfigProvider>
-          </Form.Item>
+          <ConfigProvider
+            theme={{ components: { Checkbox: { fontSize: 12 } } }}
+          >
+            <Form.Item name="no_logo" valuePropName="checked">
+              <Checkbox onChange={onNoLogoChange}>
+                My practice does not have a logo.
+              </Checkbox>
+            </Form.Item>
+          </ConfigProvider>
         </Col>
         <Col span={14}>
           <div className="practice-info-form-preview">

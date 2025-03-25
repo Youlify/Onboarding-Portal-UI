@@ -6,7 +6,28 @@ import {
   getBilling,
   patchBilling,
   getW9Form,
-  signW9Form,
+  getRenderingProvider,
+  patchRenderingProvider,
+  getSuperAdvancedProvider,
+  patchSuperAdvancedProvider,
+  getFacility,
+  patchFacility,
+  getBankAccountInfo,
+  patchBankAccountInfo,
+  getEHRLoginInfo,
+  patchEHRLoginInfo,
+  getUsers,
+  patchUsers,
+  getAuthorizationForm,
+  patchAuthorizationForm,
+  getStripeChat,
+  patchStripeChat,
+  getPayers,
+  patchPayers,
+  getAdditionalBillingInfo,
+  patchAdditionalBillingInfo,
+  // searchProcedureCode,
+  // searchNDCCode,
 } from "@service/factory";
 
 const PracticeInfoForm = Suspenselazy(
@@ -164,7 +185,8 @@ const moduleConfig: Module.ModuleConfig = {
     formTitle: "W-9 Form",
     formComponent: <W9Form />,
     initDataApi: getW9Form,
-    submitDataApi: signW9Form,
+    extraDataApis: [getBasicInfo],
+    onlyNext: true,
   },
   renderingProvider: {
     key: ModuleKeyEnum.RENDERING_PROVIDER,
@@ -176,6 +198,9 @@ const moduleConfig: Module.ModuleConfig = {
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Rendering Provider",
     formComponent: <RenderingProviderForm />,
+    initDataApi: getRenderingProvider,
+    submitDataApi: patchRenderingProvider,
+    extraDataApis: [getBasicInfo],
   },
   superAdvancedProvider: {
     key: ModuleKeyEnum.SUPER_ADVANCED_PROVIDER,
@@ -187,6 +212,8 @@ const moduleConfig: Module.ModuleConfig = {
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Supervising Provider & Advanced Provider",
     formComponent: <SuperAdvancedProviderForm />,
+    initDataApi: getSuperAdvancedProvider,
+    submitDataApi: patchSuperAdvancedProvider,
   },
   facilityInfo: {
     key: ModuleKeyEnum.FACILITY_INFO,
@@ -198,6 +225,8 @@ const moduleConfig: Module.ModuleConfig = {
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Facility Information",
     formComponent: <FacilityInfoForm />,
+    initDataApi: getFacility,
+    submitDataApi: patchFacility,
   },
   bankAccounts: {
     key: ModuleKeyEnum.BANK_ACCOUNTS,
@@ -209,6 +238,8 @@ const moduleConfig: Module.ModuleConfig = {
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Bank Account to Pay Youlify Invoice",
     formComponent: <BankAccountsForm />,
+    initDataApi: getBankAccountInfo,
+    submitDataApi: patchBankAccountInfo,
   },
   ehrLogin: {
     key: ModuleKeyEnum.EHR_LOGIN,
@@ -220,6 +251,8 @@ const moduleConfig: Module.ModuleConfig = {
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "EHR Login In",
     formComponent: <EHRLoginForm />,
+    initDataApi: getEHRLoginInfo,
+    submitDataApi: patchEHRLoginInfo,
   },
   accessToYoulify: {
     key: ModuleKeyEnum.ACCESS_TO_YOULIFY,
@@ -232,6 +265,8 @@ const moduleConfig: Module.ModuleConfig = {
       "You can add, remove, or modify accounts at any time during your contract period by contacting Youlify support.",
     formTitle: "Access to Youlify",
     formComponent: <AccessToYoulifyForm />,
+    initDataApi: getUsers,
+    submitDataApi: patchUsers,
   },
   clearingHouse: {
     key: ModuleKeyEnum.CLEARING_HOUSE,
@@ -243,6 +278,8 @@ const moduleConfig: Module.ModuleConfig = {
     bannerSubTitle: "",
     formTitle: "Clearing House Authorization Form",
     formComponent: <ClearingHouseForm />,
+    initDataApi: getAuthorizationForm,
+    submitDataApi: patchAuthorizationForm,
   },
   stripe: {
     key: ModuleKeyEnum.STRIPE,
@@ -254,6 +291,8 @@ const moduleConfig: Module.ModuleConfig = {
     bannerSubTitle: "All fields are required unless marked as optional.",
     formTitle: "Stripe Standard Connect Account Chat",
     formComponent: <StripeForm />,
+    initDataApi: getStripeChat,
+    submitDataApi: patchStripeChat,
   },
   payerInfo: {
     key: ModuleKeyEnum.PAYER_INFO,
@@ -265,6 +304,8 @@ const moduleConfig: Module.ModuleConfig = {
     bannerSubTitle: "",
     formTitle: "Payer Information",
     formComponent: <PayerInfoForm />,
+    initDataApi: getPayers,
+    submitDataApi: patchPayers,
   },
   additionalBillingInfo: {
     key: ModuleKeyEnum.ADDITIONAL_BILLING_INFO,
@@ -275,6 +316,8 @@ const moduleConfig: Module.ModuleConfig = {
     bannerSubTitle: "",
     formTitle: "Additional Billing Information",
     formComponent: <AdditionalBillingInfoForm />,
+    initDataApi: getAdditionalBillingInfo,
+    submitDataApi: patchAdditionalBillingInfo,
   },
 };
 

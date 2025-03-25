@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useRequest } from "ahooks";
-import { getProgressPercentage, getProgressStatus } from "@service/factory";
+import { getProgressPercentage, getProgress } from "@service/factory";
 
 const useProgressPercentage = () => {
   const [progressPercentage, setProgressPercentage] = useState(0);
@@ -8,7 +8,7 @@ const useProgressPercentage = () => {
   const { ...rest } = useRequest(getProgressPercentage, {
     manual: true,
     onSuccess(data) {
-      setProgressPercentage(data || 0);
+      setProgressPercentage(data?.percentage || 0);
     },
     onError(e) {
       console.log(e);
@@ -21,14 +21,12 @@ const useProgressPercentage = () => {
   };
 };
 
-const useProgressStatus = () => {
-  const [progressStatus, setProgressStatus] = useState<API.APIProgressStatus>(
-    {}
-  );
-  const { ...rest } = useRequest(getProgressStatus, {
+const useProgress = () => {
+  const [progress, setProgress] = useState<API.APIProgress>({});
+  const { ...rest } = useRequest(getProgress, {
     manual: true,
     onSuccess(data) {
-      if (data) setProgressStatus(data);
+      if (data) setProgress(data);
     },
     onError(e) {
       console.log(e);
@@ -36,8 +34,8 @@ const useProgressStatus = () => {
   });
   return {
     ...rest,
-    progressStatus,
+    progress,
   };
 };
 
-export { useProgressPercentage, useProgressStatus };
+export { useProgressPercentage, useProgress };

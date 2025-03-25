@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Form, Input, Select, Checkbox, Col, Row, ConfigProvider } from "antd";
 import BaseFormWrapper, { FormComponentProps } from "../BaseFormWrapper";
 
@@ -15,10 +15,14 @@ const TaxClassificationOptions = [
 ].map((item) => ({ label: item, value: item }));
 
 const BasicTemplateForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
-  const initialValues = fieldsProps?.initialValues || {};
-  const [additionalInfoChecked, setAdditionalInfoChecked] = useState(
-    initialValues.additional_info ? true : false
-  );
+  const [additionalInfoChecked, setAdditionalInfoChecked] = useState(false);
+
+  useEffect(() => {
+    setAdditionalInfoChecked(
+      fieldsProps?.initialValues?.additional_info ? true : false
+    );
+  }, [fieldsProps?.initialValues]);
+
   return (
     <BaseFormWrapper layout="vertical" {...fieldsProps}>
       <Row>

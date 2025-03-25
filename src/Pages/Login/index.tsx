@@ -23,13 +23,10 @@ const Login: React.FC = () => {
       const accountInfo = { practiceId, accessCode };
       setToken(accountInfo);
       setGlobalValue?.({ accountInfo });
+      messageApi.success("Login success");
     },
     onError(e) {
       messageApi.error(e.message);
-      // MOCK LOGIN
-      const accountInfo = { practiceId, accessCode: "123456" };
-      setToken(accountInfo);
-      setGlobalValue?.({ accountInfo });
     },
   });
 
@@ -40,7 +37,7 @@ const Login: React.FC = () => {
         return;
       }
       const values = await form.validateFields();
-      run(values);
+      run({ ...values, practice_id: practiceId });
     } catch (e) {
       console.log(e);
     }
@@ -51,7 +48,7 @@ const Login: React.FC = () => {
     if (!practiceId) {
       const redirectUrl = searchParams.get("redirect") ?? "";
       const redirect = decodeURIComponent(redirectUrl);
-      practiceId = new RegExp(/practiceId=(\d+)/g).exec(redirect)?.[1] ?? "";
+      practiceId = new RegExp(/practiceId=(\S+)/g).exec(redirect)?.[1] ?? "";
     }
     setPracticeId(practiceId);
   }, [searchParams]);

@@ -1,25 +1,20 @@
-import { ModuleStatusEnum } from "@/Types/enum";
 import { moduleStatusConfig } from "@/Config/module";
 import "./index.less";
 
 interface ModuleCardProps {
-  status: ModuleStatusEnum;
-  title: string;
-  fillText?: string;
-  moduleInfo: Module.ModuleInfo;
+  moduleInfo: Module.ModuleInfoWithProgress;
   style?: React.CSSProperties;
   onClick?: (moduleInfo: Module.ModuleInfo) => void;
 }
 
 const ModuleCard: React.FC<ModuleCardProps> = ({
-  status,
-  title,
-  fillText,
   moduleInfo,
   style,
   onClick,
 }) => {
-  const statusMap = moduleStatusConfig[status];
+  const { cardTitle, cardFillText, progress } = moduleInfo;
+  const status = progress?.status;
+  const statusMap = moduleStatusConfig?.[status] || {};
   const { icon, text, textColor, bgColor } = statusMap;
   return (
     <div
@@ -34,10 +29,12 @@ const ModuleCard: React.FC<ModuleCardProps> = ({
             {text}
           </div>
         </div>
-        <div className="module-card-title">{title}</div>
+        <div className="module-card-title">{cardTitle}</div>
       </div>
       <div className="module-card-bottom">
-        {fillText && <div className="module-card-fill-text">{fillText}</div>}
+        {cardFillText && (
+          <div className="module-card-fill-text">{cardFillText}</div>
+        )}
       </div>
     </div>
   );

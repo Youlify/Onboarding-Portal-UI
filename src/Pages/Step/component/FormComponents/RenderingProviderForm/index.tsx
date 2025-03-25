@@ -18,7 +18,14 @@ const SuffixOptions = [
 
 const RenderingProviderForm: React.FC<FormComponentProps> = ({
   fieldsProps,
+  extraData,
 }) => {
+  const taxonomyCodes = extraData?.[0]?.taxonomy_codes || [];
+  const taxonomyCodeOptions = taxonomyCodes.map((item: string) => ({
+    label: item,
+    value: item,
+  }));
+
   return (
     <BaseFormWrapper layout="vertical" {...fieldsProps}>
       <FormList
@@ -61,6 +68,16 @@ const RenderingProviderForm: React.FC<FormComponentProps> = ({
               </Col>
               <Col span={8}>
                 <Form.Item
+                  name={[field.name, "middle_name"]}
+                  label="Middle Name"
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row gutter={24}>
+              <Col span={8}>
+                <Form.Item
                   name={[field.name, "suffix"]}
                   label="Suffix"
                   rules={[
@@ -73,11 +90,9 @@ const RenderingProviderForm: React.FC<FormComponentProps> = ({
                   <Select options={SuffixOptions} />
                 </Form.Item>
               </Col>
-            </Row>
-            <Row gutter={24}>
               <Col span={8}>
                 <Form.Item
-                  name={[field.name, "rendering_npi"]}
+                  name={[field.name, "npi"]}
                   label="Rendering Provider NPI"
                   rules={[
                     {
@@ -89,6 +104,8 @@ const RenderingProviderForm: React.FC<FormComponentProps> = ({
                   <Input />
                 </Form.Item>
               </Col>
+            </Row>
+            <Row>
               <Col span={16}>
                 <Form.Item
                   name={[field.name, "taxonomy_codes"]}
@@ -100,7 +117,7 @@ const RenderingProviderForm: React.FC<FormComponentProps> = ({
                     },
                   ]}
                 >
-                  <Select mode="multiple" />
+                  <Select mode="multiple" options={taxonomyCodeOptions} />
                 </Form.Item>
               </Col>
             </Row>

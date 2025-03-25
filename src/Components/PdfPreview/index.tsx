@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
+import "react-pdf/dist/Page/AnnotationLayer.css";
+import "react-pdf/dist/Page/TextLayer.css";
 import "./index.less";
 
 interface PdfPreviewProps {
@@ -25,11 +27,7 @@ const PdfPreview: React.FC<PdfPreviewProps> = ({ pdfUrl, style }) => {
         loading="Loading..."
       >
         {Array.from(new Array(numPages), (_, index) => (
-          <Page
-            key={`page_${index + 1}`}
-            pageNumber={index + 1}
-            loading="Loading..."
-          />
+          <Page key={`page_${index + 1}`} pageNumber={index + 1} />
         ))}
       </Document>
     </div>
