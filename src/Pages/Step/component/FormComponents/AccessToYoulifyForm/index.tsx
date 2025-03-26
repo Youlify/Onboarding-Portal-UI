@@ -12,7 +12,7 @@ const AccessToYoulifyForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
     <BaseFormWrapper layout="vertical" {...fieldsProps}>
       <FormList
         variant="rich"
-        name="access_accounts"
+        name="users"
         addText="Add Account"
         minCount={1}
         required={true}

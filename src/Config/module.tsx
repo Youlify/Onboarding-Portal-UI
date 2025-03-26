@@ -26,9 +26,8 @@ import {
   patchPayers,
   getAdditionalBillingInfo,
   patchAdditionalBillingInfo,
-  // searchProcedureCode,
-  // searchNDCCode,
 } from "@service/factory";
+import { DataParseFormatConfig } from "./dataParseFormat";
 
 const PracticeInfoForm = Suspenselazy(
   () =>
@@ -204,7 +203,7 @@ const moduleConfig: Module.ModuleConfig = {
   },
   superAdvancedProvider: {
     key: ModuleKeyEnum.SUPER_ADVANCED_PROVIDER,
-    apiKey: "supervising_advanced_provider",
+    apiKey: "super_and_advanced_provider",
     cardTitle: "Supervising Provider & Advanced Provider",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
@@ -267,6 +266,7 @@ const moduleConfig: Module.ModuleConfig = {
     formComponent: <AccessToYoulifyForm />,
     initDataApi: getUsers,
     submitDataApi: patchUsers,
+    format: DataParseFormatConfig.accessToYoulify.format,
   },
   clearingHouse: {
     key: ModuleKeyEnum.CLEARING_HOUSE,
@@ -306,6 +306,7 @@ const moduleConfig: Module.ModuleConfig = {
     formComponent: <PayerInfoForm />,
     initDataApi: getPayers,
     submitDataApi: patchPayers,
+    format: DataParseFormatConfig.payerInfo.format,
   },
   additionalBillingInfo: {
     key: ModuleKeyEnum.ADDITIONAL_BILLING_INFO,

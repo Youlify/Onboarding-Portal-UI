@@ -29,9 +29,21 @@ const PayerInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
             addText="Add Payer"
             minCount={1}
             required={true}
+            renderOperationCopy={() => null}
           >
             {(field) => (
               <>
+                <Row>
+                  <Col span={24}>
+                    <Form.Item
+                      name={[field.name, "id"]}
+                      label="ID"
+                      hidden={true}
+                    >
+                      <Input />
+                    </Form.Item>
+                  </Col>
+                </Row>
                 <Row>
                   <Col span={24}>
                     <Form.Item
@@ -56,7 +68,7 @@ const PayerInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
                   </Col>
                   <Col span={12}>
                     <Form.Item
-                      name={[field.name, "login_pasword"]}
+                      name={[field.name, "login_password"]}
                       label="Login Password (Optional)"
                     >
                       <Input.Password />

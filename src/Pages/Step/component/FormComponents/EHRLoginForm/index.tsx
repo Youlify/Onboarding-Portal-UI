@@ -35,7 +35,7 @@ const EHRLoginForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
             <Input />
           </Form.Item>
           <Form.Item
-            name="pasword"
+            name="password"
             label="EHR Account Password"
             rules={[
               { required: true, message: "Please input account password" },

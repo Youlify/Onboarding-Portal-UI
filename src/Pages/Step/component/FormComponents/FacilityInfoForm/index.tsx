@@ -18,7 +18,7 @@ const FacilityInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
               <Col span={24}>
                 <Form.Item
                   key={field.key}
-                  name={[field.name, "advanced_provider"]}
+                  name={[field.name, "name"]}
                   label="Facility Name"
                   rules={[
                     {
@@ -35,12 +35,46 @@ const FacilityInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
               <Col span={24}>
                 <Form.Item
                   key={field.key}
-                  name={[field.name, "advanced_provider"]}
-                  label="Facility Address"
+                  name={[field.name, "edi_name"]}
+                  label="Facility EDI Name"
                   rules={[
                     {
                       required: true,
-                      message: "Please input facility address",
+                      message: "Please input facility edi name",
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={24}>
+                <Form.Item
+                  key={field.key}
+                  name={[field.name, "address_line_one"]}
+                  label="Facility Address Line One"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input facility address line one",
+                    },
+                  ]}
+                >
+                  <Input />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={24}>
+                <Form.Item
+                  key={field.key}
+                  name={[field.name, "address_line_two"]}
+                  label="Facility Address Line Two"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please input facility address line two",
                     },
                   ]}
                 >
@@ -52,7 +86,7 @@ const FacilityInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
               <Col span={8}>
                 <Form.Item
                   key={field.key}
-                  name={[field.name, "advanced_provider"]}
+                  name={[field.name, "city"]}
                   label="City"
                   rules={[
                     {
@@ -67,7 +101,7 @@ const FacilityInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
               <Col span={8}>
                 <Form.Item
                   key={field.key}
-                  name={[field.name, "advanced_provider"]}
+                  name={[field.name, "state"]}
                   label="State"
                   rules={[
                     {
@@ -82,7 +116,7 @@ const FacilityInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
               <Col span={8}>
                 <Form.Item
                   key={field.key}
-                  name={[field.name, "advanced_provider"]}
+                  name={[field.name, "zip"]}
                   label="Zip Code"
                   rules={[
                     {
@@ -99,7 +133,7 @@ const FacilityInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
               <Col span={24}>
                 <Form.Item
                   key={field.key}
-                  name={[field.name, "advanced_provider"]}
+                  name={[field.name, "npi"]}
                   label="Facility NPI"
                   tooltip="You can find the facility NPI on NPPES NPI Registry. Link →"
                   rules={[

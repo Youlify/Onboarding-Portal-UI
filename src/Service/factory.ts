@@ -40,7 +40,7 @@ export const patchEHRLoginInfo = (data: API.APIEHRLoginInfoParams) =>
   patch<API.APINullRes>(API_URL.PATCH_EHR_LOGIN_INFO, { data });
 export const getUsers = () => get<API.APIUserList>(API_URL.GET_USERS);
 export const patchUsers = (data: API.APIUserParams) =>
-  patch<API.APINullRes>(API_URL.PATCH_USERS, { data });
+  post<API.APINullRes>(API_URL.PATCH_USERS, { data });
 export const getAuthorizationForm = () =>
   get<API.APIAuthorizationForm>(API_URL.GET_AUTHORIZATION_FORM);
 export const patchAuthorizationForm = (data: API.APIAuthorizationFormParams) =>
@@ -51,7 +51,7 @@ export const patchStripeChat = (data: API.APIStripeChatParams) =>
   patch<API.APINullRes>(API_URL.PATCH_STRIPE_CHAT, { data });
 export const getPayers = () => get<API.APIPayerList>(API_URL.GET_PAYERS);
 export const patchPayers = (data: API.APIPayerParams) =>
-  patch<API.APINullRes>(API_URL.PATCH_PAYERS, { data });
+  post<API.APINullRes>(API_URL.PATCH_PAYERS, { data });
 export const getAdditionalBillingInfo = () =>
   get<API.APIAdditionalBillingInfo>(API_URL.GET_ADDITIONAL_BILLING_INFO);
 export const patchAdditionalBillingInfo = (
