@@ -1,7 +1,9 @@
 import { useState, useRef } from "react";
 import { Form, Button, ConfigProvider } from "antd";
 import { DownloadOutlined, DeleteOutlined } from "@ant-design/icons";
+import { AzureContainerConfig } from "@config/azure";
 import AzureUpload, { AzureUploadRef } from "@components/AzureUpload";
+import { pdfBlobDownload } from "@utils/download";
 import BaseFormWrapper, { FormComponentProps } from "../BaseFormWrapper";
 import "./index.less";
 
@@ -46,7 +48,7 @@ const ClearingHouseForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
 
   const onAuthorizationDownload = (e: React.MouseEvent) => {
     e.stopPropagation();
-    console.log(authorizationUploadUrl);
+    pdfBlobDownload(authorizationUploadUrl, "leaningHouse_authorization");
   };
 
   const onAuthorizationDelete = (e: React.MouseEvent) => {
@@ -95,13 +97,17 @@ const ClearingHouseForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
         </div>
         <div className="clearing-house-form-step-content">
           <Form.Item
-            name="authorization_form"
+            name="form_link"
             rules={[
               { required: true, message: "Please upload authorization form " },
             ]}
           >
             <AzureUpload
               ref={azureUploadRef}
+              containerName={
+                AzureContainerConfig.ONBOARDING_DOCUMENTS.containerName
+              }
+              sasToken={AzureContainerConfig.ONBOARDING_DOCUMENTS.sasToken}
               style={{ width: "auto" }}
               renderUnUploadView={() => (
                 <div className="clearing-house-form-unupload">
@@ -118,7 +124,7 @@ const ClearingHouseForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
               )}
               renderUploadedView={() => (
                 <ClearingHouseFormFileView
-                  name="leaningHouse_ExamplePracticeName.pdf"
+                  name="leaningHouse_authorization.pdf"
                   size="120KB"
                   style={{ backgroundColor: "#E2EBFF" }}
                   renderRight={() => (

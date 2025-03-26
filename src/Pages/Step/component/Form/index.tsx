@@ -129,7 +129,7 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
         if (save) {
           const formValues = await formComponentRef.current?.validateFields();
           let submitValues = formValues;
-          if (format) submitValues = format(formValues);
+          if (format) submitValues = format(formValues, formInitialValues);
           callAPIOrNext({ save, next }, submitValues);
         } else {
           callAPIOrNext({ save, next });

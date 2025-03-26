@@ -20,6 +20,8 @@ export interface FormListProps<T = any>
     operation: FormListOperation
   ) => React.ReactNode;
   createDefaultItem?: (index: number) => T;
+  renderOperationCopy?: (index?: number) => React.ReactNode;
+  renderOperationDelete?: (index?: number) => React.ReactNode;
 }
 
 const FormList = <T extends object = any>(props: FormListProps<T>) => {
@@ -35,6 +37,8 @@ const FormList = <T extends object = any>(props: FormListProps<T>) => {
     showDivider = true,
     children,
     createDefaultItem,
+    renderOperationCopy,
+    renderOperationDelete,
     ...formItemProps
   } = props;
   const form = Form.useFormInstance();
@@ -120,25 +124,33 @@ const FormList = <T extends object = any>(props: FormListProps<T>) => {
                           onClick={() => operation.add()}
                         />
                       )}
-                      <Button
-                        type="text"
-                        icon={<CopyOutlined />}
-                        disabled={isMaxReached || formDisabled}
-                        onClick={() => {
-                          const currentValue = form.getFieldValue([
-                            name as string,
-                            index,
-                          ]);
-                          operation.add(currentValue, index + 1);
-                        }}
-                      />
-                      <Button
-                        type="text"
-                        danger
-                        icon={<DeleteOutlined />}
-                        disabled={isMinReached || formDisabled}
-                        onClick={() => operation.remove(index)}
-                      />
+                      {renderOperationCopy ? (
+                        renderOperationCopy(index)
+                      ) : (
+                        <Button
+                          type="text"
+                          icon={<CopyOutlined />}
+                          disabled={isMaxReached || formDisabled}
+                          onClick={() => {
+                            const currentValue = form.getFieldValue([
+                              name as string,
+                              index,
+                            ]);
+                            operation.add(currentValue, index + 1);
+                          }}
+                        />
+                      )}
+                      {renderOperationDelete ? (
+                        renderOperationDelete(index)
+                      ) : (
+                        <Button
+                          type="text"
+                          danger
+                          icon={<DeleteOutlined />}
+                          disabled={isMinReached || formDisabled}
+                          onClick={() => operation.remove(index)}
+                        />
+                      )}
                     </div>
                   </div>
                   {showDivider && index < fields.length - 1 && (

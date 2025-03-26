@@ -1,6 +1,17 @@
-import { useState } from "react";
-import { Form, Input, Select, Checkbox, Col, Row, Divider } from "antd";
+import { useState, useEffect } from "react";
+import {
+  Form,
+  Input,
+  Select,
+  Checkbox,
+  Col,
+  Row,
+  Divider,
+  CheckboxChangeEvent,
+  FormInstance,
+} from "antd";
 import { UploadFile } from "antd/lib";
+import { AzureContainerConfig } from "@config/azure";
 import AzureUpload from "@components/AzureUpload";
 import BaseFormWrapper, { FormComponentProps } from "../BaseFormWrapper";
 import "./index.less";
@@ -26,9 +37,9 @@ const BankAccountsFormUploadView = ({ filename }: { filename?: string }) => {
 };
 
 const BankAccountsForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
-  const [payBankAgreeChecked, setPayBankAgreeChecked] = useState(false);
-  const [receiveBankAgreeChecked, setReceiveBankAgreeChecked] = useState(false);
-  const [sameAsChecked, setSameAsChecked] = useState(false);
+  const form = fieldsProps?.ref?.current || ({} as FormInstance);
+  const initialValues = fieldsProps?.initialValues || {};
+  const [agreeChecked, setAgreeChecked] = useState(false);
   const [uploadFileNames, setUploadFileNames] = useState(["", ""]);
   const onUploadFileChange =
     (type: "payBank" | "receiveBank") => (file?: UploadFile) => {
@@ -40,12 +51,24 @@ const BankAccountsForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
       }
     };
 
+  const onAgreeCheckedChange = (e: CheckboxChangeEvent) => {
+    const agreeChecked = e.target.checked;
+    setAgreeChecked(agreeChecked);
+    if (!agreeChecked) {
+      form?.setFieldsValue({ signed_name: "" });
+    }
+  };
+
+  useEffect(() => {
+    setAgreeChecked(!!initialValues?.signed_name);
+  }, [initialValues?.signed_name]);
+
   return (
     <BaseFormWrapper layout="vertical" {...fieldsProps}>
       <Row gutter={24}>
         <Col span={12}>
           <Form.Item
-            name={["pay_bank", "name_of_bank"]}
+            name={["pay_bank_info", "bank_name"]}
             label="Name of bank"
             rules={[{ required: true, message: "Please input name of bank" }]}
           >
@@ -54,7 +77,7 @@ const BankAccountsForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
         </Col>
         <Col span={12}>
           <Form.Item
-            name={["pay_bank", "account_type"]}
+            name={["pay_bank_info", "account_type"]}
             label="Account Type"
             rules={[{ required: true, message: "Please input account type" }]}
           >
@@ -65,7 +88,7 @@ const BankAccountsForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
       <Row gutter={24}>
         <Col span={12}>
           <Form.Item
-            name={["pay_bank", "bank_account_number"]}
+            name={["pay_bank_info", "account_number"]}
             label="Bank Account Number"
             rules={[
               { required: true, message: "Please input bank account number" },
@@ -76,7 +99,7 @@ const BankAccountsForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
         </Col>
         <Col span={12}>
           <Form.Item
-            name={["pay_bank", "bank_routing_number"]}
+            name={["pay_bank_info", "routing_number"]}
             label="Bank Routing Number"
             rules={[
               { required: true, message: "Please input bank routing number" },
@@ -89,7 +112,7 @@ const BankAccountsForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
       <Row>
         <Col span={24}>
           <Form.Item
-            name={["pay_bank", "bank_letter"]}
+            name={["pay_bank_info", "bank_letter"]}
             label="A Void Check or Bank Letter"
             rules={[{ required: true, message: "Please upload file" }]}
           >
@@ -106,10 +129,7 @@ const BankAccountsForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
       </Row>
       <Row style={{ marginTop: 32 }}>
         <Col span={24}>
-          <Checkbox
-            checked={payBankAgreeChecked}
-            onChange={(e) => setPayBankAgreeChecked(e.target.checked)}
-          >
+          <Checkbox checked={agreeChecked} onChange={onAgreeCheckedChange}>
             By typing my full name below, I authorize Youlify Inc to charge my
             bank account listed above for payment of all Youlify invoices. I
             further confirm that I have the necessary authorization to provide
@@ -120,13 +140,10 @@ const BankAccountsForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
       <Row style={{ marginTop: 16 }}>
         <Col span={24}>
           <Form.Item
-            name={["pay_bank", "sign_name"]}
-            rules={[{ required: true, message: "Please input full name" }]}
+            name="signed_name"
+            rules={[{ required: true, message: "Please input sign name" }]}
           >
-            <Input
-              placeholder="Full Name Here"
-              disabled={!payBankAgreeChecked}
-            />
+            <Input placeholder="Full Name Here" disabled={!agreeChecked} />
           </Form.Item>
         </Col>
       </Row>
@@ -138,116 +155,99 @@ const BankAccountsForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
       </div>
       <Row style={{ padding: "48px 0" }}>
         <Col span={24}>
-          <Checkbox
-            checked={sameAsChecked}
-            onChange={(e) => setSameAsChecked(e.target.checked)}
-          >
-            Same as Above
-          </Checkbox>
+          <Form.Item name="is_same" valuePropName="checked">
+            <Checkbox>Same as Above</Checkbox>
+          </Form.Item>
         </Col>
       </Row>
-      {!sameAsChecked && (
-        <>
-          <Row gutter={24}>
-            <Col span={12}>
-              <Form.Item
-                name={["receive_bank", "name_of_bank"]}
-                label="Name of bank"
-                rules={[
-                  { required: true, message: "Please input name of bank" },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name={["receive_bank", "account_type"]}
-                label="Account Type"
-                rules={[
-                  { required: true, message: "Please input account type" },
-                ]}
-              >
-                <Select options={AccountTypeOptions} />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row gutter={24}>
-            <Col span={12}>
-              <Form.Item
-                name={["receive_bank", "bank_account_number"]}
-                label="Bank Account Number"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input bank account number",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item
-                name={["receive_bank", "bank_routing_number"]}
-                label="Bank Routing Number"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input bank routing number",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row>
-            <Col span={24}>
-              <Form.Item
-                name={["receive_bank", "bank_letter"]}
-                label="A Void Check or Bank Letter"
-                rules={[{ required: true, message: "Please upload file" }]}
-              >
-                <AzureUpload
-                  style={{ width: "100%" }}
-                  renderUnUploadView={() => <BankAccountsFormUploadView />}
-                  renderUploadedView={() => (
-                    <BankAccountsFormUploadView filename={uploadFileNames[1]} />
-                  )}
-                  onFileChange={onUploadFileChange("receiveBank")}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-          <Row style={{ marginTop: 32 }}>
-            <Col span={24}>
-              <Checkbox
-                checked={receiveBankAgreeChecked}
-                onChange={(e) => setReceiveBankAgreeChecked(e.target.checked)}
-              >
-                By typing my full name below, I authorize Youlify Inc to charge
-                my bank account listed above for payment of all Youlify
-                invoices. I further confirm that I have the necessary
-                authorization to provide this consent on behalf of my company.
-              </Checkbox>
-            </Col>
-          </Row>
-          <Row style={{ marginTop: 16 }}>
-            <Col span={24}>
-              <Form.Item
-                name={["receive_bank", "sign_name"]}
-                rules={[{ required: true, message: "Please input full name" }]}
-              >
-                <Input
-                  placeholder="Full Name Here"
-                  disabled={!receiveBankAgreeChecked}
-                />
-              </Form.Item>
-            </Col>
-          </Row>
-        </>
-      )}
+      <Form.Item dependencies={["is_same"]}>
+        {({ getFieldValue }) =>
+          !getFieldValue("is_same") && (
+            <>
+              <Row gutter={24}>
+                <Col span={12}>
+                  <Form.Item
+                    name={["receive_bank_info", "bank_name"]}
+                    label="Name of bank"
+                    rules={[
+                      { required: true, message: "Please input name of bank" },
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    name={["receive_bank_info", "account_type"]}
+                    label="Account Type"
+                    rules={[
+                      { required: true, message: "Please input account type" },
+                    ]}
+                  >
+                    <Select options={AccountTypeOptions} />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row gutter={24}>
+                <Col span={12}>
+                  <Form.Item
+                    name={["receive_bank_info", "account_number"]}
+                    label="Bank Account Number"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input bank account number",
+                      },
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+                </Col>
+                <Col span={12}>
+                  <Form.Item
+                    name={["receive_bank_info", "routing_number"]}
+                    label="Bank Routing Number"
+                    rules={[
+                      {
+                        required: true,
+                        message: "Please input bank routing number",
+                      },
+                    ]}
+                  >
+                    <Input />
+                  </Form.Item>
+                </Col>
+              </Row>
+              <Row>
+                <Col span={24}>
+                  <Form.Item
+                    name={["receive_bank_info", "bank_letter"]}
+                    label="A Void Check or Bank Letter"
+                    rules={[{ required: true, message: "Please upload file" }]}
+                  >
+                    <AzureUpload
+                      containerName={
+                        AzureContainerConfig.ONBOARDING_DOCUMENTS.containerName
+                      }
+                      sasToken={
+                        AzureContainerConfig.ONBOARDING_DOCUMENTS.sasToken
+                      }
+                      style={{ width: "100%" }}
+                      renderUnUploadView={() => <BankAccountsFormUploadView />}
+                      renderUploadedView={() => (
+                        <BankAccountsFormUploadView
+                          filename={uploadFileNames[1]}
+                        />
+                      )}
+                      onFileChange={onUploadFileChange("receiveBank")}
+                    />
+                  </Form.Item>
+                </Col>
+              </Row>
+            </>
+          )
+        }
+      </Form.Item>
     </BaseFormWrapper>
   );
 };

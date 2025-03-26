@@ -14,7 +14,7 @@ declare namespace Module {
     initDataApi?: (params?: any) => Promise<any>;
     submitDataApi?: (data?: any) => Promise<any>;
     extraDataApis?: ((params?: any) => Promise<any>)[];
-    format?: (formData: any) => any;
+    format?: (formData: any, initData?: any) => any;
     parse?: (apiData: any) => Record<string, any>;
     needRefresh?: boolean;
     onlyNext?: boolean;
