@@ -50,6 +50,8 @@ export const getStripeChat = () =>
 export const patchStripeChat = (data: API.APIStripeChatParams) =>
   patch<API.APINullRes>(API_URL.PATCH_STRIPE_CHAT, { data });
 export const getPayers = () => get<API.APIPayerList>(API_URL.GET_PAYERS);
+export const getPayersCSV = () =>
+  get<API.APIPayerCSVRes>(API_URL.GET_PAYERS_CSV);
 export const patchPayers = (data: API.APIPayerParams) =>
   post<API.APINullRes>(API_URL.PATCH_PAYERS, { data });
 export const getAdditionalBillingInfo = () =>

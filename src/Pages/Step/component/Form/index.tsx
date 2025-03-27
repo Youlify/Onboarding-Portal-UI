@@ -5,7 +5,7 @@ import { omit } from "lodash";
 import { useRequest } from "ahooks";
 import { moduleKeys } from "@config/module";
 import { ModuleStatusEnum } from "@/Types/enum";
-import { useProgressPercentage } from "@hooks/useProgress";
+import { useProgress } from "@hooks/useProgress";
 import {
   FormComponentProps,
   BaseFormWrapperRef,
@@ -50,7 +50,7 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
     onlyNext,
   } = moduleInfo;
 
-  const { runAsync: runGetProgressPercentage } = useProgressPercentage();
+  const { runAsync: runGetProgress, judgeCanSubmitReview } = useProgress();
   const { run: runInitDataApi, loading: initDataLoading } = useRequest(
     initDataApi!,
     {
@@ -105,9 +105,9 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
       if (next) {
         const nextKey = getNextStepKey(moduleKeys, moduleInfo.key);
         if (nextKey === "last") {
-          const res = await runGetProgressPercentage();
-          if (res?.percentage === 100) {
-            navigate("/stepDone");
+          const progress = await runGetProgress();
+          if (judgeCanSubmitReview(progress)) {
+            navigate("/step/allDone");
           } else {
             navigate("/", { replace: true });
           }

@@ -130,6 +130,10 @@ declare namespace API {
 
   type APIPayerList = APIPayer[];
 
+  interface APIPayerCSV {
+    csv_line: string;
+  }
+
   interface APIUser {
     first_name: string;
     last_name: string;
@@ -162,9 +166,19 @@ declare namespace API {
     limit: number;
   }
 
-  type APIProcedureCodeList = string[];
+  interface APIProcedureCode {
+    code: string;
+    description: string;
+  }
 
-  type APINDCCodeList = string[];
+  type APIProcedureCodeList = APIProcedureCode[];
+
+  interface APINDCCode {
+    code: string;
+    description: string;
+  }
+
+  type APINDCCodeList = APINDCCode[];
 
   type APIBaseInfoParams = APIBasicInfo;
   type APIBillingInfoParams = APIBillingInfo;
@@ -197,6 +211,7 @@ declare namespace API {
   type APIAuthorizationFormRes = APIRes<APIAuthorizationForm>;
   type APIStripeChatRes = APIRes<APIStripeChat>;
   type APIPayerRes = APIRes<APIPayerList>;
+  type APIPayerCSVRes = APIRes<APIPayerCSV>;
   type APIUserRes = APIRes<APIUserList>;
   type APIAdditionalBillingInfoRes = APIRes<APIAdditionalBillingInfo>;
   type APISearchProcedureCodeRes = APIRes<APIProcedureCodeList>;

@@ -7,7 +7,9 @@ const StepAllDone: React.FC = () => {
   const navigate = useNavigate();
   const { run, messageContextHolder } = useWorkflowCompletion({
     success() {
-      navigate("/review");
+      setTimeout(() => {
+        navigate("/");
+      }, 300);
     },
   });
 

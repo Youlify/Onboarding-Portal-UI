@@ -1,11 +1,36 @@
-import { Form, Input, Col, Row } from "antd";
+import { Form, Input, Button, Col, Row, message } from "antd";
+import { DownloadOutlined } from "@ant-design/icons";
+import { useRequest } from "ahooks";
+import { pdfBlobDownload } from "@utils/download";
+import { getPayersCSV } from "@service/factory";
 import FormList from "@components/FormList";
 import BaseFormWrapper, { FormComponentProps } from "../BaseFormWrapper";
 import "./index.less";
 
 const PayerInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
+  const [messageApi, contextHolder] = message.useMessage();
+  const { run: runGetPayersCSV } = useRequest(getPayersCSV, {
+    manual: true,
+    onSuccess: (data) => {
+      if (data?.csv_line) pdfBlobDownload(data.csv_line, "payers.csv");
+    },
+    onError: (e) => {
+      messageApi.error(e.message);
+    },
+  });
+
   return (
     <BaseFormWrapper layout="vertical" {...fieldsProps}>
+      {contextHolder}
+      <Button
+        color="primary"
+        variant="outlined"
+        icon={<DownloadOutlined />}
+        style={{ position: "absolute", top: 0, right: 0, height: 32 }}
+        onClick={runGetPayersCSV}
+      >
+        Export as CSV
+      </Button>
       <Row gutter={24}>
         <Col span={8}>
           <div className="payer-info-form-tips">
