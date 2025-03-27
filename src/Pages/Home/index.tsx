@@ -12,14 +12,20 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
   const [paddingTop, setPaddingTop] = useState(0);
 
+  const { run: runGetProgressPercentage, progressPercentage } =
+    useProgressPercentage();
   const {
-    run: runGetProgressPercentage,
-    progressPercentage,
-    isProgressPercentageCompleted,
-  } = useProgressPercentage();
-  const { run: runGetProgress, progress, loading } = useProgress();
+    run: runGetProgress,
+    progress,
+    canSubmitReview,
+    loading,
+  } = useProgress();
   const { run: runSubmitWorkflow, messageContextHolder } =
-    useWorkflowCompletion();
+    useWorkflowCompletion({
+      success() {
+        runGetProgress();
+      },
+    });
 
   const onTopBarLayout = (size: { width: number; height: number }) => {
     setPaddingTop(size.height);
@@ -27,7 +33,6 @@ const Home: React.FC = () => {
   const goStep = (moduleInfo: Module.ModuleInfo) => {
     navigate(`/step?moduleKey=${moduleInfo.key}`);
   };
-  const onSubmitWorkflow = () => runSubmitWorkflow();
 
   const renderableModules = useMemo(() => {
     const daynamicModuleKeys = Object.keys(progress);
@@ -79,8 +84,8 @@ const Home: React.FC = () => {
                 color="primary"
                 variant="solid"
                 style={{ width: 228 }}
-                disabled={!isProgressPercentageCompleted}
-                onClick={onSubmitWorkflow}
+                disabled={!canSubmitReview}
+                onClick={runSubmitWorkflow}
               >
                 Submit for Review
               </Button>

@@ -2,7 +2,7 @@ export enum ModuleStatusEnum {
   NOT_STARTED = "New",
   IN_PROGRESS = "In Progress",
   COMPLETED = "Complete",
-  NEED_MORE_INFO = "Need More info",
+  NEED_MORE_INFO = "Need More Info",
   IN_REVIEW = "In Review",
   APPROVED = "Approved",
 }

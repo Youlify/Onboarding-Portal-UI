@@ -15,18 +15,22 @@ const AdditionalBillingInfoForm: React.FC<FormComponentProps> = ({
   const [ndcCodeOptions, setNDCCodeOptions] = useState<BaseOptionType[]>([]);
 
   const debounceSearch = (type: "procedure_code" | "ndc_code") =>
-    debounce(async () => {
-      // try {
-      //   if (type === "procedure_code") {
-      //     const data = await searchProcedureCode({});
-      //     setProcedureCodeOptions(data || []);
-      //   } else {
-      //     const data = await searchNDCCode({});
-      //     setNDCCodeOptions(data || []);
-      //   }
-      // } catch (error) {
-      //   console.error(`Error fetching ${type}:`, error);
-      // }
+    debounce(async (value: string) => {
+      const api =
+        type === "procedure_code" ? searchProcedureCode : searchNDCCode;
+      let data = [] as API.APIProcedureCodeList | API.APINDCCode[];
+      try {
+        data = (await api({ query: value, limit: 100 })) || [];
+      } catch (e) {
+        console.log(e);
+      }
+      const options = data.map((item) => ({
+        value: item.code,
+        label: item.code,
+      }));
+      type === "procedure_code"
+        ? setProcedureCodeOptions(options)
+        : setNDCCodeOptions(options);
     }, 800);
 
   return (
@@ -108,6 +112,7 @@ const AdditionalBillingInfoForm: React.FC<FormComponentProps> = ({
                         >
                           <Select
                             placeholder="Search Procedure Code"
+                            showSearch={true}
                             options={procedureCodeOptions}
                             onSearch={debounceSearch("procedure_code")}
                           />
@@ -127,6 +132,7 @@ const AdditionalBillingInfoForm: React.FC<FormComponentProps> = ({
                           <Select
                             placeholder="Search NDC Code"
                             options={ndcCodeOptions}
+                            showSearch={true}
                             onSearch={debounceSearch("ndc_code")}
                           />
                         </Form.Item>

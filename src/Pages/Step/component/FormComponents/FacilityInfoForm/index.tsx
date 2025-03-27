@@ -1,6 +1,11 @@
-import { Form, Input, Col, Row } from "antd";
+import { Form, Input, Select, Col, Row } from "antd";
 import FormList from "@components/FormList";
 import BaseFormWrapper, { FormComponentProps } from "../BaseFormWrapper";
+
+const FacilityTypeOptions = ["Office", "Hospital"].map((item) => ({
+  label: item,
+  value: item,
+}));
 
 const FacilityInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
   return (
@@ -28,6 +33,23 @@ const FacilityInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
                   ]}
                 >
                   <Input />
+                </Form.Item>
+              </Col>
+            </Row>
+            <Row>
+              <Col span={24}>
+                <Form.Item
+                  key={field.key}
+                  name={[field.name, "facility_type"]}
+                  label="Facility Type"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please select facility type",
+                    },
+                  ]}
+                >
+                  <Select options={FacilityTypeOptions} />
                 </Form.Item>
               </Col>
             </Row>
