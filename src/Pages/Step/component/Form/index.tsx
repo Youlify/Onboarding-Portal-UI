@@ -76,11 +76,11 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
       },
       onError(e) {
         // @ts-ignore
-        if (e.cause?.errorCode === 301) {
+        if (e.cause?.errorCode === "409") {
           modalApi.confirm({
             width: 576,
             title: "Missing Information:",
-            content: <div style={{ margin: "24px 0" }}>{e.message}</div>,
+            content: <div style={{ margin: "12px 0" }}>{e.message}</div>,
             okText: "Jump to Module: Billing Tax ID & NPI",
             onOk() {
               navigate("/step?moduleKey=billing");
