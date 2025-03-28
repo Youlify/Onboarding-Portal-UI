@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "antd";
+import Confetti from "@components/Confetti";
 import { useWorkflowCompletion } from "@hooks/useWorkflow";
 import "./index.less";
 
@@ -21,6 +22,29 @@ const StepAllDone: React.FC = () => {
   return (
     <div className="step-all-done">
       {messageContextHolder}
+      <Confetti
+        particleCount={40}
+        rotationRange={[90, 270]}
+        durationRange={[0, 3000]}
+        totalDuration={3000}
+        spread={1}
+        colors={[
+          { color: "#FFFFFF", weight: 0.1 },
+          { color: "#7F40C9", weight: 0.2 },
+          { color: "#2B6FF6", weight: 0.7 },
+        ]}
+        containerStyle={{
+          position: "absolute",
+          top: -75,
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: "auto",
+          zIndex: 200,
+          pointerEvents: "none",
+        }}
+        particleStyle={() => ({ width: 38, height: 75 })}
+      />
       <div className="step-all-done-icon"></div>
       <div className="step-all-done-title">Hoorray — All done!</div>
       <div className="step-all-done-subtitle">
