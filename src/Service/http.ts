@@ -66,8 +66,13 @@ async function request<T>(options: AxiosRequestConfig) {
     if (status !== 200) throw new Error(SYSTEM_ERROR_MESSAGE);
     // @ts-ignore
     if (data.success) return Promise.resolve(data.data as T["data"]);
-    // @ts-ignore
-    else throw new Error(data.errorMessage || SYSTEM_ERROR_MESSAGE);
+    else {
+      // @ts-ignore
+      const errorCode = data.errorCode;
+      // @ts-ignore
+      const errorMessage = data.errorMessage || SYSTEM_ERROR_MESSAGE;
+      throw new Error(errorMessage, { cause: { errorCode, errorMessage } });
+    }
   } catch (error) {
     return Promise.reject(error || SYSTEM_ERROR_MESSAGE);
   }

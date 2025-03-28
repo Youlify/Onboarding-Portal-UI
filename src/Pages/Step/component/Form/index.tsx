@@ -1,6 +1,13 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Spin, message, FormInstance } from "antd";
+import {
+  Button,
+  Spin,
+  message,
+  Modal,
+  FormInstance,
+  ConfigProvider,
+} from "antd";
 import { omit } from "lodash";
 import { useRequest } from "ahooks";
 import { moduleKeys } from "@config/module";
@@ -33,10 +40,11 @@ const getNextStepKey = (
 
 const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
   const navigate = useNavigate();
-  const [messageApi, contextHolder] = message.useMessage();
+  const [messageApi, messageContextHolder] = message.useMessage();
+  const [modalApi, modalContextHolder] = Modal.useModal();
   const [formInitialValues, setFormInitialValues] = useState({});
   const [extraData, setExtraData] = useState<any[]>([]);
-  const [formDisabled, setFormDiabled] = useState(false);
+  const [formDisabled, setFormDiabled] = useState(true);
   const formComponentRef = useRef<BaseFormWrapperRef>(null);
   const {
     formTitle,
@@ -67,6 +75,22 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
         formComponentRef.current?.setFieldsValue(data);
       },
       onError(e) {
+        // @ts-ignore
+        if (e.cause?.errorCode === "409") {
+          modalApi.confirm({
+            width: 576,
+            title: "Missing Information:",
+            content: <div style={{ margin: "12px 0" }}>{e.message}</div>,
+            okText: "Jump to Module: Billing Tax ID & NPI",
+            onOk() {
+              navigate("/step?moduleKey=billing");
+            },
+            footer: (_, { OkBtn }) => <OkBtn />,
+            autoFocusButton: null,
+            style: { top: "30%" },
+          });
+          return;
+        }
         messageApi.error(e.message);
       },
     }
@@ -151,7 +175,22 @@ const StepForm: React.FC<StepFormProps> = ({ moduleInfo, style }) => {
 
   return (
     <div className="step-form-container" style={style}>
-      {contextHolder}
+      {messageContextHolder}
+      <ConfigProvider
+        theme={{
+          components: {
+            Modal: {
+              paddingMD: 56,
+              paddingLG: 56,
+              paddingSM: 56,
+              paddingContentHorizontalSM: 56,
+              paddingContentHorizontalLG: 56,
+            },
+          },
+        }}
+      >
+        {modalContextHolder}
+      </ConfigProvider>
       <Spin spinning={initDataLoading || submitDataLoading} fullscreen={true} />
       <div className="step-form-main">
         <div className="step-form-title">{formTitle}</div>
