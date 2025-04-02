@@ -1,5 +1,17 @@
 import { useState, useEffect } from "react";
-import { Form, Input, Select, Checkbox, Col, Row, ConfigProvider } from "antd";
+import {
+  Form,
+  Input,
+  Select,
+  Checkbox,
+  FormInstance,
+  Col,
+  Row,
+  ConfigProvider,
+} from "antd";
+import SectionsInput, {
+  sectionsInputValidator,
+} from "@components/SectionsInput";
 import BaseFormWrapper, { FormComponentProps } from "../BaseFormWrapper";
 
 const TaxClassificationOptions = [
@@ -15,9 +27,19 @@ const TaxClassificationOptions = [
 ].map((item) => ({ label: item, value: item }));
 
 const BasicTemplateForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
+  const form = fieldsProps?.ref?.current || ({} as FormInstance);
+  const [taxClassification, setTaxClassification] = useState("");
   const [additionalInfoChecked, setAdditionalInfoChecked] = useState(false);
+  const isIndividualSoleProprietor =
+    taxClassification === "Individual/sole proprietor";
+
+  const onTaxClassificationChange = (value: string) => {
+    setTaxClassification(value);
+    form?.setFieldsValue({ tax_id: "" });
+  };
 
   useEffect(() => {
+    setTaxClassification(fieldsProps?.initialValues?.tax_classification || "");
     setAdditionalInfoChecked(
       fieldsProps?.initialValues?.additional_info ? true : false
     );
@@ -37,7 +59,10 @@ const BasicTemplateForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
               },
             ]}
           >
-            <Select options={TaxClassificationOptions} />
+            <Select
+              options={TaxClassificationOptions}
+              onChange={onTaxClassificationChange}
+            />
           </Form.Item>
         </Col>
       </Row>
@@ -46,14 +71,37 @@ const BasicTemplateForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
           <Form.Item
             name="tax_id"
             label="Billing Tax ID"
+            validateFirst={true}
             rules={[
               {
                 required: true,
                 message: "Please input billing tax id",
               },
+              isIndividualSoleProprietor
+                ? sectionsInputValidator(
+                    [{ length: 3 }, { length: 2 }, { length: 4 }],
+                    "tax_id"
+                  )
+                : sectionsInputValidator(
+                    [{ length: 2 }, { length: 7 }],
+                    "tax_id"
+                  ),
             ]}
           >
-            <Input />
+            <SectionsInput
+              sections={
+                isIndividualSoleProprietor
+                  ? [
+                      { length: 3, inputProps: { placeholder: "000" } },
+                      { length: 2, inputProps: { placeholder: "00" } },
+                      { length: 4, inputProps: { placeholder: "0000" } },
+                    ]
+                  : [
+                      { length: 2, inputProps: { placeholder: "00" } },
+                      { length: 7, inputProps: { placeholder: "0000000" } },
+                    ]
+              }
+            />
           </Form.Item>
         </Col>
         <Col span={14}>

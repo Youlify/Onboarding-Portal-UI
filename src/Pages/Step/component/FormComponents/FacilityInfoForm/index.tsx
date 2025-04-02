@@ -1,6 +1,7 @@
 import { Form, Input, Select, Col, Row } from "antd";
 import FormList from "@components/FormList";
 import BaseFormWrapper, { FormComponentProps } from "../BaseFormWrapper";
+import "./index.less";
 
 const FacilityTypeOptions = ["Office", "Hospital"].map((item) => ({
   label: item,
@@ -157,7 +158,18 @@ const FacilityInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
                   key={field.key}
                   name={[field.name, "npi"]}
                   label="Facility NPI"
-                  tooltip="You can find the facility NPI on NPPES NPI Registry. Link →"
+                  tooltip={
+                    <span className="facility-info-form-tooltip">
+                      You can find the facility NPI on NPPES NPI Registry.{" "}
+                      <a
+                        href="https://npiregistry.cms.hhs.gov/search"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        Link →
+                      </a>
+                    </span>
+                  }
                   rules={[
                     {
                       required: true,
