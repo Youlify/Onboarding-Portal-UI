@@ -1,11 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import { InlineWidget, useCalendlyEventListener } from "react-calendly";
 import { Form, Checkbox, Col, Row, ConfigProvider, FormInstance } from "antd";
+import { useSize } from "ahooks";
 import BaseFormWrapper, { FormComponentProps } from "../BaseFormWrapper";
 
 const StripeForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
   const form = fieldsProps?.ref?.current || ({} as FormInstance);
   const [scheduledChat, setScheduledChat] = useState("");
+  const appointmentEleRef = useRef<HTMLDivElement>(null);
+  const appointmentEleSize = useSize(appointmentEleRef);
+  const { width: appointmentEleWidth } = appointmentEleSize || { width: 0 };
+
+  const appointmentEleHeight = useMemo(() => {
+    let height = 0;
+    if (appointmentEleWidth >= 1000) height = 680;
+    else if (appointmentEleWidth >= 650) height = 1000;
+    else height = 920;
+    return height;
+  }, [appointmentEleWidth]);
 
   useCalendlyEventListener({
     onEventScheduled(e) {
@@ -27,25 +39,27 @@ const StripeForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
 
   return (
     <BaseFormWrapper layout="vertical" {...fieldsProps}>
-      <div className="stripe-form-appointment">
-        <Form.Item
-          name="scheduled_chat"
-          rules={[{ required: true, message: "Please book a meeting" }]}
-          style={{ width: 1100 }}
+      <Form.Item
+        name="scheduled_chat"
+        rules={[{ required: true, message: "Please book a meeting" }]}
+      >
+        <div
+          ref={appointmentEleRef}
+          className="stripe-form-appointment"
+          style={{ marginTop: -45, height: appointmentEleHeight }}
         >
           <InlineWidget
             url={
               scheduledChat ||
-              "https://calendly.com/sallyyoulify/15-minutes-video-meeting"
+              "https://calendly.com/sallyyoulify/youlify-kick-off-call"
             }
             styles={{
-              margin: "-80px 0 -420px -300px",
-              minWidth: 320,
-              height: 1200,
+              width: "100%",
+              height: "100%",
             }}
           />
-        </Form.Item>
-      </div>
+        </div>
+      </Form.Item>
       <Row>
         <Col span={24}>
           <ConfigProvider

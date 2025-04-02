@@ -120,8 +120,20 @@ const PracticeInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
         <Col span={24}>
           <FormList
             name="taxonomy_codes"
-            label="Taxonomy Code"
-            tooltip="You can find your taxonomy code on the National Uniform Claim Committee code (NUCC) code set list. Link →"
+            label="Taxonomy C dode"
+            tooltip={
+              <span className="practice-info-form-tooltip">
+                You can find your taxonomy code on the National Uniform Claim
+                Committee code (NUCC) code set list.{" "}
+                <a
+                  href="https://www.irs.gov/pub/irs-pdf/fw9.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Link →
+                </a>
+              </span>
+            }
             minCount={1}
             showDivider={false}
             required={true}

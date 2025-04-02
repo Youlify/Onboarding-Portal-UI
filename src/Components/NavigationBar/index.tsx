@@ -5,12 +5,14 @@ import "./index.less";
 
 interface NavigationBarProps {
   title?: string;
+  showBgLogo?: boolean;
   renderRight?: () => React.ReactElement;
   onLeftClick?: () => void;
   onLayout?: (size: { width: number; height: number }) => void;
 }
 
 const NavigationBar: React.FC<NavigationBarProps> = ({
+  showBgLogo = true,
   renderRight,
   onLeftClick,
   onLayout,
@@ -32,11 +34,13 @@ const NavigationBar: React.FC<NavigationBarProps> = ({
 
   return (
     <div className="navigation-bar" ref={ref}>
-      <img
-        className="navigation-bar-bglogo"
-        alt="bglogo"
-        src={require("../../Assets/images/youlify_logo_bg.png")}
-      />
+      {showBgLogo && (
+        <img
+          className="navigation-bar-bglogo"
+          alt="bglogo"
+          src={require("../../Assets/images/youlify_logo_bg.png")}
+        />
+      )}
       <div className="navigation-bar-left" onClick={onBarLeftClick}>
         <div className="navigation-bar-logo"></div>
       </div>

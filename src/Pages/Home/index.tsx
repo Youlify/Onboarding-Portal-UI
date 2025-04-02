@@ -4,7 +4,8 @@ import { Button, Spin } from "antd";
 import { moduleKeys, moduleConfig } from "@config/module";
 import { useProgressPercentage, useProgress } from "@hooks/useProgress";
 import { useWorkflowCompletion } from "@hooks/useWorkflow";
-import HomeTopBar from "./TopBar";
+import NavigationBar from "@components/NavigationBar";
+import CircularProgress from "@components/CircularProgress";
 import HomeModuleCard from "./ModuleCard";
 import "./index.less";
 
@@ -27,7 +28,7 @@ const Home: React.FC = () => {
       },
     });
 
-  const onTopBarLayout = (size: { width: number; height: number }) => {
+  const onNavigationBarLayout = (size: { width: number; height: number }) => {
     setPaddingTop(size.height);
   };
   const goStep = (moduleInfo: Module.ModuleInfo) => {
@@ -59,11 +60,32 @@ const Home: React.FC = () => {
   return (
     <div className="home-container" style={{ paddingTop }}>
       {messageContextHolder}
-      <HomeTopBar
-        progressPercentage={progressPercentage}
-        onLayout={onTopBarLayout}
-      />
+      <NavigationBar showBgLogo={false} onLayout={onNavigationBarLayout} />
       <div className="home-content">
+        <div className="home-content-overview">
+          <img
+            className="home-content-overview-bglogo"
+            alt="bglogo"
+            src={require("../../Assets/images/youlify_logo_bg.png")}
+          />
+          <div className="home-content-overview-content">
+            <div className="home-content-overview-text">
+              <div className="home-content-overview-text-title">
+                Welcome to the onboarding portal, California Medical Group!
+              </div>
+              <div className="home-content-overview-text-description">
+                We need to collect some information from you to proceed
+                further.Please don't hesitate to reach out to us anytime if you
+                have any questions.
+              </div>
+            </div>
+            <CircularProgress
+              size="large"
+              percentage={progressPercentage}
+              style={{ marginLeft: 140 }}
+            />
+          </div>
+        </div>
         {loading ? (
           <Spin />
         ) : (
