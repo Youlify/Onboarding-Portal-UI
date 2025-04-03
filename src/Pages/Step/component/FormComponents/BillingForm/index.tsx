@@ -51,7 +51,20 @@ const BasicTemplateForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
         <Col span={24}>
           <Form.Item
             name="tax_classification"
-            label="Please Select Your Federal Tax Classification. (Box 3a on W-9)"
+            label={
+              <span>
+                Please Select Your Federal Tax Classification. (Box 3a on{" "}
+                <a
+                  href="https://www.irs.gov/pub/irs-pdf/fw9.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ color: "#141414", textDecoration: "underline" }}
+                >
+                  W-9
+                </a>
+                )
+              </span>
+            }
             rules={[
               {
                 required: true,

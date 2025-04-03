@@ -74,9 +74,9 @@ const Home: React.FC = () => {
                 Welcome to the onboarding portal, California Medical Group!
               </div>
               <div className="home-content-overview-text-description">
-                We need to collect some information from you to proceed
-                further.Please don't hesitate to reach out to us anytime if you
-                have any questions.
+                We need to collect some information from you to proceed further.
+                Please don't hesitate to reach out to us anytime if you have any
+                questions.
               </div>
             </div>
             <CircularProgress

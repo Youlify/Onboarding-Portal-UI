@@ -17,7 +17,8 @@ export interface FormComponentProps {
 
 const BaseFormWrapper = forwardRef<BaseFormWrapperRef, BaseFormWrapperProps>(
   ({ children, ...restProps }, ref) => {
-    const [form] = Form.useForm();
+    const [defaultForm] = Form.useForm();
+    const form = restProps?.form || defaultForm;
 
     useImperativeHandle(ref, () => ({ ...form }));
 

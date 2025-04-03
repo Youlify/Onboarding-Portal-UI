@@ -56,13 +56,7 @@ const AdditionalBillingInfoForm: React.FC<FormComponentProps> = ({
               <Col span={24}>
                 <Form.Item
                   name="payment_info"
-                  label="Do you take both credit card and cash/check payments?"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input address city",
-                    },
-                  ]}
+                  label="Can you give us a few examples of such transactions?"
                 >
                   <Input.TextArea />
                 </Form.Item>

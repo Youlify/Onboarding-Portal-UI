@@ -1,8 +1,9 @@
 import { createGlobalStyle } from "antd-style";
 
 const GlobalStyle = createGlobalStyle`
-  .ant-form-item-label label {
+  .ant-form-item-label.ant-form-item-label > label {
     font-family: Elza-Semibold;
+    align-items: baseline;
   }
   .ant-form-item-additional {
     margin-bottom: 12px;
