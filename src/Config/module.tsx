@@ -274,7 +274,7 @@ const moduleConfig: Module.ModuleConfig = {
     cardTitle: "Clearing House Authorization Form",
     cardFillText: "Avg 5-10mins",
     bannerTitle:
-      "Almost done—we just need the clearinghouse authorization form on your company letterhead.",
+      "Almost done—we just need the clearing house authorization form on your company letterhead.",
     bannerSubTitle: "",
     formTitle: "Clearing House Authorization Form",
     formComponent: <ClearingHouseForm />,

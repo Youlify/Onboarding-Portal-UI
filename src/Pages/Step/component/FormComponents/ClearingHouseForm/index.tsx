@@ -69,7 +69,7 @@ const ClearingHouseForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
         </div>
         <div className="clearing-house-form-step-content">
           <ClearingHouseFormFileView
-            name="leaningHouse_ExamplePracticeName.pdf"
+            name="ClearingHouse_Form.pdf"
             size="120KB"
             renderRight={() => (
               <ConfigProvider

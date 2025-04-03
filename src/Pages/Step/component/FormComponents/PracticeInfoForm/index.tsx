@@ -1,6 +1,5 @@
 import {
   Form,
-  FormInstance,
   Input,
   Checkbox,
   Col,
@@ -15,20 +14,22 @@ import BaseFormWrapper, { FormComponentProps } from "../BaseFormWrapper";
 import "./index.less";
 
 const PracticeInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
-  const form = (fieldsProps?.ref?.current || {}) as FormInstance;
+  const [form] = Form.useForm();
   const logoName = Form.useWatch("logo_name", form);
   const noLogo = Form.useWatch("no_logo", form);
-  const practiceLegalName = Form.useWatch("practice_legal_name", form);
+  const displayName = Form.useWatch("display_name", form);
   const address = Form.useWatch("address", form);
 
   const onNoLogoChange = (e: CheckboxChangeEvent) => {
     if (e.target.checked) form.setFieldsValue({ logo_name: "" });
     else
-      form.setFieldsValue({ logo_name: fieldsProps?.initialValues?.logo_name });
+      form?.setFieldsValue({
+        logo_name: fieldsProps?.initialValues?.logo_name,
+      });
   };
 
   return (
-    <BaseFormWrapper layout="vertical" {...fieldsProps}>
+    <BaseFormWrapper layout="vertical" {...fieldsProps} form={form}>
       <Row>
         <Col span={24}>
           <Form.Item
@@ -120,13 +121,13 @@ const PracticeInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
         <Col span={24}>
           <FormList
             name="taxonomy_codes"
-            label="Taxonomy C dode"
+            label="Taxonomy Code"
             tooltip={
               <span className="practice-info-form-tooltip">
                 You can find your taxonomy code on the National Uniform Claim
                 Committee code (NUCC) code set list.{" "}
                 <a
-                  href="https://www.irs.gov/pub/irs-pdf/fw9.pdf"
+                  href="https://www.nucc.org/index.php/code-sets-mainmenu-41/provider-taxonomy-mainmenu-40"
                   target="_blank"
                   rel="noreferrer"
                 >
@@ -147,6 +148,10 @@ const PracticeInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
                       required: true,
                       message: "Please input taxonomy code",
                     },
+                    {
+                      pattern: /^[0-9]{10}$/,
+                      message: "Taxonomy code must be 10 digits",
+                    },
                   ]}
                 >
                   <Input />
@@ -161,13 +166,13 @@ const PracticeInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
           <Form.Item
             name="display_name"
             label="Display Name on Youlify Portal, Receipt and Patient Statement"
-            labelCol={{ span: 18 }}
             rules={[
               {
                 required: true,
                 message: "Please input display name",
               },
             ]}
+            style={{ marginBottom: 24 }}
           >
             <Input />
           </Form.Item>
@@ -221,7 +226,7 @@ const PracticeInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
                     />
                   )}
                   <div className="practice-info-form-preview-provider-position-text">
-                    {practiceLegalName}
+                    {displayName}
                   </div>
                 </div>
               </div>
@@ -232,9 +237,9 @@ const PracticeInfoForm: React.FC<FormComponentProps> = ({ fieldsProps }) => {
                 />
                 <div className="practice-info-form-preview-pdf-position">
                   <div className="practice-info-form-preview-pdf-position-text">
-                    {!!practiceLegalName && (
+                    {!!displayName && (
                       <span className="practice-info-form-preview-pdf-position-text--bold">
-                        {practiceLegalName}
+                        {displayName}
                         <br />
                       </span>
                     )}
